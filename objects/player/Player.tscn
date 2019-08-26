@@ -8,6 +8,7 @@ radius = 8.85013
 
 [node name="RigidBody2D" type="RigidBody2D"]
 position = Vector2( -0.000595093, -0.487793 )
+rotation = 1.55666
 script = ExtResource( 1 )
 __meta__ = {
 "_edit_group_": true
