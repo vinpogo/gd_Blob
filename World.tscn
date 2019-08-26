@@ -21,11 +21,10 @@ GRAVITY = 90
 JUMP_FORCE = 12
 JUMP_FACTOR = 0.33
 
-[node name="MainCamera" type="Camera2D" parent="Players"]
-position = Vector2( 453.105, 211.384 )
-rotation = -1.86265e-009
+[node name="MainCamera" type="Camera2D" parent="Players/Blob"]
+rotation = -1.54036
 scale = Vector2( 1, 1 )
 rotating = true
 current = true
 script = ExtResource( 3 )
-[connection signal="switchGravity" from="Players/Blob" to="Players/MainCamera" method="_on_Blob_switchGravity"]
+[connection signal="switchGravity" from="Players/Blob" to="Players/Blob/MainCamera" method="_on_Blob_switchGravity"]

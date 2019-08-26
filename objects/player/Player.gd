@@ -8,7 +8,7 @@ var onFloor = true
 
 var jump_direction = Vector2()
 var velocity = Vector2(0,0)
-var gravity_dir = Vector2(0,0)
+var gravity_dir = Vector2(0,1)
 
 signal switchGravity
 

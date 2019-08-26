@@ -3,8 +3,8 @@ extends Camera2D
 # Declare member variables here. Examples:
 # var a = 2
 # var b = "text"
-var lastRotation = 0
-var newRotation = 0
+var lastRotation = Vector2(0,1)
+var newRotation = Vector2()
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -15,8 +15,8 @@ func _ready():
 #	pass
 
 func _on_Blob_switchGravity(dir):
-	newRotation = dir.angle()
+	newRotation = Vector2(round(dir.x), round(dir.y))
 	
-	if newRotation != lastRotation: 
-		rotate(newRotation - lastRotation)
+	if newRotation.x != lastRotation.x && newRotation.y != lastRotation.y: 
+		rotate(lastRotation.angle_to(newRotation))
 		lastRotation = newRotation
