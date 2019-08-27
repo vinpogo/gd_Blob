@@ -3,10 +3,12 @@ extends KinematicBody2D
 export var GRAVITY = 500
 export var JUMP_FORCE = 30
 export var JUMP_FACTOR = 0.5
+export var MAX_JUMPS = 3
 
 var onFloor = true
 
 var jump_direction = Vector2()
+var jump_count = 0
 var velocity = Vector2(0,0)
 var gravity_dir = Vector2(0,1)
 
@@ -24,20 +26,21 @@ func _ready():
 
 func jump(dir):
 	onFloor = false
+	jump_count += 1
 	velocity = dir.normalized() * JUMP_FORCE
 
 
 func jumpHandler():
-	if is_touching():
+	if is_touching() && jump_count == 0:
+		jump_direction = get_global_mouse_position() - position
+		jump(jump_direction)
+	if!is_touching() && jump_count <= MAX_JUMPS:
 		jump_direction = get_global_mouse_position() - position
 		jump(jump_direction)
 
 func gravityFactor():
-
 	if Input.is_action_pressed("jump") && !is_falling_down():
 		return JUMP_FACTOR
-	elif is_touching():
-		return 1
 	else:
 		return 1
 
@@ -55,8 +58,10 @@ func _process(delta):
 
 func land():
 	onFloor = true
+	jump_count = 0
 	velocity = Vector2(0,0)
-	emit_signal("switchGravity", -gravity_dir,  newCollide.normal)
+	emit_signal("switchGravity", -gravity_dir,  Vector2(round(newCollide.normal.x), round(newCollide.normal.y)))
+	rotate(gravity_dir.angle_to( Vector2(-round(newCollide.normal.x), -round(newCollide.normal.y))))
 
 	gravity_dir.x = round(-newCollide.normal.x)
 	gravity_dir.y = round(-newCollide.normal.y)

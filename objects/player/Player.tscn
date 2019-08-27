@@ -7,14 +7,11 @@
 radius = 8.85013
 
 [node name="RigidBody2D" type="KinematicBody2D"]
-rotation = 1.54036
 script = ExtResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -16.0047, -16.9246 )
 scale = Vector2( 0.994892, 0.95403 )
 texture = ExtResource( 2 )
-centered = false
 vframes = 3
 hframes = 2
 

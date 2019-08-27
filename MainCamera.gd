@@ -18,7 +18,5 @@ func _process(delta):
 	pass
 
 func _on_Blob_switchGravity(old_dir, dir):
-	rotate(old_dir.angle_to(dir))
-#		isRotating = true
-	lastRotation = newRotation
-	print(old_dir, dir)
+	pass
+#	rotate(old_dir.angle_to(dir))
