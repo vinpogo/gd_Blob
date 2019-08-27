@@ -5,18 +5,20 @@ extends Camera2D
 # var b = "text"
 var lastRotation = Vector2(0,1)
 var newRotation = Vector2()
+var ruRotation = 0
+var isRotating = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
+func _process(delta):
 
-func _on_Blob_switchGravity(dir):
-	newRotation = Vector2(round(dir.x), round(dir.y))
-	
-	if newRotation.x != lastRotation.x && newRotation.y != lastRotation.y: 
-		rotate(lastRotation.angle_to(newRotation))
-		lastRotation = newRotation
+	pass
+
+func _on_Blob_switchGravity(old_dir, dir):
+	rotate(old_dir.angle_to(dir))
+#		isRotating = true
+	lastRotation = newRotation
+	print(old_dir, dir)

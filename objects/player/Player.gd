@@ -10,52 +10,59 @@ var jump_direction = Vector2()
 var velocity = Vector2(0,0)
 var gravity_dir = Vector2(0,1)
 
+var newCollide
+var oldCollide
+
 signal switchGravity
 
 func is_touching():
 	return onFloor
 
 func _ready():
-	pass
-	
+	newCollide = move_and_collide(Vector2(0.1,0))
+	oldCollide = move_and_collide(Vector2(-0.1,0))
+
 func jump(dir):
 	onFloor = false
 	velocity = dir.normalized() * JUMP_FORCE
-	
+
 
 func jumpHandler():
 	if is_touching():
 		jump_direction = get_global_mouse_position() - position
 		jump(jump_direction)
-	
+
 func gravityFactor():
 
 	if Input.is_action_pressed("jump") && !is_falling_down():
 		return JUMP_FACTOR
 	elif is_touching():
-		velocity = Vector2(0,0)
 		return 1
-	else: 
+	else:
 		return 1
 
 func is_falling_down():
 	return velocity.normalized().dot(gravity_dir.normalized()) > 0
 
-
-	
 func _process(delta):
 	inputHandler()
 	velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
-	
-	
-	var collide = move_and_collide(velocity)
-	
-	if collide:
-		emit_signal("switchGravity", collide.normal)
-		gravity_dir = -collide.normal
-		onFloor = true
-	
+	newCollide = move_and_collide(velocity)
+	if (newCollide != oldCollide):
+		if newCollide:
+			land()
+		oldCollide = newCollide
+
+func land():
+	onFloor = true
+	velocity = Vector2(0,0)
+	emit_signal("switchGravity", -gravity_dir,  newCollide.normal)
+
+	gravity_dir.x = round(-newCollide.normal.x)
+	gravity_dir.y = round(-newCollide.normal.y)
 
 func inputHandler():
 	if Input.is_action_just_pressed("jump"):
 		jumpHandler()
+	if Input.is_action_just_pressed("ui_accept"):
+		print(gravity_dir)

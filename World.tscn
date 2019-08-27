@@ -23,7 +23,6 @@ JUMP_FACTOR = 0.33
 
 [node name="MainCamera" type="Camera2D" parent="Players/Blob"]
 rotation = -1.54036
-scale = Vector2( 1, 1 )
 rotating = true
 current = true
 script = ExtResource( 3 )
