@@ -1,7 +1,7 @@
 extends KinematicBody2D
 
 export var GRAVITY = 500
-export var JUMP_FORCE = 30
+export var JUMP_FORCE = 30.0
 export var JUMP_FACTOR = 0.5
 export var MAX_JUMPS = 3
 
