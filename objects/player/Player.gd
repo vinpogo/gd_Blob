@@ -32,6 +32,7 @@ func jump(dir):
 
 func jumpHandler():
 	if is_touching() && jump_count == 0:
+		$AnimatedSprite.play("jump")
 		jump_direction = get_global_mouse_position() - position
 		jump(jump_direction)
 	if!is_touching() && jump_count <= MAX_JUMPS:
@@ -55,8 +56,9 @@ func _process(delta):
 		if newCollide:
 			land()
 		oldCollide = newCollide
-
+		
 func land():
+	$AnimatedSprite.play("idle")
 	onFloor = true
 	jump_count = 0
 	velocity = Vector2(0,0)
