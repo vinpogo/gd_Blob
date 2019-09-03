@@ -48,7 +48,7 @@ func is_falling_down():
 	return velocity.normalized().dot(gravity_dir.normalized()) > 0
 
 func _process(delta):
-	inputHandler()
+	#inputHandler()
 	velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
 	newCollide = move_and_collide(velocity)
 	if (newCollide != oldCollide):
@@ -71,3 +71,8 @@ func inputHandler():
 		jumpHandler()
 	if Input.is_action_just_pressed("ui_accept"):
 		print(gravity_dir)
+
+func _input(event):
+	if event.is_action_pressed("jump"):
+		jumpHandler()
+		print("test")
