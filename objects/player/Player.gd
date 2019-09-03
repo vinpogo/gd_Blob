@@ -68,11 +68,6 @@ func land():
 	gravity_dir.x = round(-newCollide.normal.x)
 	gravity_dir.y = round(-newCollide.normal.y)
 
-func inputHandler():
-	if Input.is_action_just_pressed("jump"):
-		jumpHandler()
-	if Input.is_action_just_pressed("ui_accept"):
-		print(gravity_dir)
 
 func _input(event):
 	if event.is_action_pressed("jump"):

@@ -25,4 +25,3 @@ JUMP_FACTOR = 0.51
 rotating = true
 current = true
 script = ExtResource( 3 )
-[connection signal="switchGravity" from="Players/Blob" to="Players/Blob/MainCamera" method="_on_Blob_switchGravity"]
