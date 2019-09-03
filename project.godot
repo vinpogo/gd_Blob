@@ -15,9 +15,9 @@ _global_script_class_icons={
 
 [application]
 
-config/name="First GoDot"
+config/name="The Return of the BLOB"
 run/main_scene="res://World.tscn"
-config/icon="res://icon.png"
+config/icon="res://gfx/icon.png"
 
 [input]
 

@@ -32,12 +32,15 @@ func jump(dir):
 
 func jumpHandler():
 	if is_touching() && jump_count == 0:
-		$AnimatedSprite.play("jump")
+		$AnimatedSprite.play("air-jump")
 		jump_direction = get_global_mouse_position() - position
 		jump(jump_direction)
+		return
 	if!is_touching() && jump_count <= MAX_JUMPS:
+		$AnimatedSprite.play("ground-jump")
 		jump_direction = get_global_mouse_position() - position
 		jump(jump_direction)
+		return
 
 func gravityFactor():
 	if Input.is_action_pressed("jump") && !is_falling_down():
@@ -51,6 +54,8 @@ func is_falling_down():
 func _process(delta):
 	#inputHandler()
 	velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
+	if !onFloor:
+		rotation = velocity.angle() + PI/2
 	newCollide = move_and_collide(velocity)
 	if (newCollide != oldCollide):
 		if newCollide:
@@ -62,14 +67,15 @@ func land():
 	onFloor = true
 	jump_count = 0
 	velocity = Vector2(0,0)
-	emit_signal("switchGravity", -gravity_dir,  Vector2(round(newCollide.normal.x), round(newCollide.normal.y)))
-	rotate(gravity_dir.angle_to( Vector2(-round(newCollide.normal.x), -round(newCollide.normal.y))))
-
+	emit_signal("switchGravity", gravity_dir.angle_to( Vector2(-round(newCollide.normal.x), -round(newCollide.normal.y))))
 	gravity_dir.x = round(-newCollide.normal.x)
 	gravity_dir.y = round(-newCollide.normal.y)
+	rotation = gravity_dir.angle() - PI/2
 
 
 func _input(event):
 	if event.is_action_pressed("jump"):
 		jumpHandler()
-		print("test")
+
+func ru_position():
+	return self.position
