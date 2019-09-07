@@ -21,6 +21,10 @@ signal switchGravity
 
 func is_touching():
 	return onFloor
+func canJump():
+	if jump_count < MAX_JUMPS:
+		return true
+	return false
 
 func _ready():
 	newCollide = move_and_collide(Vector2(0.1,0))

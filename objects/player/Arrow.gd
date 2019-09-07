@@ -6,9 +6,7 @@ var isAiming = false
 
 func _ready():
 	visible = false
-	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
 	if Input.is_action_just_pressed("jump"):
 		startAim()
@@ -18,10 +16,12 @@ func _process(delta):
 		rotation = (get_global_mouse_position() - global_position).angle() - $"..".rotation
 
 func startAim():
-	visible = true
-	isAiming = true
-	emit_signal("aim")
+	if $"..".canJump():
+		visible = true
+		isAiming = true
+		emit_signal("aim")
 func stopAim():
-	visible = false
-	isAiming = false
-	emit_signal("jump")
+	if isAiming:
+		visible = false
+		isAiming = false
+		emit_signal("jump")
