@@ -7,6 +7,7 @@ export var MAX_JUMPS = 3
 
 var onFloor = true
 var toBounce = false
+var isAiming = false
 
 var jump_direction = Vector2()
 var jump_count = 0
@@ -76,8 +77,13 @@ func is_falling_down():
 	return velocity.normalized().dot(gravity_dir.normalized()) > 0
 
 func _process(delta):
-	velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
-	if !onFloor:
+		
+	if isAiming:
+		velocity = Vector2(0,0)
+	else:
+		velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
+		
+	if !(onFloor || isAiming):
 		rotation = velocity.angle() + PI/2
 	newCollide = move_and_collide(velocity)
 	if (newCollide != oldCollide):
@@ -102,9 +108,9 @@ func land():
 	gravity_dir.y = round(-newCollide.normal.y)
 	rotation = gravity_dir.angle() - PI/2
 
-func _input(event):
-	if event.is_action_pressed("jump"):
-		jumpHandler()
+#func _input(event):
+#	if event.is_action_pressed("jump"):
+#		jumpHandler()
 
 func ru_position():
 	return self.position
@@ -116,3 +122,12 @@ func _on_BounceArea_bounce():
 func _on_BounceArea_stopBounce():
 	return
 	toBounce = false
+
+
+func _on_Arrow_jump():
+	jumpHandler()
+	isAiming = false
+
+
+func _on_Arrow_aim():
+	isAiming = true
