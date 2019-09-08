@@ -66,7 +66,7 @@ animations = [ {
 "frames": [ ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ) ],
 "loop": false,
 "name": "ground-jump",
-"speed": 20.0
+"speed": 40.0
 }, {
 "frames": [ ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 44 ) ],
 "loop": true,
@@ -86,8 +86,8 @@ shape = SubResource( 1 )
 scale = Vector2( 0.5, 0.5 )
 z_index = 1
 frames = SubResource( 2 )
-animation = "idle"
-frame = 12
+animation = "ground-jump"
+frame = 5
 playing = true
 
 [node name="Arrow" type="Sprite" parent="."]

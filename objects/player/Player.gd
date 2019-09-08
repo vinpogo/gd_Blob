@@ -36,7 +36,7 @@ func thirdJump(dir):
 	if dir.normalized().dot(gravity_dir.normalized()) > 0:
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
-		velocity = dir.normalized() * JUMP_FORCE * 1.2
+		velocity = dir.normalized() * JUMP_FORCE * 1.5
 	
 func secondJump(dir):
 	onFloor = false
@@ -44,7 +44,7 @@ func secondJump(dir):
 	if dir.normalized().dot(gravity_dir.normalized()) > 0:
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
-		velocity = dir.normalized() * JUMP_FORCE * 1.1
+		velocity = dir.normalized() * JUMP_FORCE * 1.25
 	
 func firstJump(dir):
 	onFloor = false
@@ -72,7 +72,7 @@ func jumpHandler():
 			return
 
 func gravityFactor():
-	if Input.is_action_pressed("jump") && !is_falling_down():
+	if !is_falling_down():
 		return JUMP_FACTOR
 	else:
 		return 1
@@ -85,7 +85,7 @@ func _process(delta):
 	if isAiming:
 		velocity = Vector2(0,0)
 	else:
-		velocity += (gravity_dir * GRAVITY * gravityFactor()) * delta
+		velocity += (gravity_dir * GRAVITY) * delta
 		
 	if !(onFloor || isAiming):
 		rotation = velocity.angle() + PI/2
