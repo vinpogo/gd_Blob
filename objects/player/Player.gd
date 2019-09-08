@@ -54,19 +54,19 @@ func firstJump(dir):
 
 func jumpHandler():
 	if is_touching() && jump_count == 0:
-		$AnimatedSprite.play("air-jump")
+		$AnimatedSprite.play("ground-jump")
 		jump_direction = get_global_mouse_position() - position
 		firstJump(jump_direction)
 		return
 	if!is_touching():
 		if jump_count == 1:
-			$AnimatedSprite.play("ground-jump")
+			$AnimatedSprite.play("air-jump1")
 			jump_direction = get_global_mouse_position() - position
 			secondJump(jump_direction)
 			return
 			
 		elif jump_count == 2:
-			$AnimatedSprite.play("ground-jump")
+			$AnimatedSprite.play("air-jump2")
 			jump_direction = get_global_mouse_position() - position
 			thirdJump(jump_direction)
 			return
