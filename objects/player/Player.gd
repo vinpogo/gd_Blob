@@ -27,8 +27,10 @@ func canJump():
 	return false
 
 func _ready():
-	newCollide = move_and_collide(Vector2(0.1,0))
-	oldCollide = move_and_collide(Vector2(-0.1,0))
+#	Engine.time_scale = 0.5
+#	newCollide = move_and_collide(Vector2(0.1,0))
+#	oldCollide = move_and_collide(Vector2(-0.1,0))
+	pass
 	
 func thirdJump(dir):
 	onFloor = false
@@ -81,14 +83,19 @@ func is_falling_down():
 	return velocity.normalized().dot(gravity_dir.normalized()) > 0
 
 func _process(delta):
+	print(delta)
 		
-	if isAiming:
-		velocity = Vector2(0,0)
-	else:
-		velocity += (gravity_dir * GRAVITY) * delta
-		
-	if !(onFloor || isAiming):
+#	if isAiming:
+#		velocity = Vector2(0,0)
+#	else:
+#		velocity += (gravity_dir * GRAVITY) * delta
+	velocity += (gravity_dir * GRAVITY) * delta
+	
+	if isAiming && !onFloor:
+		rotation = (get_global_mouse_position() - global_position).angle() + PI/2
+	elif !onFloor:
 		rotation = velocity.angle() + PI/2
+		
 	newCollide = move_and_collide(velocity)
 	if (newCollide != oldCollide):
 		if newCollide:
@@ -131,7 +138,10 @@ func _on_BounceArea_stopBounce():
 func _on_Arrow_jump():
 	jumpHandler()
 	isAiming = false
+	Engine.time_scale = 1
 
 
 func _on_Arrow_aim():
 	isAiming = true
+	velocity /= 10
+	Engine.time_scale = 0.01
