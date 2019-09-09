@@ -1,15 +1,17 @@
 extends Camera2D
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+onready var tween = get_node("Tween")
+#func _on_ready():
+#	rotation = $"../Blob".gravity_dir.angle()-PI/2
 
 func _process(delta):
-	
-	self.position = $"../Blob".ru_position()
-	pass
+	position = $"../Blob".ru_position()
+	if (($"../Blob".rotation-PI/2) != rotation):
+		ru_set_rotation($"../Blob".gravity_dir.angle() - PI/2)
 
 
-func _on_Blob_switchGravity(angle):
-	rotate(angle)
-	pass # Replace with function body.
+func ru_set_rotation(angle):
+	print(tween.is_active())
+	tween.interpolate_property($".", "rotation", null, angle, 0.05, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	if !tween.is_active():
+		tween.start()
