@@ -11,7 +11,6 @@ func _process(delta):
 
 
 func ru_set_rotation(angle):
-	print(tween.is_active())
-	tween.interpolate_property($".", "rotation", null, angle, 0.05, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.interpolate_property($".", "rotation", null, angle, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	if !tween.is_active():
 		tween.start()
