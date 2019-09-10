@@ -2,7 +2,6 @@ extends KinematicBody2D
 
 export var GRAVITY = 500
 export var JUMP_FORCE = 30.0
-export var JUMP_FACTOR = 0.5
 export var MAX_JUMPS = 3
 
 var onFloor = false
@@ -17,23 +16,20 @@ var gravity_dir = Vector2(1,0)
 var newCollide
 var oldCollide
 
-signal switchGravity
+onready var tween = get_node("Tween")
 
 func is_touching():
 	return onFloor
-func canJump():
-	if jump_count < MAX_JUMPS:
-		return true
-	return false
 
 func _ready():
+	tween.repeat = false
 	rotation = (-gravity_dir).angle()
-	pass
 
 func thirdJump(dir):
 	onFloor = false
 	jump_count += 1
-	if dir.normalized().cross(gravity_dir.normalized()) > 0:
+	if gravity_dir.dot(dir) > 0:
+		print("down", gravity_dir, dir)
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
 		velocity = dir.normalized() * JUMP_FORCE * 1.5
@@ -41,7 +37,8 @@ func thirdJump(dir):
 func secondJump(dir):
 	onFloor = false
 	jump_count += 1
-	if dir.normalized().dot(gravity_dir.normalized()) > 0:
+	if gravity_dir.dot(dir) > 0:
+		print("down")
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
 		velocity = dir.normalized() * JUMP_FORCE * 1.25
@@ -50,7 +47,6 @@ func firstJump(dir):
 	onFloor = false
 	jump_count += 1
 	velocity = dir.normalized() * JUMP_FORCE
-
 
 func jumpHandler():
 	if is_touching() && jump_count == 0:
@@ -71,16 +67,8 @@ func jumpHandler():
 			thirdJump(jump_direction)
 			return
 
-func gravityFactor():
-	if !is_falling_down():
-		return JUMP_FACTOR
-	else:
-		return 1
-
-func is_falling_down():
-	return velocity.project(gravity_dir).dot(gravity_dir) > 0
-
 func _process(delta):
+	print(Engine.time_scale)
 
 	if onFloor:
 		$"../MainCamera/Tween".stop_all()
@@ -103,7 +91,6 @@ func _process(delta):
 				elif !onFloor:
 					land()
 
-
 func bounce(col):
 	$AnimatedSprite.play("final-jump")
 	velocity = velocity.bounce(col.normal)*0.5
@@ -117,24 +104,29 @@ func land():
 	gravity_dir = -newCollide.normal
 	rotation = (-gravity_dir).angle()
 
-
 func ru_position():
 	return self.position
+	
+func canJump():
+	if jump_count < MAX_JUMPS: return true
+	return false
 
+func is_falling_down():
+	return gravity_dir.dot(velocity) < 0
 
 func _on_BounceArea_bounce():
 	toBounce = true
 
-func _on_BounceArea_stopBounce():
-	return
-	toBounce = false
-
 func _on_Arrow_jump():
+	tween.stop_all()
+	tween.interpolate_property(Engine, "time_scale", null, 1, 0.01, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	tween.start()
 	jumpHandler()
 	isAiming = false
-	Engine.time_scale = 1
+	
 
 func _on_Arrow_aim():
 	isAiming = true
 	velocity /= 10
-	Engine.time_scale = 0.1
+	tween.interpolate_property(Engine, "time_scale", 1, 0.001, 0.05, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	tween.start()

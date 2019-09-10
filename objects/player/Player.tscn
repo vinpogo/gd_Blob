@@ -77,6 +77,7 @@ animations = [ {
 [sub_resource type="ParticlesMaterial" id=3]
 flag_disable_z = true
 spread = 0.0
+angular_velocity = 7.46952
 orbit_velocity = 0.0
 orbit_velocity_random = 0.0
 scale = 3.0
@@ -98,7 +99,7 @@ scale = Vector2( 0.5, 0.5 )
 z_index = 1
 frames = SubResource( 2 )
 animation = "idle"
-frame = 10
+frame = 2
 playing = true
 
 [node name="Arrow" type="Sprite" parent="."]
@@ -114,5 +115,7 @@ randomness = 1.0
 fixed_fps = 24
 local_coords = false
 process_material = SubResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
 [connection signal="aim" from="Arrow" to="." method="_on_Arrow_aim"]
 [connection signal="jump" from="Arrow" to="." method="_on_Arrow_jump"]

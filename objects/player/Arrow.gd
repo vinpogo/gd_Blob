@@ -9,32 +9,31 @@ func _ready():
 
 func _process(delta):
 	set_scale(Vector2((get_global_mouse_position() - global_position).length()/100, 1))
-	if !canAim():
-		stopAim()
+	if canAim():
+		visible = true
 	else:
-		startAim()
+		visible = false
 
-	if Input.is_action_just_released("jump") && blob.canJump() && isAiming:
+	if Input.is_action_just_released("jump") && blob.canJump() && canAim():
 		jump()
-	if Input.is_action_just_pressed("jump") && blob.canJump():
+	if Input.is_action_just_pressed("jump") && blob.canJump() && canAim():
 		emit_signal("aim")
-
-	if isAiming:
-		rotation = ru_rotation()
+		
+	rotation = ru_rotation()
 
 func ru_rotation():
 	return (get_global_mouse_position() - global_position).angle() - blob.rotation
+	
 func canAim():
 	var gravity = blob.gravity_dir
-	var projection = (get_global_mouse_position()-global_position).project(gravity)
+	var projection = get_global_mouse_position()-global_position
 
-
-	print( projection.dot(gravity))
 	if !blob.onFloor :
 		return true
-	if blob.onFloor && projection.dot(gravity) < 0:
+	if blob.onFloor && gravity.dot(projection) < 0:
 		return true
 	return false
+
 func startAim():
 		visible = true
 		isAiming = true
