@@ -18,12 +18,12 @@ func _process(delta):
 		jump()
 	if Input.is_action_just_pressed("jump") && blob.canJump() && canAim():
 		emit_signal("aim")
-		
+
 	rotation = ru_rotation()
 
 func ru_rotation():
 	return (get_global_mouse_position() - global_position).angle() - blob.rotation
-	
+
 func canAim():
 	var gravity = blob.gravity_dir
 	var projection = get_global_mouse_position()-global_position

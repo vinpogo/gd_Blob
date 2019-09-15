@@ -1,4 +1,4 @@
-[gd_scene load_steps=50 format=2]
+[gd_scene load_steps=49 format=2]
 
 [ext_resource path="res://objects/player/Player.gd" type="Script" id=1]
 [ext_resource path="res://objects/player/idle/0001.png" type="Texture" id=2]
@@ -74,18 +74,6 @@ animations = [ {
 "speed": 40.0
 } ]
 
-[sub_resource type="ParticlesMaterial" id=3]
-flag_disable_z = true
-spread = 0.0
-angular_velocity = 7.46952
-orbit_velocity = 0.0
-orbit_velocity_random = 0.0
-scale = 3.0
-scale_random = 1.0
-color = Color( 0.541176, 0.117647, 0.490196, 1 )
-hue_variation = 0.01
-hue_variation_random = 1.0
-
 [node name="Blob" type="KinematicBody2D"]
 script = ExtResource( 1 )
 
@@ -99,22 +87,13 @@ scale = Vector2( 0.5, 0.5 )
 z_index = 1
 frames = SubResource( 2 )
 animation = "idle"
-frame = 2
+frame = 4
 playing = true
 
 [node name="Arrow" type="Sprite" parent="."]
 texture = ExtResource( 45 )
 offset = Vector2( 32, 0 )
 script = ExtResource( 46 )
-
-[node name="Particles2D" type="Particles2D" parent="."]
-amount = 202
-lifetime = 3.1
-speed_scale = 0.3
-randomness = 1.0
-fixed_fps = 24
-local_coords = false
-process_material = SubResource( 3 )
 
 [node name="Tween" type="Tween" parent="."]
 [connection signal="aim" from="Arrow" to="." method="_on_Arrow_aim"]

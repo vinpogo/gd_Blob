@@ -29,7 +29,6 @@ func thirdJump(dir):
 	onFloor = false
 	jump_count += 1
 	if gravity_dir.dot(dir) > 0:
-		print("down", gravity_dir, dir)
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
 		velocity = dir.normalized() * JUMP_FORCE * 1.5
@@ -49,6 +48,7 @@ func firstJump(dir):
 	velocity = dir.normalized() * JUMP_FORCE
 
 func jumpHandler():
+	print("jump")
 	if is_touching() && jump_count == 0:
 		$AnimatedSprite.play("ground-jump")
 		jump_direction = get_global_mouse_position() - global_position
@@ -68,8 +68,8 @@ func jumpHandler():
 			return
 
 func _process(delta):
-	print(Engine.time_scale)
-
+	var size = 2-Engine.time_scale
+	scale = Vector2(size, size)
 	if onFloor:
 		$"../MainCamera/Tween".stop_all()
 
@@ -86,27 +86,33 @@ func _process(delta):
 		oldCollide = newCollide
 		if newCollide:
 			if newCollide.position.distance_to(position) > 10:
-				if toBounce:
-					bounce(oldCollide)
-				elif !onFloor:
-					land()
+				collisionHandler(newCollide)
 
 func bounce(col):
 	$AnimatedSprite.play("final-jump")
 	velocity = velocity.bounce(col.normal)*0.5
 	toBounce = false
 
-func land():
+func land(collision):
 	$AnimatedSprite.play("idle")
 	onFloor = true
 	jump_count = 0
 	velocity = Vector2(0,0)
-	gravity_dir = -newCollide.normal
+	gravity_dir = -collision.normal
 	rotation = (-gravity_dir).angle()
+
+func collisionHandler(collision):
+	var type
+	if collision.collider.has_method("get_type"):
+		type = collision.collider.get_type()
+	if type == "bounce" || toBounce:
+		bounce(collision)
+	elif type == "sticky" && !onFloor:
+		land(collision)
 
 func ru_position():
 	return self.position
-	
+
 func canJump():
 	if jump_count < MAX_JUMPS: return true
 	return false
@@ -123,10 +129,10 @@ func _on_Arrow_jump():
 	tween.start()
 	jumpHandler()
 	isAiming = false
-	
+
 
 func _on_Arrow_aim():
 	isAiming = true
-	velocity /= 10
+	velocity /= 1000
 	tween.interpolate_property(Engine, "time_scale", 1, 0.001, 0.05, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
