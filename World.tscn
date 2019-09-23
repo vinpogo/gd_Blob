@@ -23,7 +23,7 @@ tile_data = PoolIntArray( -655377, 0, 65536, -655376, 0, 327681, -655375, 0, 327
 script = ExtResource( 2 )
 
 [node name="Sticky" parent="Map" instance=ExtResource( 3 )]
-position = Vector2( 836.123, 79.5226 )
+position = Vector2( 777.666, 76.1823 )
 scale = Vector2( 2, 2 )
 
 [node name="Sticky2" parent="Map" instance=ExtResource( 3 )]
@@ -41,6 +41,7 @@ position = Vector2( 1067.78, 447.632 )
 
 [node name="Bounce" parent="Map" instance=ExtResource( 4 )]
 position = Vector2( 842.651, 273.6 )
+type = "bouncy"
 
 [node name="Bounce4" parent="Map" instance=ExtResource( 4 )]
 position = Vector2( -258.505, -232.551 )
@@ -50,10 +51,10 @@ rotation = -1.9063
 position = Vector2( 63.6544, 425.39 )
 
 [node name="Bounce3" parent="Map" instance=ExtResource( 4 )]
-position = Vector2( 162.029, -12.534 )
+position = Vector2( 160.358, -10.8639 )
 
 [node name="StaticBody2D" parent="Map" instance=ExtResource( 5 )]
-position = Vector2( 596.258, 75.1586 )
+position = Vector2( 511.078, 200.423 )
 rotation = -1.57671
 
 [node name="StaticBody2D2" parent="Map" instance=ExtResource( 5 )]
