@@ -1,13 +1,14 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://test.tres" type="TileSet" id=1]
 [ext_resource path="res://TileMap.gd" type="Script" id=2]
 [ext_resource path="res://Area2D.gd" type="Script" id=3]
 [ext_resource path="res://objects/mapObjects/Sticky.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/mapObjects/Bounce.tscn" type="PackedScene" id=5]
-[ext_resource path="res://objects/player/BlobCharacter.tscn" type="PackedScene" id=6]
-[ext_resource path="res://objects/player/BlobCamera.tscn" type="PackedScene" id=7]
-[ext_resource path="res://objects/mapObjects/HUD.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/mapObjects/OneWay.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/player/BlobCharacter.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/player/BlobCamera.tscn" type="PackedScene" id=8]
+[ext_resource path="res://objects/mapObjects/HUD.tscn" type="PackedScene" id=9]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 101.573, 60.2662 )
@@ -54,20 +55,24 @@ position = Vector2( 836.123, 79.5226 )
 [node name="Bounce" parent="Map" instance=ExtResource( 5 )]
 position = Vector2( 842.651, 273.6 )
 
-[node name="Players" type="Node2D" parent="."]
+[node name="OneWay" parent="Map" instance=ExtResource( 6 )]
+position = Vector2( 580.27, 156.376 )
+rotation = -2.02458
+
+[node name="Player" type="Node2D" parent="."]
 position = Vector2( 455.378, 69.3406 )
 
-[node name="Blob" parent="Players" instance=ExtResource( 6 )]
+[node name="Blob" parent="Player" instance=ExtResource( 7 )]
 collision_layer = 3
 GRAVITY = 18
 JUMP_FORCE = 5.5
 
-[node name="BlobCamera" parent="Players" instance=ExtResource( 7 )]
+[node name="BlobCamera" parent="Player" instance=ExtResource( 8 )]
 
-[node name="HUD" parent="." instance=ExtResource( 8 )]
+[node name="HUD" parent="." instance=ExtResource( 9 )]
 [connection signal="body_entered" from="Map/BounceArea" to="Map/BounceArea" method="_on_BounceArea_body_entered"]
 [connection signal="body_exited" from="Map/BounceArea" to="Map/BounceArea" method="_on_BounceArea_body_exited"]
-[connection signal="bounce" from="Map/BounceArea" to="Players/Blob" method="_on_BounceArea_bounce"]
+[connection signal="bounce" from="Map/BounceArea" to="Player/Blob" method="_on_BounceArea_bounce"]
 [connection signal="body_entered" from="Map/BounceArea2" to="Map/BounceArea2" method="_on_BounceArea_body_entered"]
 [connection signal="body_exited" from="Map/BounceArea2" to="Map/BounceArea2" method="_on_BounceArea_body_exited"]
-[connection signal="bounce" from="Map/BounceArea2" to="Players/Blob" method="_on_BounceArea_bounce"]
+[connection signal="bounce" from="Map/BounceArea2" to="Player/Blob" method="_on_BounceArea_bounce"]
