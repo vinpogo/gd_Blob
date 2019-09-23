@@ -17,6 +17,7 @@ var newCollide
 var oldCollide
 
 onready var tween = get_node("Tween")
+onready var blob = get_parent()
 
 func is_touching():
 	return onFloor
@@ -50,19 +51,19 @@ func firstJump(dir):
 func jumpHandler():
 	print("jump")
 	if is_touching() && jump_count == 0:
-		$AnimatedSprite.play("ground-jump")
+		$sprite.play("ground-jump")
 		jump_direction = get_global_mouse_position() - global_position
 		firstJump(jump_direction)
 		return
 	if!is_touching():
 		if jump_count == 1:
-			$AnimatedSprite.play("jump")
+			$sprite.play("jump")
 			jump_direction = get_global_mouse_position() - global_position
 			secondJump(jump_direction)
 			return
 
 		elif jump_count == 2:
-			$AnimatedSprite.play("final-jump")
+			$sprite.play("final-jump")
 			jump_direction = get_global_mouse_position() - global_position
 			thirdJump(jump_direction)
 			return
@@ -71,7 +72,7 @@ func _process(delta):
 	var size = 2-Engine.time_scale
 	scale = Vector2(size, size)
 	if onFloor:
-		$"../MainCamera/Tween".stop_all()
+		blob.get_node("BlobCamera/Tween").stop_all()
 
 	if !onFloor:
 		velocity += (gravity_dir * GRAVITY) * delta
@@ -89,12 +90,12 @@ func _process(delta):
 				collisionHandler(newCollide)
 
 func bounce(col):
-	$AnimatedSprite.play("final-jump")
+	$sprite.play("final-jump")
 	velocity = velocity.bounce(col.normal)*0.5
 	toBounce = false
 
-func land(collision):
-	$AnimatedSprite.play("idle")
+func stick(collision):
+	$sprite.play("idle")
 	onFloor = true
 	jump_count = 0
 	velocity = Vector2(0,0)
@@ -108,7 +109,7 @@ func collisionHandler(collision):
 	if type == "bounce" || toBounce:
 		bounce(collision)
 	elif type == "sticky" && !onFloor:
-		land(collision)
+		stick(collision)
 
 func ru_position():
 	return self.position
