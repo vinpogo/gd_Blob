@@ -38,7 +38,6 @@ func secondJump(dir):
 	onFloor = false
 	jump_count += 1
 	if gravity_dir.dot(dir) > 0:
-		print("down")
 		velocity += dir.normalized() * JUMP_FORCE
 	else:
 		velocity = dir.normalized() * JUMP_FORCE * 1.25
@@ -49,7 +48,6 @@ func firstJump(dir):
 	velocity = dir.normalized() * JUMP_FORCE
 
 func jumpHandler():
-	print("jump")
 	if is_touching() && jump_count == 0:
 		$sprite.play("ground-jump")
 		jump_direction = get_global_mouse_position() - global_position
@@ -106,7 +104,7 @@ func collisionHandler(collision):
 	var type
 	if collision.collider.has_method("get_type"):
 		type = collision.collider.get_type()
-	if type == "bounce" || toBounce:
+	if type == "bouncy" || toBounce:
 		bounce(collision)
 	elif type == "sticky" && !onFloor:
 		stick(collision)

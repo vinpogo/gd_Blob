@@ -24,12 +24,14 @@ script = ExtResource( 2 )
 
 [node name="Sticky" parent="Map" instance=ExtResource( 3 )]
 position = Vector2( 836.123, 79.5226 )
+scale = Vector2( 2, 2 )
 
 [node name="Sticky2" parent="Map" instance=ExtResource( 3 )]
 position = Vector2( 547.347, -125.159 )
 
 [node name="Sticky3" parent="Map" instance=ExtResource( 3 )]
 position = Vector2( 250.638, 279.444 )
+scale = Vector2( 3, 3 )
 
 [node name="Sticky4" parent="Map" instance=ExtResource( 3 )]
 position = Vector2( -344.367, 352.432 )
@@ -50,13 +52,14 @@ position = Vector2( 63.6544, 425.39 )
 [node name="Bounce3" parent="Map" instance=ExtResource( 4 )]
 position = Vector2( 162.029, -12.534 )
 
-[node name="OneWay" parent="Map" instance=ExtResource( 5 )]
-position = Vector2( 563.086, 429.884 )
-rotation = -2.02458
+[node name="StaticBody2D" parent="Map" instance=ExtResource( 5 )]
+position = Vector2( 596.258, 75.1586 )
+rotation = -1.57671
 
-[node name="OneWay2" parent="Map" instance=ExtResource( 5 )]
-position = Vector2( -215.974, 63.3604 )
-rotation = -4.46539
+[node name="StaticBody2D2" parent="Map" instance=ExtResource( 5 )]
+position = Vector2( 604.609, 317.336 )
+rotation = -0.747527
+type = "bouncy"
 
 [node name="Player" type="Node2D" parent="."]
 position = Vector2( 455.378, 69.3406 )
