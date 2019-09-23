@@ -56,17 +56,16 @@ position = Vector2( 160.358, -10.8639 )
 [node name="StaticBody2D" parent="Map" instance=ExtResource( 5 )]
 position = Vector2( 511.078, 200.423 )
 rotation = -1.57671
+collision_mask = 3
 
 [node name="StaticBody2D2" parent="Map" instance=ExtResource( 5 )]
 position = Vector2( 604.609, 317.336 )
 rotation = -0.747527
-type = "bouncy"
 
 [node name="Player" type="Node2D" parent="."]
 position = Vector2( 455.378, 69.3406 )
 
 [node name="Blob" parent="Player" instance=ExtResource( 6 )]
-collision_layer = 3
 GRAVITY = 18
 JUMP_FORCE = 5.5
 

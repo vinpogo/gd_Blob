@@ -22,7 +22,6 @@ func _ready():
 	ru_setTexture(type)
 
 func _physics_process(delta):
-	print(type)
 	if type != currentType:
 		print("switch sprite")
 		ru_setTexture(type)

@@ -66,12 +66,10 @@ func jumpHandler():
 			thirdJump(jump_direction)
 			return
 
-func _process(delta):
+func _physics_process(delta):
 	var size = 2-Engine.time_scale
 	scale = Vector2(size, size)
-	if onFloor:
-		blob.get_node("BlobCamera/Tween").stop_all()
-
+	
 	if !onFloor:
 		velocity += (gravity_dir * GRAVITY) * delta
 		if isAiming:
@@ -102,9 +100,12 @@ func stick(collision):
 
 func collisionHandler(collision):
 	var type
+	
 	if collision.collider.has_method("get_type"):
 		type = collision.collider.get_type()
 	if type == "bouncy" || toBounce:
+		print("jump")
+		
 		bounce(collision)
 	elif type == "sticky" && !onFloor:
 		stick(collision)
@@ -131,6 +132,7 @@ func _on_Arrow_jump():
 
 
 func _on_Arrow_aim():
+	print("aim")
 	isAiming = true
 	velocity /= 1000
 	tween.interpolate_property(Engine, "time_scale", 1, 0.001, 0.05, Tween.TRANS_LINEAR, Tween.EASE_OUT)
