@@ -2,25 +2,23 @@ extends Sprite
 signal aim
 signal jump
 
-var lastPos = Vector2(0,0)
-var pos = Vector2(0,0)
+signal predict
+
 var isAiming = false
 onready var blob = get_parent()
-onready var particle = load("res://objects/player/BlobAim.tscn")
 func _ready():
 	visible = false
 
 func _input(event):
-	if event is InputEventMouseMotion && canAim() && blob.onFloor:
-		predict_movement(0.01)
+	if event is InputEventMouseMotion && visible && blob.onFloor:
+		emit_signal("predict", rotation)
 		
 
 func _physics_process(delta):
 #	set_scale(Vector2((get_global_mouse_position() - global_position).length()/100, 1))
-	if canAim():
+	if canAim() && !visible:
 		visible = true
-	else:
-		blob.get_node("aimTimer").stop()
+	elif !canAim() && visible:
 		visible = false
 
 	if Input.is_action_just_released("jump") && blob.canJump() && canAim():
@@ -57,23 +55,3 @@ func crossProduct(vec1, vec2):
 	var a = vec1.normalized()
 	var b = vec2.normalized()
 	return a.x * b.y - a.y * b.x
-
-func predict_movement(delta):
-	print("predict", get_local_mouse_position())
-	pos = position
-	lastPos = global_position
-	var vel = get_local_mouse_position().normalized()*blob.JUMP_FORCE
-	var grav = blob.gravity_dir*blob.GRAVITY
-	print(vel, grav)
-	
-	for i in range(50):
-		vel += (grav * delta)
-		pos += vel
-		if(get_child(i) == null):
-			print("add")
-			var node = particle.instance()
-			node.global_position = pos
-			add_child(node)
-		else:
-			get_child(i).position = pos
-		lastPos = pos

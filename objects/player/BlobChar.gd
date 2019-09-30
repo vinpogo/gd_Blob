@@ -3,6 +3,7 @@ extends KinematicBody2D
 export var GRAVITY = 500
 export var JUMP_FORCE = 30.0
 export var MAX_JUMPS = 3
+export var SLOWMO = 20
 
 var onFloor = false
 var toBounce = false
@@ -12,12 +13,12 @@ var jump_direction = Vector2()
 var jump_count = 0
 var velocity = Vector2(0,0)
 var gravity_dir = Vector2(1,0)
+var slowMo = 1
 
 var newCollide
 var oldCollide
 
 onready var tween = get_node("Tween")
-onready var blob = get_parent()
 
 func is_touching():
 	return onFloor
@@ -71,7 +72,7 @@ func _physics_process(delta):
 	scale = Vector2(size, size)
 	
 	if !onFloor:
-		velocity += (gravity_dir * GRAVITY) * delta
+		velocity += (gravity_dir * GRAVITY * slowMo) * delta * slowMo
 		if isAiming:
 			rotation = (get_global_mouse_position() - global_position).angle()
 		else:
@@ -125,15 +126,23 @@ func _on_BounceArea_bounce():
 
 func _on_Arrow_jump():
 	tween.stop_all()
-	tween.interpolate_property(Engine, "time_scale", null, 1, 0.01, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	print("stop tween")
+	tween.interpolate_property(self, "slowMo", null, 1, 0.01, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
-	jumpHandler()
 	isAiming = false
 
 
 func _on_Arrow_aim():
 	print("aim")
 	isAiming = true
-	velocity /= 1000
-	tween.interpolate_property(Engine, "time_scale", 1, 0.001, 0.05, Tween.TRANS_LINEAR, Tween.EASE_OUT)
+	velocity /= SLOWMO
+	tween.interpolate_property(self, "slowMo", null, 1/SLOWMO, 0.05, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
+
+func _on_Tween_tween_all_completed():
+	print("ENDE")
+
+
+func _on_Tween_tween_completed(object, key):
+	if slowMo == 1:
+		jumpHandler()
