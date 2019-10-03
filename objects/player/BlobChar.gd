@@ -18,14 +18,17 @@ var slowMo = 1
 var newCollide
 var oldCollide
 
+signal stick
+
 onready var tween = get_node("Tween")
+onready var aim = get_node("aim")
 
 func is_touching():
 	return onFloor
 
 func _ready():
 	tween.repeat = false
-	rotation = (-gravity_dir).angle()
+#	rotation = (-gravity_dir).angle()
 
 func thirdJump(dir):
 	onFloor = false
@@ -49,34 +52,31 @@ func firstJump(dir):
 	velocity = dir.normalized() * JUMP_FORCE
 
 func jumpHandler():
+	var direction = aim.ru_getDirection()
+	jump_direction = -direction.y * gravity_dir + direction.x * gravity_dir.rotated(-PI/2)
+	
 	if is_touching() && jump_count == 0:
 		$sprite.play("ground-jump")
-		jump_direction = get_global_mouse_position() - global_position
 		firstJump(jump_direction)
 		return
 	if!is_touching():
 		if jump_count == 1:
 			$sprite.play("jump")
-			jump_direction = get_global_mouse_position() - global_position
 			secondJump(jump_direction)
 			return
 
 		elif jump_count == 2:
 			$sprite.play("final-jump")
-			jump_direction = get_global_mouse_position() - global_position
 			thirdJump(jump_direction)
 			return
 
 func _physics_process(delta):
-	var size = 2-Engine.time_scale
-	scale = Vector2(size, size)
-	
 	if !onFloor:
 		velocity += (gravity_dir * GRAVITY * slowMo) * delta * slowMo
-		if isAiming:
-			rotation = (get_global_mouse_position() - global_position).angle()
-		else:
-			rotation = velocity.angle()
+#		if isAiming:
+#			rotation = (get_global_mouse_position() - global_position).angle()
+#		else:
+#			rotation = velocity.angle()
 
 	newCollide = move_and_collide(velocity)
 
@@ -97,7 +97,8 @@ func stick(collision):
 	jump_count = 0
 	velocity = Vector2(0,0)
 	gravity_dir = -collision.normal
-	rotation = (-gravity_dir).angle()
+#	rotation = (-gravity_dir).angle()
+	emit_signal("stick")
 
 func collisionHandler(collision):
 	var type

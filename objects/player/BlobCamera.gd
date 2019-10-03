@@ -15,8 +15,9 @@ func _physics_process(delta):
 func ru_set_rotation(angle):
 	if !tween.is_active():
 		tween.interpolate_property(self, "rotation", null, angle, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
-		tween.start()
+#		tween.start()
 
 
 func _on_Tween_tween_completed(object, key):
 	tween.stop_all()
+

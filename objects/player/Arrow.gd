@@ -26,20 +26,20 @@ func _physics_process(delta):
 	if Input.is_action_just_pressed("jump") && blob.canJump() && canAim():
 		emit_signal("aim")
 
-	rotation = ru_rotation()
+	rotation = -ru_getDirection().angle()
 
 func ru_rotation():
 	return (get_global_mouse_position() - global_position).angle() - blob.rotation
 
 func canAim():
-	var gravity = blob.gravity_dir
-	var projection = get_global_mouse_position()-global_position
+	if blob.onFloor:
+		return ru_getDirection().y > 0.2
+	return true
 
-	if !blob.onFloor :
-		return true
-	if blob.onFloor && gravity.dot(projection) < 0:
-		return true
-	return false
+func ru_getDirection():
+	return Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
+	Input.get_action_strength("ui_up") - Input.get_action_strength("ui_down"))
+	
 
 func startAim():
 		visible = true
