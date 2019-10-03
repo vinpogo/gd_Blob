@@ -50,6 +50,9 @@ func firstJump(dir):
 	onFloor = false
 	jump_count += 1
 	velocity = dir.normalized() * JUMP_FORCE
+func walkJump(dir):
+	onFloor = false
+	velocity = dir.normalized() * 5
 
 func jumpHandler():
 	var direction = aim.ru_getDirection()
@@ -73,10 +76,6 @@ func jumpHandler():
 func _physics_process(delta):
 	if !onFloor:
 		velocity += (gravity_dir * GRAVITY * slowMo) * delta * slowMo
-#		if isAiming:
-#			rotation = (get_global_mouse_position() - global_position).angle()
-#		else:
-#			rotation = velocity.angle()
 
 	newCollide = move_and_collide(velocity)
 
@@ -97,7 +96,6 @@ func stick(collision):
 	jump_count = 0
 	velocity = Vector2(0,0)
 	gravity_dir = -collision.normal
-#	rotation = (-gravity_dir).angle()
 	emit_signal("stick")
 
 func collisionHandler(collision):
@@ -147,3 +145,14 @@ func _on_Tween_tween_all_completed():
 func _on_Tween_tween_completed(object, key):
 	if slowMo == 1:
 		jumpHandler()
+
+func ru_walk():
+	var x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
+	var y = abs(x)
+	var direction = -y * gravity_dir + x * gravity_dir.rotated(-PI/2)
+	walkJump(direction)
+
+func _on_aim_move():
+	print("walk")
+	ru_walk()
+	pass # Replace with function body.

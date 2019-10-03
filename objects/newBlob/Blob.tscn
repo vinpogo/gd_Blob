@@ -52,7 +52,7 @@
 [ext_resource path="res://gfx/p_dot_w.png" type="Texture" id=50]
 
 [sub_resource type="CapsuleShape2D" id=1]
-radius = 10.2697
+radius = 15.3699
 height = 3.64281
 
 [sub_resource type="SpriteFrames" id=2]
@@ -94,7 +94,7 @@ shape = SubResource( 1 )
 z_index = 1
 frames = SubResource( 2 )
 animation = "idle"
-frame = 3
+frame = 1
 playing = true
 script = ExtResource( 46 )
 
@@ -110,13 +110,13 @@ rotating = true
 current = true
 script = ExtResource( 49 )
 
-[node name="rotation" type="Tween" parent="BlobCamera"]
-
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 50 )
+
+[node name="rotation" type="Tween" parent="."]
 [connection signal="stick" from="BlobCharacter" to="." method="_on_BlobCharacter_stick"]
 [connection signal="aim" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_aim"]
 [connection signal="jump" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_jump"]
+[connection signal="move" from="BlobCharacter/aim" to="BlobCharacter" method="_on_aim_move"]
 [connection signal="tween_all_completed" from="BlobCharacter/Tween" to="BlobCharacter" method="_on_Tween_tween_all_completed"]
 [connection signal="tween_completed" from="BlobCharacter/Tween" to="BlobCharacter" method="_on_Tween_tween_completed"]
-[connection signal="tween_completed" from="BlobCamera/rotation" to="BlobCamera" method="_on_Tween_tween_completed"]

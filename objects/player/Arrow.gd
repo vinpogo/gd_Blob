@@ -2,29 +2,28 @@ extends Sprite
 signal aim
 signal jump
 
-signal predict
+signal move
 
 var isAiming = false
 onready var blob = get_parent()
+
+
 func _ready():
 	visible = false
 
-func _input(event):
-	if event is InputEventMouseMotion && visible && blob.onFloor:
-		emit_signal("predict", rotation)
-		
 
 func _physics_process(delta):
-#	set_scale(Vector2((get_global_mouse_position() - global_position).length()/100, 1))
 	if canAim() && !visible:
 		visible = true
 	elif !canAim() && visible:
 		visible = false
-
-	if Input.is_action_just_released("jump") && blob.canJump() && canAim():
+	if Input.is_action_just_released("jump") && blob.canJump() && canAim() && !Input.is_action_pressed("walk"):
 		jump()
-	if Input.is_action_just_pressed("jump") && blob.canJump() && canAim():
+	elif Input.is_action_just_pressed("jump") && blob.canJump() && canAim() && !Input.is_action_pressed("walk"):
 		emit_signal("aim")
+	elif Input.is_action_pressed("walk") && blob.onFloor && !Input.is_action_pressed("jump"):
+		print("emit walk")
+		emit_signal("move")
 
 	rotation = -ru_getDirection().angle()
 
