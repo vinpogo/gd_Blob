@@ -1,9 +1,15 @@
 extends Camera2D
 
-onready var blob = get_parent().get_child(0)
-#func _on_ready():
-#	rotation = $"../Blob".gravity_dir.angle()-PI/2
+onready var blobChar = get_parent().get_node("Blob/BlobCharacter")
+onready var tween = get_node("rotation")
+
 
 func _physics_process(delta):
-	global_position = blob.global_position
+	if blobChar:
+		position = blobChar.global_position
 	
+
+func _on_Blob_rotate(angle) -> void:
+	tween.interpolate_property(self, "rotation", null, angle, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()
+	pass # Replace with function body.

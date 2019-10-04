@@ -1,0 +1,22 @@
+[gd_scene format=2]
+
+[node name="GUI" type="Control"]
+anchor_right = 1.0
+margin_right = -1024.0
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+margin_left = 40.0
+margin_top = 40.0
+margin_right = 40.0
+margin_bottom = 40.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+meta_underlined = false
+tab_size = 9
+text = "Halloffdigdifgjdfiogjdfoigjdifgjdofigjdfiogjoidf
+"
+scroll_active = false
