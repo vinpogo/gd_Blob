@@ -2,6 +2,7 @@ extends KinematicBody2D
 
 export var GRAVITY = 500
 export var JUMP_FORCE = 30.0
+# warning-ignore:unused_class_variable
 export var JUMP_FACTOR = 1.5
 export var MAX_JUMPS = 3
 export var SLOWMO = 10
@@ -10,13 +11,13 @@ var onFloor = false
 var inMotion = false
 var toBounce = false
 var jumpFactor = 1
+var jumpsLeft = 1
 
 var jump_count = 0
 var velocity = Vector2(0,0)
 var slowMo = 1
 
 var newCollide
-var oldCollide
 
 signal stick
 
@@ -62,7 +63,6 @@ func jump(dir):
 func jumpHandler():
 	var direction = aim.ru_getDirection()
 	var jump_direction = -direction.y * compass.down + direction.x * compass.down.rotated(-PI/2)
-	jump(jump_direction)
 	if onFloor && jump_count == 0:
 		$sprite.play("ground-jump")
 	elif!onFloor:
@@ -70,6 +70,7 @@ func jumpHandler():
 			$sprite.play("jump")
 		elif jump_count == 2:
 			$sprite.play("final-jump")
+	jump(jump_direction)
 
 func _physics_process(delta):
 	if !onFloor:
@@ -77,10 +78,6 @@ func _physics_process(delta):
 		newCollide = move_and_collide(velocity)
 		if newCollide:
 			collisionHandler(newCollide)
-#		oldCollide = newCollide
-#		if newCollide:
-#			if newCollide.position.distance_to(position) > 10 && !onFloor:
-#				collisionHandler(newCollide)
 
 func bounce(col):
 	$sprite.play("final-jump")
@@ -108,6 +105,8 @@ func collisionHandler(collision):
 		bounce(collision)
 	elif type == "sticky" && !inMotion:
 		stick(collision)
+	elif type == "deadly":
+		die()
 
 func ru_position():
 	return self.position
@@ -159,3 +158,8 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 
 func _on_aim_stopAim() -> void:
 	slowMo = 1
+func die():
+	get_tree().reload_current_scene()
+
+func addJump():
+	jumpsLeft += 1

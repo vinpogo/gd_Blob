@@ -29,7 +29,6 @@ func _physics_process(delta):
 		jump()
 	elif Input.is_action_just_released("jump") && !canAim():
 		emit_signal("stopAim")
-		jump()
 	elif Input.is_action_just_pressed("jump"):
 		emit_signal("aim")
 	rotation = -ru_getDirection().angle()

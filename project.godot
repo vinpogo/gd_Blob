@@ -22,6 +22,8 @@ config/icon="res://gfx/icon.png"
 [debug]
 
 gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unused_argument=false
+gdscript/warnings/unreachable_code=false
 
 [display]
 

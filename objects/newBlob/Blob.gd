@@ -2,6 +2,7 @@ extends Node2D
 
 onready var blobChar = get_node("BlobCharacter")
 onready var tween = get_node("rotation")
+onready var compass = blobChar.compass
 signal rotate(angle)
 func _on_ready():
 	emit_signal("rotate", blobChar.compass.up.angle()-PI/2)
