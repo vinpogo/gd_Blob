@@ -11,7 +11,7 @@ var controller_offset = {"up": 0, "down": 0, "right": 0, "left": 0}
 
 func _on_ready():
 	visible = false
-	
+
 
 
 func _physics_process(delta):
@@ -46,7 +46,7 @@ func canAim():
 func ru_getDirection():
 	return Vector2(Input.get_action_strength("ui_right")-controller_offset.right - Input.get_action_strength("ui_left")+controller_offset.left,
 	Input.get_action_strength("ui_up")-controller_offset.up - Input.get_action_strength("ui_down")+controller_offset.down)
-	
+
 
 func startAim():
 		visible = true

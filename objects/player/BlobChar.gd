@@ -7,6 +7,7 @@ export var JUMP_FACTOR = 1.5
 export var MAX_JUMPS = 3
 export var SLOWMO = 10
 
+var justJumped = false
 var onFloor = false
 var inMotion = false
 var toBounce = false
@@ -22,6 +23,7 @@ var newCollide
 signal stick
 
 onready var aim = get_node("aim")
+onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
 
 func ru_setCompass(dir: String, vec: Vector2 ):
@@ -47,15 +49,17 @@ func ru_setCompass(dir: String, vec: Vector2 ):
 			compass.down = -compass.up
 			compass.right = -v
 			compass.left = v
-	
-	
-	
+
+
+
 func _on_ready():
 	ru_setCompass("down", Vector2(0,1))
 
 
 func jump(dir):
 	onFloor = false
+	timer.start()
+	justJumped = true
 	jump_count += 1
 	velocity = dir.normalized() * JUMP_FORCE * jumpFactor
 
@@ -75,9 +79,13 @@ func jumpHandler():
 func _physics_process(delta):
 	if !onFloor:
 		velocity += (compass.down * GRAVITY * slowMo) * delta * slowMo
-		newCollide = move_and_collide(velocity)
-		if newCollide:
-			collisionHandler(newCollide)
+		if !justJumped:
+			newCollide = move_and_collide(velocity)
+			if newCollide:
+				collisionHandler(newCollide)
+		else:
+			 move_and_collide(velocity)
+
 
 func bounce(col):
 	$sprite.play("final-jump")
@@ -90,18 +98,18 @@ func stick(collision):
 		$sprite.play("idle")
 		onFloor = true
 		jump_count = 0
-		velocity = Vector2(0,0)
+#		velocity = Vector2(0,0)
 		ru_setCompass("up", collision.normal)
 		emit_signal("stick")
 
 func collisionHandler(collision):
 	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
-	
+
 #	if collision.collider.has_method("get_type"):
 #		type = collision.collider.get_type()
 	if type == "bouncy" || toBounce:
 		print("jump")
-		
+
 		bounce(collision)
 	elif type == "sticky" && !inMotion:
 		stick(collision)
@@ -124,14 +132,14 @@ func _on_BounceArea_bounce():
 func _on_Arrow_jump():
 	jumpHandler()
 	slowMo = 1
-	
+
 
 
 func _on_Arrow_aim():
 	print("aim")
 	velocity = velocity.normalized() / SLOWMO
 	slowMo = 1/SLOWMO
-	
+
 
 func ru_walk():
 	var x = Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left")
@@ -140,11 +148,11 @@ func ru_walk():
 	print(x)
 	walkJump(direction)
 	inMotion = true
-	
+
 func walkJump(dir):
 	if !inMotion:
 		print("step")
-		
+
 		onFloor = false
 		velocity = dir.normalized() * 3
 func _on_aim_move():
@@ -163,3 +171,7 @@ func die():
 
 func addJump():
 	jumpsLeft += 1
+
+
+func _on_Timer_timeout() -> void:
+	justJumped = false

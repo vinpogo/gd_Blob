@@ -5,7 +5,7 @@
 [ext_resource path="res://gfx/standard_circle.png" type="Texture" id=3]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 62.2017
+radius = 62.5461
 
 [node name="Sticky" type="StaticBody2D"]
 script = ExtResource( 1 )

@@ -29,7 +29,6 @@ tile_data = PoolIntArray( -655377, 0, 65536, -655376, 0, 327681, -655375, 0, 327
 script = ExtResource( 3 )
 
 [node name="ruObjects" type="Node" parent="Map"]
-editor/display_folded = true
 
 [node name="Sticky" parent="Map/ruObjects" instance=ExtResource( 4 )]
 position = Vector2( 777.666, 76.1823 )
@@ -74,18 +73,18 @@ rotation = -0.747527
 [node name="Items" type="Node" parent="Map"]
 
 [node name="jump" type="Area2D" parent="Map/Items"]
-editor/display_folded = true
 position = Vector2( -133.951, 113.051 )
 script = ExtResource( 7 )
 __meta__ = {
 "_edit_group_": true
 }
 
+[node name="Sprite" type="Sprite" parent="Map/Items/jump"]
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 8 )
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Items/jump"]
 shape = SubResource( 1 )
-
-[node name="Sprite" type="Sprite" parent="Map/Items/jump"]
-texture = ExtResource( 8 )
 
 [node name="Camera2D" type="Camera2D" parent="."]
 editor/display_folded = true

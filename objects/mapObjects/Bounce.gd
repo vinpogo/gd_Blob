@@ -14,8 +14,8 @@ func ru_setTexture(type):
 		"bouncy":
 			sprite.set_texture(bouncy)
 			currentType = "bouncy"
-			
-			
+
+
 
 
 func _ready():
@@ -25,6 +25,6 @@ func _physics_process(delta):
 	if type != currentType:
 		print("switch sprite")
 		ru_setTexture(type)
-		
+
 func get_type():
 	return type
