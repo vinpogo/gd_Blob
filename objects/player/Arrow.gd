@@ -15,22 +15,22 @@ func _on_ready():
 
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("debug"):
-		controller_offset.up = Input.get_action_strength("ui_up")
-		controller_offset.down = Input.get_action_strength("ui_down")
-		controller_offset.left = Input.get_action_strength("ui_left")
-		controller_offset.right = Input.get_action_strength("ui_right")
+#	if Input.is_action_just_pressed("debug"):
+#		controller_offset.up = Input.get_action_strength("ui_up")
+#		controller_offset.down = Input.get_action_strength("ui_down")
+#		controller_offset.left = Input.get_action_strength("ui_left")
+#		controller_offset.right = Input.get_action_strength("ui_right")
 	if canAim() && !visible:
 		visible = true
 	elif !canAim() && visible:
 		visible = false
-	if abs(ru_getDirection().y) < 0.31 && abs(ru_getDirection().x) > 0.25 && blob.onFloor && !blob.inMotion:
-		pass
-#		move()
 	elif Input.is_action_just_released("jump") && canAim():
 		print("emit jump")
 		jump()
-	elif Input.is_action_just_pressed("jump") && canAim() && !Input.is_action_pressed("walk"):
+	elif Input.is_action_just_released("jump") && !canAim():
+		emit_signal("stopAim")
+		jump()
+	elif Input.is_action_just_pressed("jump"):
 		emit_signal("aim")
 	rotation = -ru_getDirection().angle()
 
@@ -39,7 +39,7 @@ func ru_rotation():
 
 func canAim():
 	if blob.onFloor:
-		return ru_getDirection().y > 0.2 && ru_getDirection().length() > 0.5
+		return ru_getDirection().y > 0.0 && ru_getDirection().length() > 0.5
 	elif !blob.onFloor && ru_getDirection().length() > 0.5:
 		return true
 	return false

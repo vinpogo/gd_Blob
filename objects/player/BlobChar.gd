@@ -75,12 +75,12 @@ func _physics_process(delta):
 	if !onFloor:
 		velocity += (compass.down * GRAVITY * slowMo) * delta * slowMo
 		newCollide = move_and_collide(velocity)
-
-	if newCollide != oldCollide:
-		oldCollide = newCollide
 		if newCollide:
-			if newCollide.position.distance_to(position) > 10 && !onFloor:
-				collisionHandler(newCollide)
+			collisionHandler(newCollide)
+#		oldCollide = newCollide
+#		if newCollide:
+#			if newCollide.position.distance_to(position) > 10 && !onFloor:
+#				collisionHandler(newCollide)
 
 func bounce(col):
 	$sprite.play("final-jump")
@@ -98,10 +98,10 @@ func stick(collision):
 		emit_signal("stick")
 
 func collisionHandler(collision):
-	var type
+	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
 	
-	if collision.collider.has_method("get_type"):
-		type = collision.collider.get_type()
+#	if collision.collider.has_method("get_type"):
+#		type = collision.collider.get_type()
 	if type == "bouncy" || toBounce:
 		print("jump")
 		
@@ -159,4 +159,3 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 
 func _on_aim_stopAim() -> void:
 	slowMo = 1
-	pass # Replace with function body.

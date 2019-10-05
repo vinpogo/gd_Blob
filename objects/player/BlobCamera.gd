@@ -5,6 +5,8 @@ onready var tween = get_node("rotation")
 
 
 func _physics_process(delta):
+	if Input.is_action_just_pressed("debug"):
+		zoom = zoom*2 if zoom == Vector2(1, 1) else Vector2(1, 1)
 	if blobChar:
 		position = blobChar.global_position
 	
