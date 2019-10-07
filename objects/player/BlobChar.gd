@@ -4,7 +4,7 @@ export var GRAVITY = 500
 export var JUMP_FORCE = 30.0
 # warning-ignore:unused_class_variable
 export var JUMP_FACTOR = 1.5
-export var MAX_JUMPS = 3
+export var MAX_JUMPS = 1
 export var SLOWMO = 10
 
 var justJumped = false

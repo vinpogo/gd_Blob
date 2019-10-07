@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://objects/newBlob/Blob.tscn" type="PackedScene" id=1]
 [ext_resource path="res://test.tres" type="TileSet" id=2]
@@ -6,9 +6,11 @@
 [ext_resource path="res://objects/mapObjects/Sticky.tscn" type="PackedScene" id=4]
 [ext_resource path="res://objects/mapObjects/Bounce.tscn" type="PackedScene" id=5]
 [ext_resource path="res://objects/mapObjects/OneWay.tscn" type="PackedScene" id=6]
-[ext_resource path="res://jump.gd" type="Script" id=7]
-[ext_resource path="res://gfx/fan.png" type="Texture" id=8]
-[ext_resource path="res://objects/player/BlobCamera.gd" type="Script" id=9]
+[ext_resource path="res://objects/mapObjects/Rectangle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/mapObjects/CircleBig.tscn" type="PackedScene" id=8]
+[ext_resource path="res://jump.gd" type="Script" id=9]
+[ext_resource path="res://gfx/fan.png" type="Texture" id=10]
+[ext_resource path="res://objects/player/BlobCamera.gd" type="Script" id=11]
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 25.0783
@@ -31,24 +33,17 @@ script = ExtResource( 3 )
 [node name="ruObjects" type="Node" parent="Map"]
 
 [node name="Sticky" parent="Map/ruObjects" instance=ExtResource( 4 )]
-position = Vector2( 777.666, 76.1823 )
+position = Vector2( 1094.79, 14.5193 )
 scale = Vector2( 2, 2 )
 
 [node name="Sticky2" parent="Map/ruObjects" instance=ExtResource( 4 )]
-position = Vector2( 547.347, -125.159 )
-
-[node name="Sticky3" parent="Map/ruObjects" instance=ExtResource( 4 )]
-position = Vector2( 250.638, 279.444 )
-scale = Vector2( 3, 3 )
-
-[node name="Sticky4" parent="Map/ruObjects" instance=ExtResource( 4 )]
-position = Vector2( -344.367, 352.432 )
+position = Vector2( 106.849, -230.928 )
 
 [node name="Sticky5" parent="Map/ruObjects" instance=ExtResource( 4 )]
-position = Vector2( 1067.78, 447.632 )
+position = Vector2( 757.655, 223.217 )
 
 [node name="Bounce" parent="Map/ruObjects" instance=ExtResource( 5 )]
-position = Vector2( 842.651, 273.6 )
+position = Vector2( 1048.34, 424.184 )
 type = "bouncy"
 
 [node name="Bounce4" parent="Map/ruObjects" instance=ExtResource( 5 )]
@@ -56,32 +51,37 @@ position = Vector2( -258.505, -232.551 )
 rotation = -1.9063
 
 [node name="Bounce2" parent="Map/ruObjects" instance=ExtResource( 5 )]
-position = Vector2( 63.6544, 425.39 )
-
-[node name="Bounce3" parent="Map/ruObjects" instance=ExtResource( 5 )]
-position = Vector2( 162.306, -34.2402 )
+position = Vector2( -0.63036, 423.442 )
 
 [node name="StaticBody2D" parent="Map/ruObjects" instance=ExtResource( 6 )]
-position = Vector2( 511.078, 200.423 )
-rotation = -1.57671
+position = Vector2( 463.926, 87.9663 )
+rotation = -0.731944
 collision_mask = 3
 
 [node name="StaticBody2D2" parent="Map/ruObjects" instance=ExtResource( 6 )]
-position = Vector2( 604.609, 317.336 )
-rotation = -0.747527
+position = Vector2( 69.9193, 68.1913 )
+rotation = 3.96731
+
+[node name="Rectangle" parent="Map/ruObjects" instance=ExtResource( 7 )]
+position = Vector2( -298.525, 271.117 )
+rotation = 0.37435
+scale = Vector2( 0.5, 0.5 )
+
+[node name="CircleBig" parent="Map/ruObjects" instance=ExtResource( 8 )]
+position = Vector2( 254.473, 297.642 )
 
 [node name="Items" type="Node" parent="Map"]
 
 [node name="jump" type="Area2D" parent="Map/Items"]
 position = Vector2( -133.951, 113.051 )
-script = ExtResource( 7 )
+script = ExtResource( 9 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="Sprite" type="Sprite" parent="Map/Items/jump"]
 scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 8 )
+texture = ExtResource( 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Items/jump"]
 shape = SubResource( 1 )
@@ -93,7 +93,7 @@ current = true
 drag_margin_h_enabled = false
 drag_margin_v_enabled = false
 smoothing_enabled = true
-script = ExtResource( 9 )
+script = ExtResource( 11 )
 
 [node name="rotation" type="Tween" parent="Camera2D"]
 [connection signal="rotate" from="Blob" to="Camera2D" method="_on_Blob_rotate"]

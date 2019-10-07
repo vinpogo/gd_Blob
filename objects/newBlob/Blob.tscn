@@ -2,74 +2,74 @@
 
 [ext_resource path="res://objects/newBlob/Blob.gd" type="Script" id=1]
 [ext_resource path="res://objects/player/BlobChar.gd" type="Script" id=2]
-[ext_resource path="res://gfx/arrow.png" type="Texture" id=3]
-[ext_resource path="res://objects/player/Arrow.gd" type="Script" id=4]
-[ext_resource path="res://objects/player/idle/0001.png" type="Texture" id=5]
-[ext_resource path="res://objects/player/idle/0002.png" type="Texture" id=6]
-[ext_resource path="res://objects/player/idle/0003.png" type="Texture" id=7]
-[ext_resource path="res://objects/player/idle/0004.png" type="Texture" id=8]
-[ext_resource path="res://objects/player/idle/0005.png" type="Texture" id=9]
-[ext_resource path="res://objects/player/idle/0006.png" type="Texture" id=10]
-[ext_resource path="res://objects/player/idle/0007.png" type="Texture" id=11]
-[ext_resource path="res://objects/player/idle/0008.png" type="Texture" id=12]
-[ext_resource path="res://objects/player/idle/0009.png" type="Texture" id=13]
-[ext_resource path="res://objects/player/jump/0001.png" type="Texture" id=14]
-[ext_resource path="res://objects/player/jump/0002.png" type="Texture" id=15]
-[ext_resource path="res://objects/player/jump/0003.png" type="Texture" id=16]
-[ext_resource path="res://objects/player/jump/0004.png" type="Texture" id=17]
-[ext_resource path="res://objects/player/jump/0005.png" type="Texture" id=18]
-[ext_resource path="res://objects/player/jump/0006.png" type="Texture" id=19]
-[ext_resource path="res://objects/player/jump/0007.png" type="Texture" id=20]
-[ext_resource path="res://objects/player/jump/0008.png" type="Texture" id=21]
-[ext_resource path="res://objects/player/jump/0009.png" type="Texture" id=22]
-[ext_resource path="res://objects/player/ground-jump/0001.png" type="Texture" id=23]
-[ext_resource path="res://objects/player/ground-jump/0002.png" type="Texture" id=24]
-[ext_resource path="res://objects/player/ground-jump/0003.png" type="Texture" id=25]
-[ext_resource path="res://objects/player/ground-jump/0004.png" type="Texture" id=26]
-[ext_resource path="res://objects/player/ground-jump/0005.png" type="Texture" id=27]
-[ext_resource path="res://objects/player/ground-jump/0006.png" type="Texture" id=28]
-[ext_resource path="res://objects/player/jump-spin/0001.png" type="Texture" id=29]
-[ext_resource path="res://objects/player/jump-spin/0002.png" type="Texture" id=30]
-[ext_resource path="res://objects/player/jump-spin/0003.png" type="Texture" id=31]
-[ext_resource path="res://objects/player/jump-spin/0004.png" type="Texture" id=32]
-[ext_resource path="res://objects/player/jump-spin/0005.png" type="Texture" id=33]
-[ext_resource path="res://objects/player/jump-spin/0006.png" type="Texture" id=34]
-[ext_resource path="res://objects/player/jump-spin/0007.png" type="Texture" id=35]
-[ext_resource path="res://objects/player/jump-spin/0008.png" type="Texture" id=36]
-[ext_resource path="res://objects/player/jump-spin/0009.png" type="Texture" id=37]
-[ext_resource path="res://objects/player/jump-spin/0010.png" type="Texture" id=38]
-[ext_resource path="res://objects/player/jump-spin/0011.png" type="Texture" id=39]
-[ext_resource path="res://objects/player/jump-spin/0012.png" type="Texture" id=40]
-[ext_resource path="res://objects/player/jump-spin/0013.png" type="Texture" id=41]
-[ext_resource path="res://objects/player/jump-spin/0014.png" type="Texture" id=42]
-[ext_resource path="res://objects/player/jump-spin/0015.png" type="Texture" id=43]
-[ext_resource path="res://objects/player/jump-spin/0016.png" type="Texture" id=44]
-[ext_resource path="res://objects/player/jump-spin/0017.png" type="Texture" id=45]
-[ext_resource path="res://objects/player/jump-spin/0018.png" type="Texture" id=46]
-[ext_resource path="res://objects/player/jump-spin/0019.png" type="Texture" id=47]
-[ext_resource path="res://objects/newBlob/sprite.gd" type="Script" id=48]
-[ext_resource path="res://gfx/standard_circle.png" type="Texture" id=49]
-[ext_resource path="res://objects/newBlob/Light2D.gd" type="Script" id=50]
+[ext_resource path="res://objects/player/idle/0001.png" type="Texture" id=3]
+[ext_resource path="res://objects/player/idle/0002.png" type="Texture" id=4]
+[ext_resource path="res://objects/player/idle/0003.png" type="Texture" id=5]
+[ext_resource path="res://objects/player/idle/0004.png" type="Texture" id=6]
+[ext_resource path="res://objects/player/idle/0005.png" type="Texture" id=7]
+[ext_resource path="res://objects/player/idle/0006.png" type="Texture" id=8]
+[ext_resource path="res://objects/player/idle/0007.png" type="Texture" id=9]
+[ext_resource path="res://objects/player/idle/0008.png" type="Texture" id=10]
+[ext_resource path="res://objects/player/idle/0009.png" type="Texture" id=11]
+[ext_resource path="res://objects/player/jump/0001.png" type="Texture" id=12]
+[ext_resource path="res://objects/player/jump/0002.png" type="Texture" id=13]
+[ext_resource path="res://objects/player/jump/0003.png" type="Texture" id=14]
+[ext_resource path="res://objects/player/jump/0004.png" type="Texture" id=15]
+[ext_resource path="res://objects/player/jump/0005.png" type="Texture" id=16]
+[ext_resource path="res://objects/player/jump/0006.png" type="Texture" id=17]
+[ext_resource path="res://objects/player/jump/0007.png" type="Texture" id=18]
+[ext_resource path="res://objects/player/jump/0008.png" type="Texture" id=19]
+[ext_resource path="res://objects/player/jump/0009.png" type="Texture" id=20]
+[ext_resource path="res://objects/player/ground-jump/0001.png" type="Texture" id=21]
+[ext_resource path="res://objects/player/ground-jump/0002.png" type="Texture" id=22]
+[ext_resource path="res://objects/player/ground-jump/0003.png" type="Texture" id=23]
+[ext_resource path="res://objects/player/ground-jump/0004.png" type="Texture" id=24]
+[ext_resource path="res://objects/player/ground-jump/0005.png" type="Texture" id=25]
+[ext_resource path="res://objects/player/ground-jump/0006.png" type="Texture" id=26]
+[ext_resource path="res://objects/player/jump-spin/0001.png" type="Texture" id=27]
+[ext_resource path="res://objects/player/jump-spin/0002.png" type="Texture" id=28]
+[ext_resource path="res://objects/player/jump-spin/0003.png" type="Texture" id=29]
+[ext_resource path="res://objects/player/jump-spin/0004.png" type="Texture" id=30]
+[ext_resource path="res://objects/player/jump-spin/0005.png" type="Texture" id=31]
+[ext_resource path="res://objects/player/jump-spin/0006.png" type="Texture" id=32]
+[ext_resource path="res://objects/player/jump-spin/0007.png" type="Texture" id=33]
+[ext_resource path="res://objects/player/jump-spin/0008.png" type="Texture" id=34]
+[ext_resource path="res://objects/player/jump-spin/0009.png" type="Texture" id=35]
+[ext_resource path="res://objects/player/jump-spin/0010.png" type="Texture" id=36]
+[ext_resource path="res://objects/player/jump-spin/0011.png" type="Texture" id=37]
+[ext_resource path="res://objects/player/jump-spin/0012.png" type="Texture" id=38]
+[ext_resource path="res://objects/player/jump-spin/0013.png" type="Texture" id=39]
+[ext_resource path="res://objects/player/jump-spin/0014.png" type="Texture" id=40]
+[ext_resource path="res://objects/player/jump-spin/0015.png" type="Texture" id=41]
+[ext_resource path="res://objects/player/jump-spin/0016.png" type="Texture" id=42]
+[ext_resource path="res://objects/player/jump-spin/0017.png" type="Texture" id=43]
+[ext_resource path="res://objects/player/jump-spin/0018.png" type="Texture" id=44]
+[ext_resource path="res://objects/player/jump-spin/0019.png" type="Texture" id=45]
+[ext_resource path="res://objects/newBlob/sprite.gd" type="Script" id=46]
+[ext_resource path="res://gfx/standard_circle.png" type="Texture" id=47]
+[ext_resource path="res://objects/newBlob/Light2D.gd" type="Script" id=48]
+[ext_resource path="res://gfx/arrow.png" type="Texture" id=49]
+[ext_resource path="res://objects/player/Arrow.gd" type="Script" id=50]
 [ext_resource path="res://gfx/p_dot_w.png" type="Texture" id=51]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
-"frames": [ ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 12 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ) ],
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 10 ), ExtResource( 9 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 4 ) ],
 "loop": true,
 "name": "idle",
 "speed": 20.0
 }, {
-"frames": [ ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 21 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 15 ) ],
+"frames": [ ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 19 ), ExtResource( 18 ), ExtResource( 17 ), ExtResource( 16 ), ExtResource( 15 ), ExtResource( 14 ), ExtResource( 13 ) ],
 "loop": true,
 "name": "jump",
 "speed": 20.0
 }, {
-"frames": [ ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ), ExtResource( 27 ), ExtResource( 28 ) ],
+"frames": [ ExtResource( 21 ), ExtResource( 22 ), ExtResource( 23 ), ExtResource( 24 ), ExtResource( 25 ), ExtResource( 26 ) ],
 "loop": false,
 "name": "ground-jump",
 "speed": 40.0
 }, {
-"frames": [ ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 45 ), ExtResource( 46 ), ExtResource( 47 ) ],
+"frames": [ ExtResource( 27 ), ExtResource( 28 ), ExtResource( 29 ), ExtResource( 30 ), ExtResource( 31 ), ExtResource( 32 ), ExtResource( 33 ), ExtResource( 34 ), ExtResource( 35 ), ExtResource( 36 ), ExtResource( 37 ), ExtResource( 38 ), ExtResource( 39 ), ExtResource( 40 ), ExtResource( 41 ), ExtResource( 42 ), ExtResource( 43 ), ExtResource( 44 ), ExtResource( 45 ) ],
 "loop": true,
 "name": "final-jump",
 "speed": 40.0
@@ -80,7 +80,7 @@ radius = 16.8876
 
 [sub_resource type="ProxyTexture" id=3]
 flags = 4
-base = ExtResource( 49 )
+base = ExtResource( 47 )
 
 [node name="Blob" type="Node2D"]
 script = ExtResource( 1 )
@@ -92,26 +92,25 @@ GRAVITY = 40
 JUMP_FORCE = 8.0
 JUMP_FACTOR = 2.1
 
-[node name="aim" type="Sprite" parent="BlobCharacter"]
-texture = ExtResource( 3 )
-offset = Vector2( 32, 0 )
-script = ExtResource( 4 )
-
 [node name="sprite" type="AnimatedSprite" parent="BlobCharacter"]
 z_index = 1
 frames = SubResource( 1 )
 animation = "idle"
-frame = 14
+frame = 12
 playing = true
-script = ExtResource( 48 )
+script = ExtResource( 46 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="BlobCharacter"]
 shape = SubResource( 2 )
 
 [node name="Light2D" type="Light2D" parent="BlobCharacter"]
+editor/display_folded = true
 texture = SubResource( 3 )
+texture_scale = 0.01
+color = Color( 0, 0.737255, 0.305882, 1 )
 energy = 0.01
-script = ExtResource( 50 )
+range_item_cull_mask = 2
+script = ExtResource( 48 )
 
 [node name="Tween" type="Tween" parent="BlobCharacter/Light2D"]
 
@@ -119,18 +118,24 @@ script = ExtResource( 50 )
 wait_time = 0.05
 one_shot = true
 
+[node name="aim" type="Sprite" parent="BlobCharacter"]
+light_mask = 2
+texture = ExtResource( 49 )
+offset = Vector2( 64, 0 )
+script = ExtResource( 50 )
+
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 51 )
 
 [node name="rotation" type="Tween" parent="."]
 [connection signal="stick" from="BlobCharacter" to="." method="_on_BlobCharacter_stick"]
-[connection signal="aim" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_aim"]
-[connection signal="aim" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_aim"]
-[connection signal="jump" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_jump"]
-[connection signal="jump" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_jump"]
-[connection signal="move" from="BlobCharacter/aim" to="BlobCharacter" method="_on_aim_move"]
-[connection signal="stopAim" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_stopAim"]
-[connection signal="stopAim" from="BlobCharacter/aim" to="BlobCharacter" method="_on_aim_stopAim"]
-[connection signal="tween_completed" from="BlobCharacter/Light2D/Tween" to="BlobCharacter/Light2D" method="_on_Tween_tween_completed"]
 [connection signal="tween_completed" from="BlobCharacter/Light2D/Tween" to="BlobCharacter/aim" method="_on_Tween_tween_completed"]
+[connection signal="tween_completed" from="BlobCharacter/Light2D/Tween" to="BlobCharacter/Light2D" method="_on_Tween_tween_completed"]
 [connection signal="timeout" from="BlobCharacter/Timer" to="BlobCharacter" method="_on_Timer_timeout"]
+[connection signal="aim" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_aim"]
+[connection signal="aim" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_aim"]
+[connection signal="jump" from="BlobCharacter/aim" to="BlobCharacter" method="_on_Arrow_jump"]
+[connection signal="jump" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_jump"]
+[connection signal="move" from="BlobCharacter/aim" to="BlobCharacter" method="_on_aim_move"]
+[connection signal="stopAim" from="BlobCharacter/aim" to="BlobCharacter" method="_on_aim_stopAim"]
+[connection signal="stopAim" from="BlobCharacter/aim" to="BlobCharacter/Light2D" method="_on_aim_stopAim"]

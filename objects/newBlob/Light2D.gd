@@ -11,23 +11,23 @@ func _ready() -> void:
 
 func _on_aim_aim() -> void:
 	tween.interpolate_property(self, "energy", null, 3, 1, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	tween.interpolate_property(self, "texture_scale", null, 0, 1, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
+	tween.interpolate_property(self, "texture_scale", null, 3, 1, Tween.TRANS_LINEAR, Tween.EASE_OUT_IN)
 	tween.interpolate_property(blob, "jumpFactor", 1, blob.JUMP_FACTOR, 1, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 	tween.start()
 
 func _on_aim_jump() -> void:
 	tween.stop_all()
 	energy = 0.0
-	texture_scale = 1
+	texture_scale = 0.01
 
 func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 	tween.stop_all()
 	energy = 0.0
-	texture_scale = 1
+	texture_scale = 0.01
 	blob.jumpFactor = 1
 
 
 func _on_aim_stopAim() -> void:
 	tween.stop_all()
 	energy = 0.0
-	texture_scale = 1
+	texture_scale = 0.01

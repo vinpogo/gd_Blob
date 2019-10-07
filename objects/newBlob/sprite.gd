@@ -4,8 +4,8 @@ onready var blob = get_parent()
 
 func _ready():
 	rotation = 0
-	
-func _physics_process(delta):
+
+func _process(delta):
 	if !blob.onFloor:
 		global_rotation = blob.velocity.angle() + PI/2
 	else:

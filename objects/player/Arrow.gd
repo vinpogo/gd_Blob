@@ -29,7 +29,7 @@ func _physics_process(delta):
 		jump()
 	elif Input.is_action_just_released("jump") && !canAim():
 		emit_signal("stopAim")
-	elif Input.is_action_just_pressed("jump"):
+	elif Input.is_action_just_pressed("jump") && blob.jump_count < blob.MAX_JUMPS:
 		emit_signal("aim")
 	rotation = -ru_getDirection().angle()
 
@@ -39,7 +39,7 @@ func ru_rotation():
 func canAim():
 	if blob.onFloor:
 		return ru_getDirection().y > 0.0 && ru_getDirection().length() > 0.5
-	elif !blob.onFloor && ru_getDirection().length() > 0.5:
+	elif !blob.onFloor && ru_getDirection().length() > 0.5 && blob.jump_count < blob.MAX_JUMPS:
 		return true
 	return false
 

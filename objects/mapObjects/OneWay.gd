@@ -8,7 +8,7 @@ func _ready():
 		sprite.set_texture(bouncy)
 	else:
 		sprite.texture = sticky
-		
+
 
 
 func get_type():
