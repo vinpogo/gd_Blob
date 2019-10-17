@@ -1,14 +1,21 @@
 [gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://objects/newBlob/Blob.tscn" type="PackedScene" id=1]
-[ext_resource path="res://objects/mapObjects/Sticky.gd" type="Script" id=2]
-[ext_resource path="res://gfx/tmp_vin/rect.png" type="Texture" id=3]
-[ext_resource path="res://Goal.gd" type="Script" id=4]
-[ext_resource path="res://objects/mapObjects/CollisionShape2D.gd" type="Script" id=5]
-[ext_resource path="res://gfx/circle.png" type="Texture" id=6]
-[ext_resource path="res://objects/mapObjects/Bounce.gd" type="Script" id=7]
-[ext_resource path="res://gfx/tmp_vin/rect_bounce.png" type="Texture" id=8]
-[ext_resource path="res://objects/player/BlobCamera.gd" type="Script" id=9]
+[ext_resource path="res://test.tres" type="TileSet" id=2]
+[ext_resource path="res://TileMap.gd" type="Script" id=3]
+[ext_resource path="res://objects/mapObjects/Sticky.tscn" type="PackedScene" id=4]
+[ext_resource path="res://objects/mapObjects/Configurable.tscn" type="PackedScene" id=5]
+[ext_resource path="res://objects/mapObjects/OneWay.tscn" type="PackedScene" id=6]
+[ext_resource path="res://objects/mapObjects/Rectangle.tscn" type="PackedScene" id=7]
+[ext_resource path="res://objects/mapObjects/CircleBig.tscn" type="PackedScene" id=8]
+[ext_resource path="res://jump.gd" type="Script" id=9]
+[ext_resource path="res://gfx/fan.png" type="Texture" id=10]
+[ext_resource path="res://objects/BlobCamera.gd" type="Script" id=11]
+
+
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 25.0783
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 896, 528 )
