@@ -78,15 +78,15 @@ func jumpHandler():
 	jump(jump_direction)
 
 func _physics_process(delta):
-	if !onFloor:
-		velocity = velocity + compass.down * GRAVITY * slowMo * delta
-		velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
-		if !justJumped:
-			newCollide = move_and_collide(velocity)
-			if newCollide:
-				collisionHandler(newCollide)
-		else:
-			 move_and_collide(velocity, false)
+#	if !onFloor:
+	velocity = velocity + compass.down * GRAVITY * slowMo * delta
+	velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
+	if !justJumped:
+		newCollide = move_and_collide(velocity)
+		if newCollide:
+			collisionHandler(newCollide)
+	else:
+		 move_and_collide(velocity, false)
 
 
 func bounce(col):
@@ -101,12 +101,13 @@ func stick(collision):
 		onFloor = true
 		jump_count = 0
 		ru_setCompass("up", collision.normal)
-		emit_signal("stick")
+		emit_signal("stick", collision.normal)
 
 func collisionHandler(collision):
 	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
 	if type == "goal":
 		print("finish")
+		stick(collision)
 #		get_tree().reload_current_scene()
 	if type == "bouncy" || toBounce:
 		bounce(collision)
