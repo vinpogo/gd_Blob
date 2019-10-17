@@ -11,6 +11,13 @@ func _on_ready():
 func _on_BlobCharacter_stick():
 	position = blobChar.global_position
 	blobChar.position = Vector2(0,0)
-	emit_signal("rotate", blobChar.compass.down.angle()-PI/2)
-	tween.interpolate_property(self, "rotation", null, blobChar.compass.down.angle()-PI/2, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	
+	var angle = blobChar.compass.down.angle()-PI/2
+	var a = angle if abs(angle - rotation) < PI else angle + 2*PI
+	emit_signal("rotate", a)
+	tween.interpolate_property(self, "rotation", null, a, 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
 	tween.start()
+
+
+func _on_GameZone_body_shape_exited(body_id: int, body: PhysicsBody2D, body_shape: int, area_shape: int) -> void:
+	blobChar.die()

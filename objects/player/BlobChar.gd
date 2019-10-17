@@ -1,10 +1,11 @@
 extends KinematicBody2D
 
 export var GRAVITY = 500
-export var JUMP_FORCE = 30.0
+export var JUMP_FORCE = 30
 # warning-ignore:unused_class_variable
 export var JUMP_FACTOR = 1.5
 export var MAX_JUMPS = 1
+export var MAX_SPEED = 100
 export var SLOWMO = 10
 
 var justJumped = false
@@ -78,18 +79,19 @@ func jumpHandler():
 
 func _physics_process(delta):
 	if !onFloor:
-		velocity += (compass.down * GRAVITY * slowMo) * delta * slowMo
+		velocity = velocity + compass.down * GRAVITY * slowMo * delta
+		velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
 		if !justJumped:
 			newCollide = move_and_collide(velocity)
 			if newCollide:
 				collisionHandler(newCollide)
 		else:
-			 move_and_collide(velocity)
+			 move_and_collide(velocity, false)
 
 
 func bounce(col):
 	$sprite.play("final-jump")
-	velocity = velocity.bounce(col.normal)*0.5
+	velocity = velocity.bounce(col.normal)
 	toBounce = false
 
 func stick(collision):
@@ -98,18 +100,15 @@ func stick(collision):
 		$sprite.play("idle")
 		onFloor = true
 		jump_count = 0
-#		velocity = Vector2(0,0)
 		ru_setCompass("up", collision.normal)
 		emit_signal("stick")
 
 func collisionHandler(collision):
 	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
-
-#	if collision.collider.has_method("get_type"):
-#		type = collision.collider.get_type()
+	if type == "goal":
+		print("finish")
+#		get_tree().reload_current_scene()
 	if type == "bouncy" || toBounce:
-		print("jump")
-
 		bounce(collision)
 	elif type == "sticky" && !inMotion:
 		stick(collision)

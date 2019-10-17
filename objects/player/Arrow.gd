@@ -15,11 +15,6 @@ func _on_ready():
 
 
 func _physics_process(delta):
-#	if Input.is_action_just_pressed("debug"):
-#		controller_offset.up = Input.get_action_strength("ui_up")
-#		controller_offset.down = Input.get_action_strength("ui_down")
-#		controller_offset.left = Input.get_action_strength("ui_left")
-#		controller_offset.right = Input.get_action_strength("ui_right")
 	if canAim() && !visible:
 		visible = true
 	elif !canAim() && visible:
@@ -66,5 +61,5 @@ func crossProduct(vec1, vec2):
 
 
 func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
-	emit_signal("stopAim")
-	pass # Replace with function body.
+	if !blob.onFloor:
+		emit_signal("stopAim")
