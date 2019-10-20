@@ -1,11 +1,11 @@
 extends Camera2D
 
-onready var blobChar = get_parent().get_node("Map/Blob/BlobCharacter")
+onready var blobChar = get_parent().get_node("Map/Blob")
 onready var tween = get_node("rotation")
 
 
 func _physics_process(delta):
-	if Input.is_action_just_pressed("debug"):
+	if Input.is_action_just_pressed("slot_5"):
 		zoom = zoom*2 if zoom == Vector2(1, 1) else Vector2(1, 1)
 	if blobChar:
 		position = blobChar.global_position
@@ -25,3 +25,6 @@ func short_angle_dist(from, to):
 		var max_angle = PI * 2
 		var difference = fmod(to - from, max_angle)
 		return fmod(2 * difference, max_angle) - difference
+
+func _on_Blob_toggle_zoom() -> void:
+	zoom = zoom*2 if zoom == Vector2(1, 1) else Vector2(1, 1)

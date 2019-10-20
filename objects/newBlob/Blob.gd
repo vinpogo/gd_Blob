@@ -1,9 +1,10 @@
 extends Node2D
 
-onready var blobChar = get_node("BlobCharacter")
+onready var blobChar = get_node("Character")
 onready var tween = get_node("rotation")
 onready var compass = blobChar.compass
 signal rotate(vec)
+signal jump
 
 
 func _on_ready():
@@ -28,3 +29,6 @@ func short_angle_dist(from, to):
 		var max_angle = PI * 2
 		var difference = fmod(to - from, max_angle)
 		return fmod(2 * difference, max_angle) - difference
+
+func _on_BlobCharacter_jump() -> void:
+	emit_signal("jump")

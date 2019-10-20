@@ -1,4 +1,4 @@
-extends Timer
+extends NinePatchRect
 
 # Declare member variables here. Examples:
 # var a: int = 2
@@ -13,6 +13,7 @@ func _ready() -> void:
 #	pass
 
 
-func _on_BlobCharacter_stick() -> void:
-	stop()
+func _on_Blob_jump() -> void:
+	rect_size.x -= 124
+	print("resize", margin_right, rect_size)
 	pass # Replace with function body.

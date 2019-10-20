@@ -20,13 +20,6 @@ func _on_aim_jump() -> void:
 	energy = 0.0
 	texture_scale = 0.01
 
-#func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
-#	tween.stop_all()
-#	energy = 0.0
-#	texture_scale = 0.01
-#	blob.jumpFactor = 1
-
-
 func _on_aim_stopAim() -> void:
 	tween.stop_all()
 	energy = 0.0
