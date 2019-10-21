@@ -63,7 +63,7 @@ func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed:
 				print(slots_used)
 			elif just_released && !canAim():
 				aim_stop()
-			elif just_pressed && canAim():
+			elif just_pressed:
 				aim_start()
 		"zoom":
 			if just_pressed:
