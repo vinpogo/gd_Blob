@@ -77,11 +77,13 @@ func player_input_velocity():
 	if Input.is_action_pressed("jump") && !is_falling_down():
 		return compass.right * utils.controller_input().left_stick.x * air_control * 0.4
 	return compass.right * utils.controller_input().left_stick.x * air_control
+
 func gravity_velocity():
 	print(is_falling_down())
 	if Input.is_action_pressed("jump") && !is_falling_down():
 		return compass.down * GRAVITY * 0.4
 	return compass.down * GRAVITY
+
 func _physics_process(delta):
 	if !onFloor:
 		print(velocity, (player_input_velocity() + gravity_velocity()),  slowmo , delta)
