@@ -1,5 +1,15 @@
 extends Node
 var AXIS_THRESHHOLD = 0.5
+enum ABILITIES{
+	PRECISION_JUMP,
+	FLIP_GRAVITY,
+	SLOWMO
+}
+var ability_mapping = {
+	"slot_1": ABILITIES.PRECISION_JUMP,
+	"slot_2": ABILITIES.FLIP_GRAVITY,
+	"slot_3": ABILITIES.SLOWMO
+}
 func short_angle_dist(from, to):
 		var max_angle = PI * 2
 		var difference = fmod(to - from, max_angle)
@@ -41,7 +51,7 @@ func ability_pressed():
 	}
 func controller_input():
 	return {
-"left_stick": left_stick()
+	"left_stick": left_stick()
 	}
 
 func ru_setCompass(dir: String, vec: Vector2 ):

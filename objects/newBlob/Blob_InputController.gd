@@ -1,6 +1,7 @@
 extends Sprite
 signal aim
 signal stopAim
+signal precision_jump
 signal jump
 signal toggle_zoom
 signal bounce
@@ -10,15 +11,10 @@ signal shoot
 signal shield
 signal freeze
 signal unfreeze
+signal slowmo
 
 signal move
 
-var ability = {
-	"slot_1": "jump",
-	"slot_2": "flip_gravity",
-	"slot_3": "freeze",
-	"slot_4": "jump",
-}
 var slots_used = []
 onready var blob = get_parent()
 onready var utils = get_node("/root/global")
@@ -41,6 +37,8 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 		emit_signal("stopAim")
 
 func handle_inputs() -> void:
+	if Input.is_action_just_pressed("jump"):
+		emit_signal("jump")
 	var inputs = utils.ability()
 	if inputs.just_pressed.slot_1 || inputs.just_released.slot_1 || inputs.pressed.slot_1:
 		handle_slot("slot_1", inputs.just_pressed.slot_1, inputs.just_released.slot_1, inputs.pressed.slot_1)
@@ -54,11 +52,11 @@ func handle_inputs() -> void:
 func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed: bool):
 	if slots_used.find(slot) > -1:
 		return
-	match(ability[slot]):
-		"jump":
+	match(global.ability_mapping[slot]):
+		global.ABILITIES.PRECISION_JUMP:
 			if just_released && canAim():
 				unfreeze()
-				jump()
+				precision_jump()
 				slots_used.append(slot)
 				print(slots_used)
 			elif just_released && !canAim():
@@ -68,19 +66,18 @@ func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed:
 		"zoom":
 			if just_pressed:
 				toggleZoom()
-		"flip_gravity":
+		global.ABILITIES.FLIP_GRAVITY:
 			if just_pressed:
 				flip_gravity()
 				slots_used.append(slot)
-		"freeze":
-			print(just_released)
-			if just_pressed && !blob.onFloor:
-				freeze()
-			if just_released:
-				print("unfreeze")
-				unfreeze()
+		global.ABILITIES.SLOWMO:
+			if(just_pressed):
+				slowmo(true)
+			if(just_released):
+				slowmo(false)
 
-
+func slowmo(b: bool):
+	emit_signal("slowmo", b)
 func freeze():
 	emit_signal("freeze")
 func unfreeze():
@@ -92,9 +89,9 @@ func aim_start():
 func aim_stop():
 	visible = false
 	emit_signal("stopAim")
-func jump():
+func precision_jump():
 	visible = false
-	emit_signal("jump")
+	emit_signal("precision_jump")
 func toggleZoom():
 	emit_signal("toggle_zoom")
 func flip_gravity():

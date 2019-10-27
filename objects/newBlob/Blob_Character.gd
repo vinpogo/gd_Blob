@@ -14,12 +14,14 @@ var inMotion = false
 var toBounce = false
 var jumpFactor = 1
 var jumpsLeft = 1
+var air_control = 0
 
 var jump_count = 0
 var velocity = Vector2(0,0)
-var slowMo = 1
+var slowmo = 1.0
 
 var ability = {
+	"jump": 3,
 	"slot_1": "jump",
 	"slot_2": "jump",
 	"slot_3": "zoom",
@@ -27,14 +29,13 @@ var ability = {
 }
 
 var newCollide
-
 signal stick
 signal rotate(vec)
 signal jump
 signal toggle_zoom
 
 onready var utils = get_node("/root/global")
-onready var aim = get_node("InputController")
+#onready var aim = get_node("InputController")
 onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
 
@@ -42,6 +43,17 @@ func _on_ready():
 	utils.ru_setCompass("down", Vector2(0,1))
 
 func jump():
+	velocity = compass.up * JUMP_FORCE + compass.right * utils.controller_input().left_stick.x * JUMP_FORCE /2
+	onFloor = false
+	timer.start()
+	justJumped = true
+	air_control = AIR_CONTROL
+
+	jump_count += 1
+	$Sprite.play("ground-jump")
+
+
+func precision_jump():
 	var direction = utils.left_stick()
 	var jump_direction = -direction.y * compass.down + direction.x * compass.down.rotated(-PI/2)
 	if onFloor && jump_count == 0:
@@ -53,14 +65,27 @@ func jump():
 			$Sprite.play("final-jump")
 	timer.start()
 	justJumped = true
-	jump_count += 1
+
 	velocity = jump_direction.normalized() * JUMP_FORCE * (jumpFactor if onFloor else 2)
 	onFloor = false
+	air_control = AIR_CONTROL / 4
 	emit_signal("jump")
 
+func player_input_velocity():
+	if onFloor:
+		return Vector2(0,0)
+	if Input.is_action_pressed("jump") && !is_falling_down():
+		return compass.right * utils.controller_input().left_stick.x * air_control * 0.4
+	return compass.right * utils.controller_input().left_stick.x * air_control
+func gravity_velocity():
+	print(is_falling_down())
+	if Input.is_action_pressed("jump") && !is_falling_down():
+		return compass.down * GRAVITY * 0.4
+	return compass.down * GRAVITY
 func _physics_process(delta):
 	if !onFloor:
-		velocity = velocity + (compass.down * GRAVITY + compass.right * utils.controller_input().left_stick.x * AIR_CONTROL) * slowMo * delta
+		print(velocity, (player_input_velocity() + gravity_velocity()),  slowmo , delta)
+		velocity = velocity + (player_input_velocity() + gravity_velocity()) * slowmo * delta
 		velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
 	else:
 		velocity = Vector2(0,0)
@@ -107,13 +132,10 @@ func canJump():
 	return false
 
 func is_falling_down():
-	return compass.down.dot(velocity) < 0
+	return compass.down.dot(velocity) > 0
 
 func _on_BounceArea_bounce():
 	toBounce = true
-
-func _on_Arrow_jump():
-	jump()
 
 func _on_Arrow_aim():
 	print("aim")
@@ -148,9 +170,24 @@ func _on_InputController_flip_gravity() -> void:
 
 
 func _on_InputController_freeze() -> void:
-	slowMo = 0
+	slowmo = 0
 	velocity = Vector2(0,0)
 
 
 func _on_InputController_unfreeze() -> void:
-	slowMo = 1
+	slowmo = 1
+
+
+func _on_InputController_jump() -> void:
+	if jump_count < ability.jump:
+		jump()
+
+
+func _on_InputController_precision_jump() -> void:
+	precision_jump()
+
+
+func _on_InputController_slowmo(b: bool) -> void:
+	slowmo = (1.0/SLOWMO) if b else 1.0
+	velocity /= SLOWMO
+	pass # Replace with function body.
