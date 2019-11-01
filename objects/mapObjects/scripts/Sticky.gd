@@ -7,9 +7,7 @@ func get_type():
 
 	if Timeout > 0:
 		tween.interpolate_property($Gfx, "scale", null, Vector2(1,0), Timeout, Tween.TRANS_LINEAR, Tween.EASE_OUT)
-#		tween.interpolate_property($CollisionShape2D, "scale", null, Vector2(1,0), Timeout, Tween.TRANS_LINEAR, Tween.EASE_OUT)
 		tween.start()
-#		print("hallo")
 	return "sticky"
 
 

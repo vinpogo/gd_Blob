@@ -32,7 +32,6 @@ func ability_just_pressed():
 	"slot_1": Input.is_action_just_pressed("slot_1"),
 	"slot_2": Input.is_action_just_pressed("slot_2"),
 	"slot_3": Input.is_action_just_pressed("slot_3"),
-	"slot_4": Input.is_action_just_pressed("slot_4"),
 	}
 
 func ability_just_released():
@@ -40,14 +39,12 @@ func ability_just_released():
 	"slot_1": Input.is_action_just_released("slot_1"),
 	"slot_2": Input.is_action_just_released("slot_2"),
 	"slot_3": Input.is_action_just_released("slot_3"),
-	"slot_4": Input.is_action_just_released("slot_4"),
 	}
 func ability_pressed():
 	return {
 	"slot_1": Input.is_action_pressed("slot_1"),
 	"slot_2": Input.is_action_pressed("slot_2"),
 	"slot_3": Input.is_action_pressed("slot_3"),
-	"slot_4": Input.is_action_pressed("slot_4"),
 	}
 func controller_input():
 	return {

@@ -22,10 +22,6 @@ var slowmo = 1.0
 
 var ability = {
 	"jump": 3,
-	"slot_1": "jump",
-	"slot_2": "jump",
-	"slot_3": "zoom",
-	"slot_4": "jump",
 }
 
 var newCollide
@@ -36,6 +32,7 @@ signal toggle_zoom
 
 onready var utils = get_node("/root/global")
 #onready var aim = get_node("InputController")
+onready var tween = get_node("rotation")
 onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
 
@@ -43,7 +40,7 @@ func _on_ready():
 	utils.ru_setCompass("down", Vector2(0,1))
 
 func jump():
-	velocity = compass.up * JUMP_FORCE + compass.right * utils.controller_input().left_stick.x * JUMP_FORCE /2
+	velocity = (compass.up * JUMP_FORCE + compass.right * utils.controller_input().left_stick.x * JUMP_FORCE).normalized() * slowmo * JUMP_FORCE * (3 if slowmo < 1.0 else 1)
 	onFloor = false
 	timer.start()
 	justJumped = true
@@ -68,26 +65,24 @@ func precision_jump():
 
 	velocity = jump_direction.normalized() * JUMP_FORCE * (jumpFactor if onFloor else 2)
 	onFloor = false
-	air_control = AIR_CONTROL / 4
+	air_control = AIR_CONTROL
 	emit_signal("jump")
 
 func player_input_velocity():
 	if onFloor:
 		return Vector2(0,0)
 	if Input.is_action_pressed("jump") && !is_falling_down():
-		return compass.right * utils.controller_input().left_stick.x * air_control * 0.4
-	return compass.right * utils.controller_input().left_stick.x * air_control
+		return compass.right * utils.controller_input().left_stick.x * AIR_CONTROL * 0.4* slowmo
+	return compass.right * utils.controller_input().left_stick.x * AIR_CONTROL* slowmo
 
 func gravity_velocity():
-	print(is_falling_down())
 	if Input.is_action_pressed("jump") && !is_falling_down():
-		return compass.down * GRAVITY * 0.4
-	return compass.down * GRAVITY
+		return compass.down * GRAVITY * 0.4* slowmo
+	return compass.down * GRAVITY* slowmo
 
 func _physics_process(delta):
 	if !onFloor:
-		print(velocity, (player_input_velocity() + gravity_velocity()),  slowmo , delta)
-		velocity = velocity + (player_input_velocity() + gravity_velocity()) * slowmo * delta
+		velocity = velocity + (player_input_velocity() + gravity_velocity())  * delta
 		velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
 	else:
 		velocity = Vector2(0,0)
@@ -108,11 +103,15 @@ func stick(collision):
 		velocity = Vector2(0,0)
 		jump_count = 0
 		compass = utils.ru_setCompass("up", collision.normal)
-		var angle = collision.normal.angle()
-		var rot = rotation - PI / 2
-		rotation = rotation + utils.short_angle_dist(rot, angle)
-		emit_signal("rotate", collision.normal)
+
+		ru_rotate(collision.normal)
 		emit_signal("stick")
+
+func ru_rotate(vec) -> void:
+	var angle = vec.angle()
+	var rot = rotation - PI / 2
+	tween.interpolate_property(self, "rotation", null, rotation + utils.short_angle_dist(rot, angle), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()
 
 func collisionHandler(collision):
 	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
@@ -164,11 +163,8 @@ func _on_GameZone_body_shape_exited(body_id: int, body: PhysicsBody2D, body_shap
 
 func _on_InputController_flip_gravity() -> void:
 	compass = utils.ru_setCompass("up", compass.down)
-	emit_signal("rotate", compass.up)
+	ru_rotate(compass.up)
 	onFloor = false
-	var angle = compass.up.angle()
-	var rot = rotation - PI / 2
-	rotation = rotation + utils.short_angle_dist(rot, angle)
 
 
 func _on_InputController_freeze() -> void:
@@ -190,6 +186,8 @@ func _on_InputController_precision_jump() -> void:
 
 
 func _on_InputController_slowmo(b: bool) -> void:
+	print("slowmo")
 	slowmo = (1.0/SLOWMO) if b else 1.0
-	velocity /= SLOWMO
+	velocity *= (slowmo*2)
 	pass # Replace with function body.
+

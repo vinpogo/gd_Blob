@@ -46,8 +46,7 @@ func handle_inputs() -> void:
 		handle_slot("slot_2", inputs.just_pressed.slot_2, inputs.just_released.slot_2, inputs.pressed.slot_2)
 	if inputs.just_pressed.slot_3|| inputs.just_released.slot_3 || inputs.pressed.slot_3:
 		handle_slot("slot_3", inputs.just_pressed.slot_3, inputs.just_released.slot_3, inputs.pressed.slot_3)
-	if inputs.just_pressed.slot_4 || inputs.just_released.slot_4 || inputs.pressed.slot_4:
-		handle_slot("slot_4", inputs.just_pressed.slot_4, inputs.just_released.slot_4, inputs.pressed.slot_4)
+
 
 func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed: bool):
 	if slots_used.find(slot) > -1:
@@ -58,7 +57,6 @@ func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed:
 				unfreeze()
 				precision_jump()
 				slots_used.append(slot)
-				print(slots_used)
 			elif just_released && !canAim():
 				aim_stop()
 			elif just_pressed:
@@ -97,5 +95,4 @@ func toggleZoom():
 func flip_gravity():
 	emit_signal("flip_gravity")
 func _on_Character_stick() -> void:
-	print("reset")
 	slots_used = []

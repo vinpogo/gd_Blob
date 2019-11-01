@@ -15,5 +15,4 @@ func _ready() -> void:
 
 func _on_Blob_jump() -> void:
 	rect_size.x -= 124
-	print("resize", margin_right, rect_size)
 	pass # Replace with function body.
