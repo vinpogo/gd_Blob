@@ -1,10 +1,12 @@
 extends Camera2D
 
 
+func _ready():
+	zoom = zoom*3
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("slot_5"):
-		zoom = zoom*2 if zoom == Vector2(1, 1) else Vector2(1, 1)
+		zoom = zoom*3 if zoom == Vector2(1, 1) else Vector2(1, 1)
 
 func lerp_angle(from, to, weight):
 		return from + short_angle_dist(from, to) * weight

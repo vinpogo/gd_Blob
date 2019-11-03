@@ -1,25 +1,30 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://objects/mapObjects/configurableObject.gd" type="Script" id=1]
-[ext_resource path="res://gfx/tmp_vin/circle.png" type="Texture" id=2]
-[ext_resource path="res://gfx/circle.png" type="Texture" id=3]
+[ext_resource path="res://gfx/Planets-Atmosphere-pngs/planet-5.png" type="Texture" id=2]
+[ext_resource path="res://gfx/Planets/planet-14.png" type="Texture" id=3]
+[ext_resource path="res://gfx/tmp_vin/flag.png" type="Texture" id=4]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 58.8558
+radius = 59.254
 
 [node name="Configurable" type="StaticBody2D"]
 script = ExtResource( 1 )
+sprite = ExtResource( 2 )
 
 [node name="Sprite" type="Sprite" parent="."]
-texture = ExtResource( 2 )
+scale = Vector2( 0.1, 0.1 )
+texture = ExtResource( 3 )
+region_rect = Rect2( 21, 21, 1108, 1108 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Tween" type="Tween" parent="."]
 
-[node name="Light2D" type="Light2D" parent="."]
-texture = ExtResource( 3 )
-texture_scale = 0.01
-color = Color( 0.992157, 0, 1, 1 )
-mode = 2
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 11.8834, -55.8961 )
+rotation = 0.188061
+scale = Vector2( 0.2, 0.2 )
+texture = ExtResource( 4 )
+hframes = 10

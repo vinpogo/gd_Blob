@@ -37,8 +37,15 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 		emit_signal("stopAim")
 
 func handle_inputs() -> void:
+	if Input.is_action_pressed("ui_end"):
+		print("reset")
+		get_tree().reload_current_scene()
 	if Input.is_action_just_pressed("jump"):
 		emit_signal("jump")
+	if(Input.is_action_just_pressed("slowmo")):
+		slowmo(true)
+	if(Input.is_action_just_released("slowmo")):
+		slowmo(false)
 	var inputs = utils.ability()
 	if inputs.just_pressed.slot_1 || inputs.just_released.slot_1 || inputs.pressed.slot_1:
 		handle_slot("slot_1", inputs.just_pressed.slot_1, inputs.just_released.slot_1, inputs.pressed.slot_1)
@@ -68,11 +75,6 @@ func handle_slot(slot: String, just_pressed: bool, just_released: bool, pressed:
 			if just_pressed:
 				flip_gravity()
 				slots_used.append(slot)
-		global.ABILITIES.SLOWMO:
-			if(just_pressed):
-				slowmo(true)
-			if(just_released):
-				slowmo(false)
 
 func slowmo(b: bool):
 	emit_signal("slowmo", b)

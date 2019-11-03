@@ -1,11 +1,11 @@
 [gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://objects/mapObjects/scenes/Sticky.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gfx/fan.png" type="Texture" id=3]
+[ext_resource path="res://gfx/fan.png" type="Texture" id=2]
+[ext_resource path="res://objects/mapObjects/Configurable.tscn" type="PackedScene" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 3938.62, 1819.12 )
+extents = Vector2( 14893.8, 20348.7 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -13,35 +13,41 @@ script = ExtResource( 1 )
 [node name="GameZone" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="GameZone"]
+position = Vector2( -4.80859, 0 )
 shape = SubResource( 1 )
-
-[node name="Sticky" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
-position = Vector2( 0, 1600 )
-scale = Vector2( 10, 1 )
-
-[node name="Sticky2" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
-position = Vector2( 0, -1600 )
-scale = Vector2( 10, 1 )
-
-[node name="Sticky3" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
-position = Vector2( -3000, 0 )
-rotation = 1.56357
-scale = Vector2( 10, 1 )
-
-[node name="Sticky4" parent="." instance=ExtResource( 2 )]
-editor/display_folded = true
-position = Vector2( 3000, 0 )
-rotation = 1.56357
-scale = Vector2( 10, 1 )
 
 [node name="Spawnpoint" type="Node2D" parent="."]
 editor/display_folded = true
-position = Vector2( 0.520325, -147.855 )
+position = Vector2( 213.918, 8767.8 )
 
 [node name="Sprite" type="Sprite" parent="Spawnpoint"]
 self_modulate = Color( 1, 1, 1, 0.27451 )
 scale = Vector2( 0.2, 0.2 )
-texture = ExtResource( 3 )
+texture = ExtResource( 2 )
+
+[node name="Configurable" parent="." instance=ExtResource( 3 )]
+position = Vector2( 190.132, 14805.5 )
+scale = Vector2( 100, 100 )
+type = "sticky"
+
+[node name="Configurable2" parent="." instance=ExtResource( 3 )]
+position = Vector2( 335.199, -13924.8 )
+scale = Vector2( 100, 100 )
+type = "deadly"
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CanvasLayer"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -20.0
+margin_top = -25.0
+margin_right = 20.0
+margin_bottom = 15.0
+bbcode_text = "12
+"
+tab_size = 24
+text = "12
+"

@@ -10,6 +10,9 @@ var ability_mapping = {
 	"slot_2": ABILITIES.FLIP_GRAVITY,
 	"slot_3": ABILITIES.SLOWMO
 }
+var jump_count = 3
+var precision_count = 5
+var slowmo_duration = 5.0
 func short_angle_dist(from, to):
 		var max_angle = PI * 2
 		var difference = fmod(to - from, max_angle)
@@ -70,3 +73,6 @@ func ru_setCompass(dir: String, vec: Vector2 ):
 			return {
 				"up": v.rotated(PI/2), "down": v.rotated(-PI/2), "right": -v, "left": v
 			}
+
+func add_to_jump_count(n: int):
+	jump_count += n

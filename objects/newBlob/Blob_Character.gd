@@ -1,5 +1,6 @@
 extends KinematicBody2D
 
+class_name BlobCharacter, "res://objects/newBlob/animations/idle/0001.png"
 export var GRAVITY = 500
 export var JUMP_FORCE = 30
 # warning-ignore:unused_class_variable
@@ -23,6 +24,7 @@ var slowmo = 1.0
 var ability = {
 	"jump": 3,
 }
+var visited_goals = []
 
 var newCollide
 signal stick
@@ -36,7 +38,12 @@ onready var tween = get_node("rotation")
 onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
 
-func _on_ready():
+func _ready():
+	visited_goals= []
+	global.jump_count = 3
+	global.precision_count = 5
+	global.slowmo_duration = 5.0
+	$Hud/GUI.update_jump_count()
 	utils.ru_setCompass("down", Vector2(0,1))
 
 func jump():
@@ -46,7 +53,8 @@ func jump():
 	justJumped = true
 	air_control = AIR_CONTROL
 
-	jump_count += 1
+	global.jump_count -= 1
+	$Hud/GUI.update_jump_count()
 	$Sprite.play("ground-jump")
 
 
@@ -61,6 +69,8 @@ func precision_jump():
 		elif jump_count == 2:
 			$Sprite.play("final-jump")
 	timer.start()
+	global.precision_count -= 1
+	$Hud/GUI.update_jump_count()
 	justJumped = true
 
 	velocity = jump_direction.normalized() * JUMP_FORCE * (jumpFactor if onFloor else 2)
@@ -81,14 +91,19 @@ func gravity_velocity():
 	return compass.down * GRAVITY* slowmo
 
 func _physics_process(delta):
+	if global.slowmo_duration < 0.5:
+		slowmo = 1.0
 	if !onFloor:
 		velocity = velocity + (player_input_velocity() + gravity_velocity())  * delta
-		velocity = velocity if velocity.length() < MAX_SPEED else velocity.normalized()*MAX_SPEED
+		if is_falling_down() && velocity.length() > MAX_SPEED:
+			velocity = velocity.normalized() * MAX_SPEED
 	else:
 		velocity = Vector2(0,0)
+	var oldCollide = newCollide
 	newCollide = move_and_collide(velocity)
 	if newCollide && !justJumped:
-		collisionHandler(newCollide)
+		if newCollide != oldCollide:
+			collisionHandler(newCollide)
 
 func bounce(col):
 	$Sprite.play("final-jump")
@@ -114,13 +129,24 @@ func ru_rotate(vec) -> void:
 	tween.start()
 
 func collisionHandler(collision):
-	var type = collision.collider.get_type() if collision.collider.has_method("get_type") else null
+	var type = collision.collider.get_type() if collision.collider is Planet else "deadly"
 	if type == "goal":
-		print("finish")
+		if visited_goals.find(collision.collider) == -1:
+			global.jump_count += 3
+			visited_goals.push_back(collision.collider)
+			$Hud/GUI.update_jump_count()
 		stick(collision)
 	if type == "bouncy" || toBounce:
 		bounce(collision)
+		if visited_goals.find(collision.collider) == -1:
+			global.slowmo_duration += 3.0
+			visited_goals.push_back(collision.collider)
+			$Hud/GUI.update_jump_count()
 	elif type == "sticky" && !inMotion:
+		if visited_goals.find(collision.collider) == -1:
+			global.precision_count += 3
+			visited_goals.push_back(collision.collider)
+			$Hud/GUI.update_jump_count()
 		stick(collision)
 	elif type == "deadly":
 		die()
@@ -177,17 +203,23 @@ func _on_InputController_unfreeze() -> void:
 
 
 func _on_InputController_jump() -> void:
-	if jump_count < ability.jump:
+	if global.jump_count > 0:
 		jump()
 
 
 func _on_InputController_precision_jump() -> void:
-	precision_jump()
+	if global.precision_count > 0:
+		precision_jump()
 
 
 func _on_InputController_slowmo(b: bool) -> void:
 	print("slowmo")
-	slowmo = (1.0/SLOWMO) if b else 1.0
-	velocity *= (slowmo*2)
-	pass # Replace with function body.
+	if(b):
+		$Hud/GUI.start_slowmo_timer()
+		if global.slowmo_duration > 0.5:
+			slowmo = 1.0/SLOWMO
+			velocity *= (slowmo*2)
+	else:
+		$Hud/GUI.stop_slowmo_timer()
+		slowmo = 1.0
 
