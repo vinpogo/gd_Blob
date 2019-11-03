@@ -2,7 +2,7 @@ extends Camera2D
 
 
 func _ready():
-	zoom = zoom*3
+	zoom = zoom*30
 
 func _physics_process(delta):
 	if Input.is_action_just_pressed("slot_5"):

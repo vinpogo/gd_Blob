@@ -32,11 +32,11 @@ func get_type():
 func set_type():
 	var r = randf()
 	if r < 0.3:
-		type = types[2]
+		type = "sticky"
 	elif r < 0.6:
-		type = types[0]
+		type = "deadly"
 	elif r < 0.9:
-		type = types[1]
+		type = "bouncy"
 	else:
-		type = types[3]
+		type = "goal"
 	$Sprite.texture = textures[type]
