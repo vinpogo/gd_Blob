@@ -1,14 +1,14 @@
 extends Node2D
 
-var b = preload("res://objects/newBlob/Blob.tscn")
 var obj = preload ("res://objects/mapObjects/Configurable.tscn")
 
+func get_distance_to_goal(player: int):
+	var d = get_node("Spawn%s"%( 1 if player == 2 else 2)).global_position - get_node("Player%s"%player).global_position
+	return d.length()
+	pass
 
 func _ready():
-	var pos = get_node("Spawnpoint").position
-	var blob = b.instance()
-	blob.global_position = pos
-	add_child(blob)
+	randomize()
 	var shape = $GameZone/CollisionShape2D.shape.extents
 	for i in range(floor(shape.x*shape.y / 100000)):
 		var obj_pos = Vector2(randf()*2*shape.x-shape.x, randf()*2*shape.y - shape.y)
@@ -20,7 +20,12 @@ func _ready():
 		o.set_type()
 		add_child(o)
 
-func _process(delta: float) -> void:
-	print()
-	if $Character:
-		$CanvasLayer/RichTextLabel.text = String(stepify((- $Character.global_position + $Configurable2.global_position).length()-600, 1))
+#func _process(delta: float) -> void:
+#	print()
+#	if $Character:
+#		$CanvasLayer/RichTextLabel.text = String(stepify((- $Character.global_position + $Configurable2.global_position).length()-600, 1))
+
+func _on_Player_die(player) -> void:
+	get_node("Player%s"%player).global_position = get_node("Spawn%s"%player).global_position
+
+	pass # Replace with function body.

@@ -24,11 +24,15 @@ func _ready():
 
 func _physics_process(delta):
 	handle_inputs()
-	rotation = -utils.left_stick().angle()
+	rotation = -utils.left_stick(blob.player).angle()
+
+func _input(event: InputEvent) -> void:
+
+	pass
 
 func canAim():
 	if blob.onFloor:
-		return utils.left_stick().y > 0.0
+		return utils.left_stick(blob.player).y > 0.0
 	return true
 
 func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
@@ -39,14 +43,16 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 func handle_inputs() -> void:
 	if Input.is_action_pressed("ui_end"):
 		print("reset")
-		get_tree().reload_current_scene()
-	if Input.is_action_just_pressed("jump"):
+		blob.die()
+
+	if Input.is_action_just_pressed("jump_%s" % blob.player):
+		print("jump_%s" % blob.player)
 		emit_signal("jump")
-	if(Input.is_action_just_pressed("slowmo")):
+	if(Input.is_action_just_pressed("slowmo_%s" % blob.player)):
 		slowmo(true)
-	if(Input.is_action_just_released("slowmo")):
+	if(Input.is_action_just_released("slowmo_%s" % blob.player)):
 		slowmo(false)
-	var inputs = utils.ability()
+	var inputs = utils.ability(blob.player)
 	if inputs.just_pressed.slot_1 || inputs.just_released.slot_1 || inputs.pressed.slot_1:
 		handle_slot("slot_1", inputs.just_pressed.slot_1, inputs.just_released.slot_1, inputs.pressed.slot_1)
 	if inputs.just_pressed.slot_2 || inputs.just_released.slot_2 || inputs.pressed.slot_2:

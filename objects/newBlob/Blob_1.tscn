@@ -1,0 +1,214 @@
+[gd_scene load_steps=26 format=2]
+
+[ext_resource path="res://objects/newBlob/Blob_Character.gd" type="Script" id=1]
+[ext_resource path="res://gfx/arrow.png" type="Texture" id=2]
+[ext_resource path="res://objects/newBlob/Blob_InputController.gd" type="Script" id=3]
+[ext_resource path="res://gfx/blob/player2/idle/spritesheet.png" type="Texture" id=4]
+[ext_resource path="res://objects/newBlob/Blob_Sprite.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 16.8876
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:frame")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 0, 19 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "inAir"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "slowmo" ]
+}
+
+[sub_resource type="Animation" id=4]
+resource_name = "jump"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "jump" ]
+}
+
+[sub_resource type="Animation" id=5]
+resource_name = "land"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "land" ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "precision-jump"
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ "precision-jump" ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=7]
+animation = "idle"
+
+[sub_resource type="AnimationNodeAnimation" id=8]
+animation = "inAir"
+
+[sub_resource type="AnimationNodeAnimation" id=9]
+animation = "jump"
+
+[sub_resource type="AnimationNodeAnimation" id=10]
+animation = "land"
+
+[sub_resource type="AnimationNodeAnimation" id=11]
+animation = "precision-jump"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=12]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=13]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=14]
+switch_mode = 2
+auto_advance = true
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=15]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=16]
+switch_mode = 2
+xfade_time = 0.1
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=17]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=18]
+
+[sub_resource type="AnimationNodeStateMachine" id=19]
+states/idle/node = SubResource( 7 )
+states/idle/position = Vector2( 79, 61 )
+states/inAir/node = SubResource( 8 )
+states/inAir/position = Vector2( 380, 167 )
+states/jump/node = SubResource( 9 )
+states/jump/position = Vector2( 173, 188 )
+states/land/node = SubResource( 10 )
+states/land/position = Vector2( 332, 25 )
+states/precision-jump/node = SubResource( 11 )
+states/precision-jump/position = Vector2( 195, -39 )
+transitions = [ "idle", "jump", SubResource( 12 ), "land", "idle", SubResource( 13 ), "jump", "inAir", SubResource( 14 ), "inAir", "land", SubResource( 15 ), "inAir", "jump", SubResource( 16 ), "idle", "precision-jump", SubResource( 17 ), "precision-jump", "land", SubResource( 18 ) ]
+start_node = "idle"
+graph_offset = Vector2( -164, 40.024 )
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=20]
+
+[node name="Character" type="KinematicBody2D"]
+script = ExtResource( 1 )
+GRAVITY = 42
+JUMP_FORCE = 9
+JUMP_FACTOR = 2.1
+MAX_SPEED = 15
+AIR_CONTROL = 30
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.05
+one_shot = true
+
+[node name="InputController" type="Sprite" parent="."]
+light_mask = 2
+texture = ExtResource( 2 )
+offset = Vector2( 64, 0 )
+script = ExtResource( 3 )
+
+[node name="rotation" type="Tween" parent="."]
+
+[node name="Slowmo" type="Timer" parent="."]
+process_mode = 0
+wait_time = 5.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+editor/display_folded = true
+playback_process_mode = 0
+anims/idle = SubResource( 2 )
+anims/inAir = SubResource( 3 )
+anims/jump = SubResource( 4 )
+anims/land = SubResource( 5 )
+anims/precision-jump = SubResource( 6 )
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer"]
+tree_root = SubResource( 19 )
+anim_player = NodePath("..")
+active = true
+process_mode = 0
+parameters/playback = SubResource( 20 )
+
+[node name="Sprite" type="Sprite" parent="."]
+z_index = 1
+texture = ExtResource( 4 )
+hframes = 20
+frame = 19
+script = ExtResource( 5 )
+[connection signal="stick" from="." to="InputController" method="_on_Character_stick"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
+[connection signal="aim" from="InputController" to="." method="_on_Arrow_aim"]
+[connection signal="flip_gravity" from="InputController" to="." method="_on_InputController_flip_gravity"]
+[connection signal="freeze" from="InputController" to="." method="_on_InputController_freeze"]
+[connection signal="jump" from="InputController" to="." method="_on_InputController_jump"]
+[connection signal="precision_jump" from="InputController" to="." method="_on_InputController_precision_jump"]
+[connection signal="slowmo" from="InputController" to="." method="_on_InputController_slowmo"]
+[connection signal="stopAim" from="InputController" to="." method="_on_aim_stopAim"]
+[connection signal="toggle_zoom" from="InputController" to="." method="_on_InputController_toggle_zoom"]
+[connection signal="unfreeze" from="InputController" to="." method="_on_InputController_unfreeze"]

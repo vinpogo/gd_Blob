@@ -10,48 +10,44 @@ var ability_mapping = {
 	"slot_2": ABILITIES.FLIP_GRAVITY,
 	"slot_3": ABILITIES.SLOWMO
 }
-var jump_count = 3
 var precision_count = 5
 var slowmo_duration = 5.0
 func short_angle_dist(from, to):
-		var max_angle = PI * 2
-		var difference = fmod(to - from, max_angle)
-		return fmod(2 * difference, max_angle) - difference
+	var max_angle = PI * 2
+	var difference = fmod(to - from, max_angle)
+	return fmod(2 * difference, max_angle) - difference
 
-func left_stick():
-	return Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-	Input.get_action_strength("ui_up")- Input.get_action_strength("ui_down")) if Vector2(Input.get_action_strength("ui_right") - Input.get_action_strength("ui_left"),
-	Input.get_action_strength("ui_up")- Input.get_action_strength("ui_down")).length() > AXIS_THRESHHOLD else Vector2(0,0)
+func left_stick(player: int):
+	if Input.get_connected_joypads().size() > 0:
+		var x_Axis = Input.get_joy_axis(player - 1, JOY_AXIS_0)
+		var y_Axis = -Input.get_joy_axis(player - 1, JOY_AXIS_1)
+		return Vector2(x_Axis, y_Axis) if Vector2(x_Axis, y_Axis).length() > AXIS_THRESHHOLD else Vector2(0,0)
 
-func ability():
+func ability(player: int):
 	return {
-		"just_pressed": ability_just_pressed(),
-		"just_released": ability_just_released(),
-		"pressed": ability_pressed()
+		"just_pressed": ability_just_pressed(player),
+		"just_released": ability_just_released(player),
+		"pressed": ability_pressed(player)
 	}
 
-func ability_just_pressed():
+func ability_just_pressed(player: int):
 	return {
-	"slot_1": Input.is_action_just_pressed("slot_1"),
-	"slot_2": Input.is_action_just_pressed("slot_2"),
-	"slot_3": Input.is_action_just_pressed("slot_3"),
+	"slot_1": Input.is_action_just_pressed("slot_1_%s"%player),
+	"slot_2": Input.is_action_just_pressed("slot_2_%s"%player),
+	"slot_3": Input.is_action_just_pressed("slot_3_%s"%player),
 	}
 
-func ability_just_released():
+func ability_just_released(player: int):
 	return {
-	"slot_1": Input.is_action_just_released("slot_1"),
-	"slot_2": Input.is_action_just_released("slot_2"),
-	"slot_3": Input.is_action_just_released("slot_3"),
+	"slot_1": Input.is_action_just_released("slot_1_%s"%player),
+	"slot_2": Input.is_action_just_released("slot_2_%s"%player),
+	"slot_3": Input.is_action_just_released("slot_3_%s"%player),
 	}
-func ability_pressed():
+func ability_pressed(player: int):
 	return {
-	"slot_1": Input.is_action_pressed("slot_1"),
-	"slot_2": Input.is_action_pressed("slot_2"),
-	"slot_3": Input.is_action_pressed("slot_3"),
-	}
-func controller_input():
-	return {
-	"left_stick": left_stick()
+	"slot_1": Input.is_action_pressed("slot_1_%s"%player),
+	"slot_2": Input.is_action_pressed("slot_2_%s"%player),
+	"slot_3": Input.is_action_pressed("slot_3_%s"%player),
 	}
 
 func ru_setCompass(dir: String, vec: Vector2 ):
@@ -73,6 +69,3 @@ func ru_setCompass(dir: String, vec: Vector2 ):
 			return {
 				"up": v.rotated(PI/2), "down": v.rotated(-PI/2), "right": -v, "left": v
 			}
-
-func add_to_jump_count(n: int):
-	jump_count += n

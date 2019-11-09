@@ -1,4 +1,4 @@
-extends AnimatedSprite
+extends Sprite
 
 onready var blob = get_parent()
 
