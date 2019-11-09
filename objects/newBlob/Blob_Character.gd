@@ -37,6 +37,7 @@ onready var utils = get_node("/root/global")
 onready var tween = get_node("rotation")
 onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
+onready var tree = $AnimationPlayer/AnimationTree["parameters/playback"]
 
 func _ready():
 	visited_goals= []
@@ -55,24 +56,20 @@ func jump():
 
 	global.jump_count -= 1
 	$Hud/GUI.update_jump_count()
-	$Sprite.play("ground-jump")
 
 
 func precision_jump():
 	var direction = utils.left_stick()
 	var jump_direction = -direction.y * compass.down + direction.x * compass.down.rotated(-PI/2)
-	if onFloor && jump_count == 0:
-		$Sprite.play("ground-jump")
-	elif!onFloor:
-		if jump_count == 1:
-			$Sprite.play("jump")
-		elif jump_count == 2:
-			$Sprite.play("final-jump")
+#	if onFloor && jump_count == 0:
+#	elif!onFloor:
+#		if jump_count == 1:
+#		elif jump_count == 2:
 	timer.start()
 	global.precision_count -= 1
 	$Hud/GUI.update_jump_count()
 	justJumped = true
-
+	tree.travel("precision-jump")
 	velocity = jump_direction.normalized() * JUMP_FORCE * (jumpFactor if onFloor else 2)
 	onFloor = false
 	air_control = AIR_CONTROL
@@ -106,14 +103,12 @@ func _physics_process(delta):
 			collisionHandler(newCollide)
 
 func bounce(col):
-	$Sprite.play("final-jump")
 	velocity = velocity.bounce(col.normal)
 	toBounce = false
 
 func stick(collision):
 	if !onFloor:
-
-		$Sprite.play("idle")
+		tree.travel("land")
 		onFloor = true
 		velocity = Vector2(0,0)
 		jump_count = 0
@@ -189,6 +184,7 @@ func _on_GameZone_body_shape_exited(body_id: int, body: PhysicsBody2D, body_shap
 
 func _on_InputController_flip_gravity() -> void:
 	compass = utils.ru_setCompass("up", compass.down)
+	tree.travel("inAir")
 	ru_rotate(compass.up)
 	onFloor = false
 
@@ -205,6 +201,7 @@ func _on_InputController_unfreeze() -> void:
 func _on_InputController_jump() -> void:
 	if global.jump_count > 0:
 		jump()
+		tree.travel("jump")
 
 
 func _on_InputController_precision_jump() -> void:
