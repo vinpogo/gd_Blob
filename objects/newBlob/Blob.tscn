@@ -3,11 +3,11 @@
 [ext_resource path="res://objects/newBlob/Blob_Character.gd" type="Script" id=1]
 [ext_resource path="res://gfx/arrow.png" type="Texture" id=2]
 [ext_resource path="res://objects/newBlob/Blob_InputController.gd" type="Script" id=3]
-[ext_resource path="res://gfx/blob/player1/spritesheet.png" type="Texture" id=4]
+[ext_resource path="res://gfx/blob/spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://objects/newBlob/Blob_Sprite.gd" type="Script" id=5]
 
 [sub_resource type="CircleShape2D" id=1]
-radius = 16.8876
+radius = 34.7217
 
 [sub_resource type="Animation" id=2]
 resource_name = "idle"
@@ -149,6 +149,7 @@ JUMP_FORCE = 9
 JUMP_FACTOR = 2.1
 MAX_SPEED = 15
 AIR_CONTROL = 30
+color = Color( 1, 0, 0.890196, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -187,7 +188,7 @@ parameters/playback = SubResource( 20 )
 texture = ExtResource( 4 )
 vframes = 5
 hframes = 20
-frame = 17
+frame = 4
 script = ExtResource( 5 )
 [connection signal="stick" from="." to="InputController" method="_on_Character_stick"]
 [connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

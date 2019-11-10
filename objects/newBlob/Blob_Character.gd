@@ -10,6 +10,8 @@ export var MAX_SPEED = 100
 export var SLOWMO = 10
 export var AIR_CONTROL = 200
 export(Texture) var player_atlas
+export(Vector2) var initial_gravity
+export(Color) var color
 export var player = 1
 var justJumped = false
 var onFloor = false
@@ -55,8 +57,11 @@ func _ready():
 	jump_count = 30
 	precision_count = 5
 	slowmo_duration = 5.0
-	utils.ru_setCompass("down", Vector2(0,1))
+	compass = global.ru_setCompass("down", initial_gravity)
+	emit_signal("rotate", compass.down)
 	$Sprite.texture = player_atlas
+	$Sprite.modulate = color
+
 
 func jump():
 	velocity = (compass.up * JUMP_FORCE + compass.right * utils.left_stick(player).x * JUMP_FORCE).normalized() * slowmo * JUMP_FORCE * (3 if slowmo < 1.0 else 1)
@@ -76,7 +81,7 @@ func precision_jump():
 	precision_count -= 1
 	justJumped = true
 	tree.travel("precision-jump")
-	velocity = jump_direction.normalized() * JUMP_FORCE * 3
+	velocity = jump_direction.normalized() * JUMP_FORCE * 2.5
 	onFloor = false
 	air_control = AIR_CONTROL
 	emit_signal("jump")
@@ -110,7 +115,7 @@ func _physics_process(delta):
 			collisionHandler(newCollide)
 
 func bounce(col):
-	velocity = velocity.bounce(col.normal)
+	velocity = velocity.bounce(col.normal).normalized() * JUMP_FORCE * 2
 	toBounce = false
 	tree.travel("jump")
 
@@ -134,7 +139,7 @@ func ru_rotate(vec) -> void:
 func collisionHandler(collision):
 	var type = "bouncy"
 	if collision.collider is Planet:
-		type = collision.collider.get_type()
+		type = collision.collider.get_type(color, player)
 		collision.collider.set_type("bouncy")
 	if type == "sticky":
 		if visited_goals.find(collision.collider) == -1:
@@ -176,6 +181,9 @@ func _on_aim_stopAim() -> void:
 
 func die():
 	emit_signal("die", player)
+	compass = global.ru_setCompass("down", initial_gravity)
+	emit_signal("rotate", compass.up)
+	onFloor = false
 
 func addJump():
 	jumpsLeft += 1

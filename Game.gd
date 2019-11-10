@@ -25,3 +25,6 @@ func _ready():
 		camera2.connect_signals()
 		hud2.target = world.get_node("Player2")
 		hud2.connect_signals()
+
+		world.get_node("Player1").emit_signal("rotate", world.get_node("Player1").compass.up)
+		world.get_node("Player2").emit_signal("rotate", world.get_node("Player2").compass.up)

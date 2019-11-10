@@ -1,33 +1,66 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
-[ext_resource path="res://objects/newBlob/Blob.tscn" type="PackedScene" id=2]
-[ext_resource path="res://gfx/blob/player2/spritesheet.png" type="Texture" id=3]
-[ext_resource path="res://gfx/blob/player1/spritesheet.png" type="Texture" id=4]
+[ext_resource path="res://objects/mapObjects/scenes/Sector.tscn" type="PackedScene" id=2]
+[ext_resource path="res://objects/newBlob/Blob.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gfx/blob/spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://objects/mapObjects/Configurable.tscn" type="PackedScene" id=5]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 5000, 5000 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
 
-[node name="GameZone" type="Area2D" parent="."]
+[node name="Map" type="Node" parent="."]
+editor/display_folded = true
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="GameZone"]
-shape = SubResource( 1 )
+[node name="GameZone" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 1000, 1000 )
+PLANET_COUNT = 10
 
-[node name="Player2" parent="." instance=ExtResource( 2 )]
+[node name="GameZone2" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -995.434, 979.428 )
+
+[node name="GameZone3" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -1036.58, -1036.58 )
+
+[node name="GameZone4" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 1041.14, -1036.58 )
+
+[node name="GameZone5" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 3077.72, -995.433 )
+
+[node name="GameZone6" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 3098.29, 1082.29 )
+
+[node name="GameZone7" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -3134.87, 1061.71 )
+
+[node name="GameZone8" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -3176.01, -1304.01 )
+
+[node name="GameZone9" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -937.216, -3159.85 )
+
+[node name="GameZone10" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 1419.41, -3307.14 )
+
+[node name="GameZone11" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 3952.78, -3307.14 )
+
+[node name="Player2" parent="." instance=ExtResource( 3 )]
 position = Vector2( 4684.6, -5693.17 )
-player_atlas = ExtResource( 3 )
+player_atlas = ExtResource( 4 )
+initial_gravity = Vector2( -1, 1 )
+color = Color( 0.0980392, 0.823529, 0.12549, 1 )
 player = 2
 
-[node name="Player1" parent="." instance=ExtResource( 2 )]
-position = Vector2( -4761.21, -5743.38 )
+[node name="Player1" parent="." instance=ExtResource( 3 )]
+position = Vector2( -5207.87, 5319.94 )
 player_atlas = ExtResource( 4 )
+initial_gravity = Vector2( 1, -1 )
+color = Color( 1, 0, 0.984314, 1 )
 
 [node name="Spawn1" type="Node2D" parent="."]
-position = Vector2( -4862.58, -5831.58 )
+position = Vector2( -5206.16, 5300.46 )
 
 [node name="Spawn2" type="Node2D" parent="."]
 position = Vector2( 4778.88, -5783.87 )

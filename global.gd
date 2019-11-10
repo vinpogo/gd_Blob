@@ -1,6 +1,17 @@
 extends Node
 var AXIS_THRESHHOLD = 0.5
+var player_count = 2
 
+var player_stats = {
+	"player_1": 0,
+	"player_2": 0
+}
+
+func stats_proto():
+	var s = {}
+	for i in range(player_count):
+		s["player_%s"%(i+1)] = 0
+	return s
 enum ABILITIES{
 	PRECISION_JUMP,
 	FLIP_GRAVITY,

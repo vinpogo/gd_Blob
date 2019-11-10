@@ -1,4 +1,5 @@
 extends StaticBody2D
+
 class_name Planet
 
 var textures = {
@@ -9,6 +10,7 @@ var textures = {
 }
 
 var types = ["sticky", "goal", "deadly", "bouncy"]
+var isBlobbed = 0
 export(String, "sticky", "goal", "deadly", "bouncy") var type = "goal"
 export(Texture) var sprite
 
@@ -17,26 +19,29 @@ onready var tween = get_node("Tween")
 func _ready() -> void:
 	$AnimatedSprite.visible = false
 
-func set_properties(planet_type = "sticky", planet_scale = 1, initial_position = null, x = 0, y = 0):
-	type = planet_type
+func set_properties(planet_type = "sticky", planet_scale = 1, initial_position = null, x = 0, y = 0) -> void:
+	type = planet_type if planet_type != "random" else get_random_type()
 	scale = Vector2(planet_scale, planet_scale)
 	global_position = initial_position if initial_position else Vector2(x, y)
+	$Sprite.texture = textures[type]
 
-func get_type():
+
+func get_type(color, player):
+	$AnimatedSprite.modulate = color
 	$AnimatedSprite.visible = true
 	$AnimatedSprite.play("blobify")
+	isBlobbed = player
+	print(color)
 	return type
 
-func set_type(t = null):
-	if t:
-		type = t
+func set_type(planet_type: String):
+	type = planet_type
+
+func get_random_type() -> String:
+	var r = randf()
+	if r < 0.4:
+		return "sticky"
+	elif r < 0.7:
+		return "deadly"
 	else:
-		var r = randf()
-		if r < 0.4:
-			type = "sticky"
-		elif r < 0.7:
-			type = "deadly"
-		else:
-			type = "goal"
-			print(type)
-	$Sprite.texture = textures[type]
+		return "goal"
