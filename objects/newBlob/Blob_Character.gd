@@ -22,8 +22,8 @@ var jumpsLeft = 1
 var air_control = 0
 var timer_on = false
 
-var jump_count = 3
-var precision_count = 0
+var jump_count = 5
+var precision_count = 5
 var slowmo_duration = 5.0
 var velocity = Vector2(0,0)
 var slowmo = 1.0
@@ -54,13 +54,14 @@ onready var tree = $AnimationPlayer/AnimationTree["parameters/playback"]
 
 func _ready():
 	visited_goals= []
-	jump_count = 30
+	jump_count = 5
 	precision_count = 5
 	slowmo_duration = 5.0
 	compass = global.ru_setCompass("down", initial_gravity)
 	emit_signal("rotate", compass.down)
 	$Sprite.texture = player_atlas
 	$Sprite.modulate = color
+	emit_signal("set_jump_count", jump_count, precision_count, player)
 
 
 func jump():
@@ -71,7 +72,7 @@ func jump():
 	air_control = AIR_CONTROL
 
 	jump_count -= 1
-	emit_signal("set_jump_count", jump_count, player)
+	emit_signal("set_jump_count", jump_count, precision_count, player)
 
 
 func precision_jump():
@@ -85,6 +86,7 @@ func precision_jump():
 	onFloor = false
 	air_control = AIR_CONTROL
 	emit_signal("jump")
+	emit_signal("set_jump_count", jump_count, precision_count, player)
 
 func player_input_velocity():
 	if onFloor:
@@ -144,7 +146,7 @@ func collisionHandler(collision):
 	if type == "sticky":
 		if visited_goals.find(collision.collider) == -1:
 			jump_count += 3
-			emit_signal("set_jump_count", jump_count, player)
+			emit_signal("set_jump_count", jump_count, precision_count, player)
 			visited_goals.push_back(collision.collider)
 		stick(collision)
 	if type == "bouncy" || toBounce:

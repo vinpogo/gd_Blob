@@ -17,6 +17,3 @@ func get_blob_statistics():
 		for key in stats.keys():
 			stats[key] += s[key]
 	return stats
-
-func _process(delta: float) -> void:
-	print(get_blob_statistics())

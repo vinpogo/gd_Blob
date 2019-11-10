@@ -41,9 +41,8 @@ func _on_Tween_tween_completed(object: Object, key: NodePath) -> void:
 		emit_signal("stopAim")
 
 func handle_inputs() -> void:
-	if Input.is_action_pressed("ui_end"):
-		print("reset")
-		blob.die()
+	if Input.is_action_pressed("ui_home"):
+		get_tree().change_scene("res://objects/Control.tscn")
 
 	if Input.is_action_just_pressed("jump_%s" % blob.player):
 		print("jump_%s" % blob.player)
