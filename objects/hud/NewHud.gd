@@ -13,10 +13,8 @@ func connect_signals():
 func _process(delta: float) -> void:
 	if world && player && count_blob:
 		var stats = world.get_blob_statistics()["player_%s"%player]
-		print(stats)
 		count_blob.text = String(stats)
 
 func _on_Character_set_jump_count(jump_count, precision_count, player) -> void:
-	print("j: ",jump_count," p: ", precision_count," | ", player, count_jump)
 	count_jump.text = String(jump_count)
 	count_precision.text = String(precision_count)

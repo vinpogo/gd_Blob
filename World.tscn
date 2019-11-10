@@ -50,13 +50,6 @@ position = Vector2( 1419.41, -3307.14 )
 [node name="GameZone11" parent="Map" instance=ExtResource( 2 )]
 position = Vector2( 3952.78, -3307.14 )
 
-[node name="Player2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 4684.6, -5693.17 )
-player_atlas = ExtResource( 4 )
-initial_gravity = Vector2( -1, 1 )
-color = Color( 0.0980392, 0.823529, 0.12549, 1 )
-player = 2
-
 [node name="Player1" parent="." instance=ExtResource( 3 )]
 position = Vector2( -5207.87, 5319.94 )
 player_atlas = ExtResource( 4 )
@@ -106,5 +99,4 @@ z_index = -1
 texture = SubResource( 1 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 204800, 120000 )
-[connection signal="die" from="Player2" to="." method="_on_Player_die"]
 [connection signal="die" from="Player1" to="." method="_on_Player_die"]

@@ -15,7 +15,7 @@ anchor_bottom = 1.0
 alignment = 1
 
 [node name="ViewportContainer1" type="ViewportContainer" parent="Viewports"]
-margin_right = 512.0
+margin_right = 1024.0
 margin_bottom = 600.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -37,29 +37,10 @@ script = ExtResource( 3 )
 
 [node name="CanvasLayer" parent="Viewports/ViewportContainer1/Viewport1" instance=ExtResource( 4 )]
 
-[node name="ViewportContainer2" type="ViewportContainer" parent="Viewports"]
-margin_left = 516.0
-margin_right = 1028.0
-margin_bottom = 600.0
-size_flags_horizontal = 3
-size_flags_vertical = 3
-
-[node name="Viewport2" type="Viewport" parent="Viewports/ViewportContainer2"]
-size = Vector2( 512, 600 )
-handle_input_locally = false
-render_target_update_mode = 3
-
-[node name="Camera2D" type="Camera2D" parent="Viewports/ViewportContainer2/Viewport2"]
-rotating = true
-current = true
-zoom = Vector2( 3, 3 )
-script = ExtResource( 3 )
-
-[node name="Tween" type="Tween" parent="Viewports/ViewportContainer2/Viewport2/Camera2D"]
-
-[node name="CanvasLayer" parent="Viewports/ViewportContainer2/Viewport2" instance=ExtResource( 4 )]
+[node name="OtherViewports" type="Node2D" parent="Viewports"]
 
 [node name="ViewportContainer" type="ViewportContainer" parent="."]
+editor/display_folded = true
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5

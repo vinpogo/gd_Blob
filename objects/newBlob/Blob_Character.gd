@@ -59,7 +59,8 @@ func _ready():
 	slowmo_duration = 5.0
 	compass = global.ru_setCompass("down", initial_gravity)
 	emit_signal("rotate", compass.down)
-	$Sprite.texture = player_atlas
+	if player_atlas:
+		$Sprite.texture = player_atlas
 	$Sprite.modulate = color
 	emit_signal("set_jump_count", jump_count, precision_count, player)
 

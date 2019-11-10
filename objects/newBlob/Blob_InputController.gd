@@ -45,7 +45,6 @@ func handle_inputs() -> void:
 		get_tree().change_scene("res://objects/Control.tscn")
 
 	if Input.is_action_just_pressed("jump_%s" % blob.player):
-		print("jump_%s" % blob.player)
 		emit_signal("jump")
 	if(Input.is_action_just_pressed("slowmo_%s" % blob.player)):
 		slowmo(true)

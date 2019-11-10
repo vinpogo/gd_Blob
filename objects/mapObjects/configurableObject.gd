@@ -31,7 +31,6 @@ func get_type(color, player):
 	$AnimatedSprite.visible = true
 	$AnimatedSprite.play("blobify")
 	isBlobbed = player
-	print(color)
 	return type
 
 func set_type(planet_type: String):
