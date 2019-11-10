@@ -1,5 +1,6 @@
 extends Node
 var AXIS_THRESHHOLD = 0.5
+
 enum ABILITIES{
 	PRECISION_JUMP,
 	FLIP_GRAVITY,

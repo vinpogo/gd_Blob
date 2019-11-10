@@ -46,6 +46,10 @@ onready var timer = get_node("Timer")
 var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
 onready var tree = $AnimationPlayer/AnimationTree["parameters/playback"]
 
+#func _init(initial_gravity: Vector2, player_index: int) -> void:
+#	compass = global.ru_setCompass("down", initial_gravity)
+#	player = player_index if player_index else player
+
 func _ready():
 	visited_goals= []
 	jump_count = 30

@@ -7,3 +7,7 @@ export_presets.cfg
 # Mono-specific ignores
 .mono/
 gfx/.DS_Store
+
+*.exe
+*.pck
+*.dmg

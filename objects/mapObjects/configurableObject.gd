@@ -4,15 +4,7 @@ class_name Planet
 var textures = {
 "bouncy": preload("res://gfx/New folder/0001.png"),
 "sticky": preload("res://gfx/New folder/earth.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-3.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-4.png"),
 "deadly": preload("res://gfx/New folder/sun.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-6.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-7.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-8.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-9.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-10.png"),
-#preload("res://gfx/Planets-Atmosphere-pngs/planet-11.png"),
 "goal": preload("res://gfx/New folder/moon.png")
 }
 
@@ -25,6 +17,11 @@ onready var tween = get_node("Tween")
 func _ready() -> void:
 	$AnimatedSprite.visible = false
 
+func set_properties(planet_type = "sticky", planet_scale = 1, initial_position = null, x = 0, y = 0):
+	type = planet_type
+	scale = Vector2(planet_scale, planet_scale)
+	global_position = initial_position if initial_position else Vector2(x, y)
+
 func get_type():
 	$AnimatedSprite.visible = true
 	$AnimatedSprite.play("blobify")
@@ -33,12 +30,13 @@ func get_type():
 func set_type(t = null):
 	if t:
 		type = t
-		return
-	var r = randf()
-	if r < 0.4:
-		type = "sticky"
-	elif r < 0.7:
-		type = "deadly"
 	else:
-		type = "goal"
+		var r = randf()
+		if r < 0.4:
+			type = "sticky"
+		elif r < 0.7:
+			type = "deadly"
+		else:
+			type = "goal"
+			print(type)
 	$Sprite.texture = textures[type]
