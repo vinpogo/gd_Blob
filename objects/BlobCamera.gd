@@ -1,6 +1,5 @@
 extends Camera2D
 
-
 func _ready():
 	zoom = zoom*3
 

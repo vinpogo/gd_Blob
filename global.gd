@@ -2,6 +2,23 @@ extends Node
 var AXIS_THRESHHOLD = 0.5
 var player_count = 2
 
+var player_config= []
+
+func default_player_config():
+	return {
+		"initial_gravity_direction": Vector2(0,1),
+		"color": Color(0.5,0.5,0.5),
+	}
+
+func set_player_config_count(n: int):
+	player_config = []
+	for i in range(n):
+		player_config.push_back(default_player_config())
+
+func init_player_config_n(n: int, config = null):
+	if config:
+		player_config[n] = config
+
 
 func stats_proto():
 	var s = {}

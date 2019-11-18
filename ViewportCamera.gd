@@ -7,6 +7,7 @@ func _physics_process(delta):
 				position = target.position
 
 func connect_signals():
+
 	target.connect("rotate", self, "_on_Character_rotate")
 
 

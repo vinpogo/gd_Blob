@@ -6,11 +6,13 @@ func get_distance_to_goal(player: int):
 	pass
 
 func add_players(count: int):
-	for i in global.player_count - 1:
+	for i in global.player_count:
 		var b = load("res://objects/newBlob/Blob.tscn").instance()
-		b.color = Color(randf(), randf(), randf() ,1)
-		b.player = i+2
-		b.set_name("Player%s"%(i+2))
+		b.init_blob(i+1, Vector2(200 * i , 200 * i))
+#		b.color = Color(randf(), randf(), randf() ,1)
+#		b.player = i+1
+		b.set_name("Player%s"%(i+1))
+#		b.initial_gravity = Vector2(0,1)
 		add_child(b)
 	pass
 

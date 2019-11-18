@@ -15,6 +15,4 @@ func stop_slowmo_timer():
 func _ready():
 	stop_slowmo_timer()
 func _process(delta: float) -> void:
-	global.slowmo_duration = max(global.slowmo_duration - delta, 0) if timer_on else global.slowmo_duration
-	$VBoxContainer/Sprite.rotation = get_parent().get_parent().get_node("Camera2D").rotation
 	update_jump_count()

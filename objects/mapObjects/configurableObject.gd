@@ -1,3 +1,4 @@
+tool
 extends StaticBody2D
 
 class_name Planet
@@ -12,11 +13,11 @@ var textures = {
 var types = ["sticky", "goal", "deadly", "bouncy"]
 var isBlobbed = 0
 export(String, "sticky", "goal", "deadly", "bouncy") var type = "goal"
-export(Texture) var sprite
 
 onready var tween = get_node("Tween")
 
 func _ready() -> void:
+	$Sprite.texture = textures[type]
 	$AnimatedSprite.visible = false
 
 func set_properties(planet_type = "sticky", planet_scale = 1, initial_position = null, x = 0, y = 0) -> void:
@@ -25,6 +26,8 @@ func set_properties(planet_type = "sticky", planet_scale = 1, initial_position =
 	global_position = initial_position if initial_position else Vector2(x, y)
 	$Sprite.texture = textures[type]
 
+func _process(delta: float) -> void:
+	$Sprite.texture = textures[type]
 
 func get_type(color, player):
 	$AnimatedSprite.modulate = color
