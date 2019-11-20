@@ -9,33 +9,30 @@ signal jump
 signal toggle_zoom
 signal die
 
-export var GRAVITY = 500
-export var JUMP_FORCE = 30
-export var JUMP_FACTOR = 1.5
+export var GRAVITY_FORCE = 42
+export var GRAVITY_FACTOR = 0.4
+export var JUMP_FORCE = 7
 export var MAX_JUMPS = 1
-export var MAX_SPEED = 100
+export var MAX_SPEED = 21
 export var SLOWMO = 10
-export var AIR_CONTROL = 200
+export var AIR_CONTROL = 30
 export(Texture) var player_atlas
 export(Color) var color
 export var player = 1
 
 var justJumped = false
 var onFloor = false
-var inMotion = false
 var toBounce = false
-var jumpFactor = 1
-var jumpsLeft = 1
-var air_control = 0
 var timer_on = false
 var jump_count = 5
 var precision_count = 5
 var velocity = Vector2(0,0)
-var slowmo = 1.0
+var slowmo_factor = 1.0
+var gravity_factor = false
 var visited_goals = []
 var newCollide
 var initial_gravity: Vector2
-
+var initial_position: Vector2
 var ability_mapping = {
 	"slot_1": "precision_jump",
 	"slot_2": "flip_gravity",
@@ -58,11 +55,11 @@ func init_blob(
 							jumps = 5,
 							precisions = 5
 							):
-	print(initial_gravity, initial_position, jumps, precisions, color)
 	player = player_index
 	global_position = initial_position
 	jump_count = jumps
 	precision_count = precisions
+	initial_position = initial_position
 	initial_gravity = initial_gravity_direction
 	$Sprite.modulate = color
 
@@ -73,6 +70,10 @@ func _ready():
 		$Sprite.texture = player_atlas
 	$Sprite.modulate = color
 	emit_signal("set_jump_count", jump_count, precision_count, player)
+
+func _on_InputController_jump(is_pressed) -> void:
+	handle_ability("jump", is_pressed)
+	tree.travel("jump")
 
 func _on_InputController_slot_1(is_pressed) -> void:
 	var ability = ability_mapping["slot_1"]
@@ -95,24 +96,48 @@ func _on_InputController_slot_5(is_pressed) -> void:
 	handle_ability(ability, is_pressed)
 
 func handle_ability(ability: String, is_pressed: bool) -> void:
-	print("handle_ability")
 	match(ability):
+		"jump":
+			if jump_count > 0 && is_pressed:
+				jump()
+			elif !is_pressed:
+				print("turn off")
+				gravity_factor = false
 		"precision_jump":
 			print("precision_jump")
+			if precision_count > 0 && !is_pressed:
+				precision_jump()
 		"slowmo":
 			print("slowmo")
+			if !is_pressed:
+				slowmo(is_pressed)
 		"flip_gravity":
 			print("flip_gravity")
+			if is_pressed:
+				flip_gravity()
 	pass
+func flip_gravity() -> void:
+	compass = global.ru_setCompass("up", compass.down)
+	tree.travel("inAir")
+	ru_rotate(compass.up)
+	emit_signal("rotate", compass.up)
+	onFloor = false
+
+func slowmo(is_pressed: bool) -> void:
+	if(is_pressed):
+		slowmo_factor = 1.0/SLOWMO
+		velocity *= (slowmo_factor*2)
+	else:
+		slowmo_factor = 1.0
 
 func jump():
-	velocity = (compass.up * JUMP_FORCE + compass.right * global.left_stick(player).x * JUMP_FORCE).normalized() * slowmo * JUMP_FORCE * (3.0 if slowmo < 1.0 else 1.0)
+	print("jump")
+	velocity = compass.up * slowmo_factor * JUMP_FORCE + global.left_stick(player) * compass.right * AIR_CONTROL
 	onFloor = false
 	timer.start()
 	justJumped = true
-	air_control = AIR_CONTROL
-
 	jump_count -= 1
+	gravity_factor = true
 	emit_signal("set_jump_count", jump_count, precision_count, player)
 
 
@@ -123,40 +148,13 @@ func precision_jump():
 	precision_count -= 1
 	justJumped = true
 	tree.travel("precision-jump")
-	velocity = jump_direction.normalized() * JUMP_FORCE * 2.5
+	velocity = jump_direction.normalized() * JUMP_FORCE
 	onFloor = false
-	air_control = AIR_CONTROL
 	emit_signal("jump")
 	emit_signal("set_jump_count", jump_count, precision_count, player)
 
-
-func player_input_velocity():
-	if onFloor:
-		return Vector2(0,0)
-	if Input.is_action_pressed("jump_%s"%player) && !is_falling_down():
-		return compass.right * global.left_stick(player).x * AIR_CONTROL * 0.4* slowmo
-	return compass.right * global.left_stick(player).x * AIR_CONTROL* slowmo
-
-func gravity_velocity():
-	if Input.is_action_pressed("jump_%s"%player) && !is_falling_down():
-		return compass.down * GRAVITY * 0.4* slowmo
-	return compass.down * GRAVITY* slowmo
-
-func _physics_process(delta):
-	if !onFloor:
-		velocity = velocity + (player_input_velocity() + gravity_velocity())  * delta
-		if is_falling_down() && velocity.length() > MAX_SPEED:
-			velocity = velocity.normalized() * MAX_SPEED
-	else:
-		velocity = Vector2(0,0)
-	var oldCollide = newCollide
-	newCollide = move_and_collide(velocity)
-	if newCollide && !justJumped:
-		if newCollide != oldCollide:
-			collisionHandler(newCollide)
-
 func bounce(col):
-	velocity = velocity.bounce(col.normal).normalized() * JUMP_FORCE * 2
+	velocity = velocity.bounce(col.normal).normalized() * JUMP_FORCE
 	toBounce = false
 	tree.travel("jump")
 
@@ -165,17 +163,31 @@ func stick(collision):
 		tree.travel("land")
 		onFloor = true
 		velocity = Vector2(0,0)
+		gravity_factor = false
 		compass = global.ru_setCompass("up", collision.normal)
 
 		ru_rotate(collision.normal)
 		emit_signal("stick")
 		emit_signal("rotate", collision.normal)
 
-func ru_rotate(vec) -> void:
-	var angle = vec.angle()
-	var rot = rotation - PI / 2
-	tween.interpolate_property(self, "rotation", null, rotation + global.short_angle_dist(rot, angle), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
-	tween.start()
+func die():
+	emit_signal("die", player)
+	emit_signal("rotate", compass.up)
+	velocity = Vector2(0,0)
+	global_position = initial_position
+	onFloor = false
+
+func player_input_velocity():
+	if onFloor:
+		return Vector2(0,0)
+	return compass.right * global.left_stick(player).x * AIR_CONTROL * slowmo_factor
+
+func gravity_velocity():
+	if is_falling_down() && gravity_factor:
+		print("turn off")
+		gravity_factor = false
+	var g = GRAVITY_FACTOR if gravity_factor else 1.0
+	return compass.down * GRAVITY_FORCE * slowmo_factor * g
 
 func collisionHandler(collision):
 	var type = "bouncy"
@@ -192,7 +204,7 @@ func collisionHandler(collision):
 		bounce(collision)
 		if visited_goals.find(collision.collider) == -1:
 			visited_goals.push_back(collision.collider)
-	elif type == "goal" && !inMotion:
+	elif type == "goal":
 		if visited_goals.find(collision.collider) == -1:
 			precision_count += 3
 			visited_goals.push_back(collision.collider)
@@ -200,8 +212,11 @@ func collisionHandler(collision):
 	elif type == "deadly":
 		die()
 
-func ru_position():
-	return self.position
+func ru_rotate(vec) -> void:
+	var angle = vec.angle()
+	var rot = rotation - PI / 2
+	tween.interpolate_property(self, "rotation", null, rotation + global.short_angle_dist(rot, angle), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
+	tween.start()
 
 func canJump():
 	if jump_count < MAX_JUMPS: return true
@@ -210,72 +225,25 @@ func canJump():
 func is_falling_down():
 	return compass.down.dot(velocity) > 0
 
-func _on_BounceArea_bounce():
-	toBounce = true
-
-func _on_Arrow_aim():
-	print("aim")
-
-func _on_aim_stopAim() -> void:
-	pass
-
-func die():
-	emit_signal("die", player)
-	emit_signal("rotate", compass.up)
-	onFloor = false
-
-func addJump():
-	jumpsLeft += 1
-
 func _on_Timer_timeout() -> void:
 	justJumped = false
-
-func _on_InputController_toggle_zoom() -> void:
-	emit_signal("toggle_zoom")
-
-
-func _on_GameZone_body_shape_exited(body_id: int, body: PhysicsBody2D, body_shape: int, area_shape: int) -> void:
-	die()
-
-
-func _on_InputController_flip_gravity() -> void:
-	compass = global.ru_setCompass("up", compass.down)
-	tree.travel("inAir")
-	ru_rotate(compass.up)
-	emit_signal("rotate", compass.up)
-	onFloor = false
-
-
-func _on_InputController_freeze() -> void:
-	slowmo = 0
-	velocity = Vector2(0,0)
-
-
-func _on_InputController_unfreeze() -> void:
-	slowmo = 1
-
-
-func _on_InputController_jump() -> void:
-	if jump_count > 0:
-		jump()
-		tree.travel("jump")
-
-
-func _on_InputController_precision_jump() -> void:
-	if precision_count > 0:
-		precision_jump()
 
 func start_slowmo_timer():
 	timer_on = true
 
 func stop_slowmo_timer():
 	timer_on = false
-func _on_InputController_slowmo(b: bool) -> void:
-	print("slowmo")
-	if(b):
-#		$Hud/GUI.start_slowmo_timer()
-		slowmo = 1.0/SLOWMO
-		velocity *= (slowmo*2)
+
+func _physics_process(delta):
+	if !onFloor:
+		velocity = velocity + (player_input_velocity() + gravity_velocity())  * delta
+		if is_falling_down() && velocity.length() > MAX_SPEED:
+			velocity = velocity.normalized() * MAX_SPEED
 	else:
-#		$Hud/GUI.stop_slowmo_timer()
-		slowmo = 1.0
+		velocity = Vector2(0,0)
+	var oldCollide = newCollide
+	newCollide = move_and_collide(velocity)
+	if newCollide && !justJumped:
+		if newCollide != oldCollide:
+			collisionHandler(newCollide)
+
