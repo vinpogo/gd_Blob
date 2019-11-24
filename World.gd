@@ -5,14 +5,12 @@ func get_distance_to_goal(player: int):
 	return d.length()
 	pass
 
-func add_players(count: int):
-	for i in global.player_count:
+func add_players():
+	for player_config in global.player_configs:
+		player_config.initial_position = get_node("Spawn%s"%player_config.player_index).global_position
 		var b = load("res://objects/newBlob/Blob.tscn").instance()
-		b.init_blob(i+1, Vector2(200 * i , 200 * i))
-#		b.color = Color(randf(), randf(), randf() ,1)
-#		b.player = i+1
-		b.set_name("Player%s"%(i+1))
-#		b.initial_gravity = Vector2(0,1)
+		b.init_blob(player_config)
+		b.set_name("Player%s"%player_config.player_index)
 		add_child(b)
 	pass
 
@@ -27,3 +25,9 @@ func get_blob_statistics():
 		for key in stats.keys():
 			stats[key] += s[key]
 	return stats
+
+
+func _on_Area2D_body_exited(body: PhysicsBody2D) -> void:
+	if body is BlobCharacter:
+		body.compass = global.ru_setCompass("down",-body.global_position)
+		body.ru_rotate(body.global_position)

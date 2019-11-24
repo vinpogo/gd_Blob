@@ -1,7 +1,7 @@
 extends Control
 var game = preload("res://Game.tscn")
-onready var cb_player1 = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CheckBox
-onready var cb_player2 = $MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer/CheckBox2
+onready var cb_player1 = get_node("MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/HBoxContainer/VBoxContainer/CheckBox1")
+onready var cb_player2 = get_node("MarginContainer/VBoxContainer/HBoxContainer5/VBoxContainer2/HBoxContainer/VBoxContainer/CheckBox2")
 onready var btn_start = $MarginContainer/VBoxContainer/HBoxContainer3/Button
 func _ready() -> void:
 	$MarginContainer/VBoxContainer/HBoxContainer3/Button.grab_focus()

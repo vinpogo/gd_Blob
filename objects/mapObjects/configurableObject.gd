@@ -11,7 +11,7 @@ var textures = {
 }
 
 var types = ["sticky", "goal", "deadly", "bouncy"]
-var isBlobbed = 0
+var isBlobbed = -1
 export(String, "sticky", "goal", "deadly", "bouncy") var type = "goal"
 
 onready var tween = get_node("Tween")

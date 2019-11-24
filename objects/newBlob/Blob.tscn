@@ -151,7 +151,7 @@ graph_offset = Vector2( -97.0423, -57.208 )
 z_index = 5
 script = ExtResource( 1 )
 JUMP_FORCE = 16
-color = Color( 0.870588, 0.152941, 0.796078, 1 )
+color = Color( 0.764706, 0.647059, 0.647059, 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
@@ -191,12 +191,5 @@ modulate = Color( 0.501961, 0.34902, 0.486275, 1 )
 texture = ExtResource( 4 )
 vframes = 5
 hframes = 20
-frame = 88
+frame = 6
 script = ExtResource( 5 )
-[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]
-[connection signal="jump" from="InputController" to="." method="_on_InputController_jump"]
-[connection signal="slot_1" from="InputController" to="." method="_on_InputController_slot_1"]
-[connection signal="slot_2" from="InputController" to="." method="_on_InputController_slot_2"]
-[connection signal="slot_3" from="InputController" to="." method="_on_InputController_slot_3"]
-[connection signal="slot_4" from="InputController" to="." method="_on_InputController_slot_4"]
-[connection signal="slot_5" from="InputController" to="." method="_on_InputController_slot_5"]

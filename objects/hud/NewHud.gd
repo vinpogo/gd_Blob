@@ -11,7 +11,7 @@ func connect_signals():
 	target.connect("set_jump_count", self, "_on_Character_set_jump_count")
 
 func _process(delta: float) -> void:
-	if world && player && count_blob:
+	if world && player > -1 && count_blob:
 		var stats = world.get_blob_statistics()["player_%s"%player]
 		count_blob.text = String(stats)
 

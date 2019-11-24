@@ -1,94 +1,143 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://objects/mapObjects/scenes/Sector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/mapObjects/Configurable.tscn" type="PackedScene" id=3]
+[ext_resource path="res://gfx/New folder/background.png" type="Texture" id=4]
 
-[sub_resource type="StreamTexture" id=1]
-flags = 7
-load_path = "res://.import/background.png-e9676c01380243fc8686df2b1fdb4716.stex"
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 7296, 7040 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
+__meta__ = {
+"_edit_vertical_guides_": [ -3200.0 ]
+}
 
 [node name="Map" type="Node" parent="."]
+editor/display_folded = true
 
 [node name="GameZone" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 1000, 1000 )
+position = Vector2( -13.1704, 2688 )
 PLANET_COUNT = 10
 
 [node name="GameZone2" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -995.434, 979.428 )
+position = Vector2( 2560, 2560 )
+PLANET_COUNT = 10
 
 [node name="GameZone3" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -1036.58, -1036.58 )
+position = Vector2( -2560, 2560 )
+PLANET_COUNT = 10
 
 [node name="GameZone4" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 1041.14, -1036.58 )
+position = Vector2( 2560, -2560 )
+PLANET_COUNT = 10
 
 [node name="GameZone5" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 3077.72, -995.433 )
+position = Vector2( 2688, 0 )
+PLANET_COUNT = 10
 
 [node name="GameZone6" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 3098.29, 1082.29 )
+position = Vector2( -2688, 0 )
+PLANET_COUNT = 10
 
 [node name="GameZone7" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -3134.87, 1061.71 )
+position = Vector2( -2560, -2560 )
+PLANET_COUNT = 10
 
 [node name="GameZone8" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -3176.01, -1304.01 )
+position = Vector2( 0, -2688 )
+PLANET_COUNT = 10
 
 [node name="GameZone9" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -937.216, -3159.85 )
+position = Vector2( 0, -5248 )
+PLANET_COUNT = 10
 
 [node name="GameZone10" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 1419.41, -3307.14 )
+position = Vector2( 2560, -5120 )
+PLANET_COUNT = 10
 
 [node name="GameZone11" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 3952.78, -3307.14 )
+position = Vector2( 5120, -2560 )
+PLANET_COUNT = 10
+
+[node name="GameZone12" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 5120, -5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone13" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 5248, 0 )
+PLANET_COUNT = 10
+
+[node name="GameZone14" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 5120, 2560 )
+PLANET_COUNT = 10
+
+[node name="GameZone15" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 2560, 5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone16" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 5120, 5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone17" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( 0, 5248 )
+PLANET_COUNT = 10
+
+[node name="GameZone18" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -2560, 5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone19" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -5120, 2560 )
+PLANET_COUNT = 10
+
+[node name="GameZone20" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -5120, 5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone21" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -5248, 0 )
+PLANET_COUNT = 10
+
+[node name="GameZone22" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -5120, -2560 )
+PLANET_COUNT = 10
+
+[node name="GameZone23" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -2560, -5120 )
+PLANET_COUNT = 10
+
+[node name="GameZone24" parent="Map" instance=ExtResource( 2 )]
+position = Vector2( -5120, -5120 )
+PLANET_COUNT = 10
+
+[node name="Area2D" type="Area2D" parent="."]
+z_index = -1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="Spawn0" type="Node2D" parent="."]
+position = Vector2( 0, 1280 )
 
 [node name="Spawn1" type="Node2D" parent="."]
-position = Vector2( -5206.16, 5300.46 )
+position = Vector2( -13.1704, -1280 )
 
 [node name="Spawn2" type="Node2D" parent="."]
-position = Vector2( 4778.88, -5783.87 )
+position = Vector2( -1280, 0 )
+
+[node name="Spawn3" type="Node2D" parent="."]
+position = Vector2( 1280, 0 )
 
 [node name="Configurable" parent="." instance=ExtResource( 3 )]
-position = Vector2( -716.411, 12150.6 )
-scale = Vector2( 30, 30 )
-type = "bouncy"
+scale = Vector2( 5, 5 )
+type = "deadly"
 
-[node name="Configurable2" parent="." instance=ExtResource( 3 )]
-position = Vector2( 88.7866, -13185.1 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable8" parent="." instance=ExtResource( 3 )]
-position = Vector2( -11220.6, -12130.9 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable3" parent="." instance=ExtResource( 3 )]
-position = Vector2( 14434.3, 229.353 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable4" parent="." instance=ExtResource( 3 )]
-position = Vector2( -14016.1, -1189.36 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable7" parent="." instance=ExtResource( 3 )]
-position = Vector2( -12003.4, 10120.1 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable5" parent="." instance=ExtResource( 3 )]
-position = Vector2( 11236.7, -10500.3 )
-scale = Vector2( 30, 30 )
-
-[node name="Configurable6" parent="." instance=ExtResource( 3 )]
-position = Vector2( 11045, 10872.5 )
-scale = Vector2( 30, 30 )
-
-[node name="Sprite" type="Sprite" parent="."]
-position = Vector2( -26.2402, 336.978 )
+[node name="Background" type="Sprite" parent="."]
 z_index = -1
-texture = SubResource( 1 )
+texture = ExtResource( 4 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 204800, 120000 )
+region_rect = Rect2( 0, 0, 20000, 20000 )
+[connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

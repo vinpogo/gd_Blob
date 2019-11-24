@@ -2,29 +2,53 @@ extends Node
 var AXIS_THRESHHOLD = 0.5
 var player_count = 2
 
-var player_config= []
+var player_configs = []
 
 func default_player_config():
 	return {
-		"initial_gravity_direction": Vector2(0,1),
-		"color": Color(0.5,0.5,0.5),
+		"initial_gravity_direction": Vector2(randf(), randf()),
+		"color": Color(randf(), randf(), randf()),
+		"jump_count": 5,
+		"precision_count": 5
 	}
 
 func set_player_config_count(n: int):
-	player_config = []
+	player_configs = []
 	for i in range(n):
-		player_config.push_back(default_player_config())
+		var c = default_player_config()
+		c.player_index = i
+		player_configs.push_back(c)
 
 func init_player_config_n(n: int, config = null):
 	if config:
-		player_config[n] = config
+		player_configs[n] = config
 
 
 func stats_proto():
 	var s = {}
 	for i in range(player_count):
-		s["player_%s"%(i+1)] = 0
+		s["player_%s"%(i)] = 0
 	return s
+
+func get_winning_color(stats):
+	var tmp_max = 0
+	var c = Color(1,1,1)
+	for i in stats.size():
+		if stats["player_%s"%i] > tmp_max:
+			tmp_max = stats["player_%s"%i]
+			c = player_configs[i].color
+	return c
+	pass
+func stats_max(stats):
+	var tmp_max = 0
+	var player = ""
+	for key in stats:
+		if stats[key] > tmp_max:
+			tmp_max = stats[key]
+			player = key
+
+
+
 enum ABILITIES{
 	PRECISION_JUMP,
 	FLIP_GRAVITY,
@@ -44,8 +68,8 @@ func short_angle_dist(from, to):
 
 func left_stick(player: int):
 	if Input.get_connected_joypads().size() > 0:
-		var x_Axis = Input.get_joy_axis(player - 1, JOY_AXIS_0)
-		var y_Axis = -Input.get_joy_axis(player - 1, JOY_AXIS_1)
+		var x_Axis = Input.get_joy_axis(player, JOY_AXIS_0)
+		var y_Axis = -Input.get_joy_axis(player, JOY_AXIS_1)
 		return Vector2(x_Axis, y_Axis) if Vector2(x_Axis, y_Axis).length() > AXIS_THRESHHOLD else Vector2(0,0)
 
 func ability(player: int):

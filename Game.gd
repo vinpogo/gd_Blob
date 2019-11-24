@@ -8,22 +8,24 @@ onready var hud1 = $Viewports/ViewportContainer1/Viewport1/CanvasLayer
 onready var world = $Viewports/ViewportContainer1/Viewport1/World
 
 func _ready():
-
-	world.add_players(global.player_count)
+	for i in global.player_count:
+		global.set_player_config_count(global.player_count)
+	world.add_players()
 
 	viewport1.size.x = 1024
 	minimap.world_2d = viewport1.world_2d
-	camera1.target = world.get_node("Player1")
+	camera1.target = world.get_node("Player0")
 	camera1.connect_signals()
-	hud1.target = world.get_node("Player1")
-	hud1.world = world
-	hud1.player = 1
+	hud1.target = world.get_node("Player0")
 	hud1.connect_signals()
+	hud1.world = world
+	hud1.player = 0
+
 	if global.player_count == 1:
 		$ViewportContainer.rect_position.x = 0.0
 		$ViewportContainer.rect_rotation = 0.0
 	viewport1.size.x = 1024 / global.player_count
-	for i in range(2, global.player_count + 1):
+	for i in range(1, global.player_count ):
 		var v = player_viewport.instance()
 		print(v)
 		v.get_node("Viewport").size = viewport1.size
