@@ -4,23 +4,24 @@ class_name Sector
 var planet = preload ("res://objects/mapObjects/Configurable.tscn")
 var grid = []
 var leader = ""
-export var PLANET_COUNT = 100
+export var PLANET_COUNT = 15
 func _ready() -> void:
 	randomize()
 	var shape = $CollisionShape2D.shape.extents
-	var grid_size = 400
+	var grid_size = 320
 	for i in range(PLANET_COUNT):
-		var obj_pos = get_free_position_in_grid(grid, Vector2(randi()%5, randi()%5)) * grid_size
-		var r = randf() * 1.5+ 0.5
+		var obj_pos = get_free_position_in_grid(grid, Vector2(randi()%8, randi()%8)) * grid_size
+		var r = randf() * 1.3+ 0.5
 		var o = planet.instance()
-		o.set_properties("random", r, obj_pos)
+		o.set_properties("random", r, obj_pos - Vector2(840, 840))
 		$Planets.add_child(o)
 func get_free_position_in_grid(grid, pos: Vector2):
+	randomize()
 	if grid.find(pos) == -1:
 		grid.push_back(pos)
 		return pos
 	else:
-		return get_free_position_in_grid(grid, Vector2(randi()%5, randi()%5))
+		return get_free_position_in_grid(grid, Vector2(randi()%8, randi()%8))
 func _process(delta: float) -> void:
 	$Sprite.modulate = global.get_winning_color(get_blob_statistics())
 	pass

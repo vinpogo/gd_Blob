@@ -8,7 +8,6 @@ extents = Vector2( 1280, 1280 )
 
 [node name="Sector" type="Area2D"]
 script = ExtResource( 1 )
-PLANET_COUNT = 15
 
 [node name="Planets" type="Node2D" parent="."]
 
@@ -20,3 +19,7 @@ z_index = -1
 texture = ExtResource( 2 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 2560, 2560 )
+
+[node name="Camera2D" type="Camera2D" parent="."]
+current = true
+zoom = Vector2( 10, 10 )

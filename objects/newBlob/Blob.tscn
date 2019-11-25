@@ -1,10 +1,13 @@
-[gd_scene load_steps=27 format=2]
+[gd_scene load_steps=28 format=2]
 
 [ext_resource path="res://objects/newBlob/Blob_Character.gd" type="Script" id=1]
 [ext_resource path="res://gfx/arrow.png" type="Texture" id=2]
 [ext_resource path="res://objects/newBlob/Blob_InputController.gd" type="Script" id=3]
 [ext_resource path="res://gfx/blob/spritesheet.png" type="Texture" id=4]
 [ext_resource path="res://objects/newBlob/Blob_Sprite.gd" type="Script" id=5]
+
+[sub_resource type="CircleShape2D" id=22]
+radius = 600.0
 
 [sub_resource type="CircleShape2D" id=1]
 radius = 34.7217
@@ -153,7 +156,13 @@ script = ExtResource( 1 )
 JUMP_FORCE = 16
 color = Color( 0.764706, 0.647059, 0.647059, 1 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="PunchArea" type="Area2D" parent="."]
+collision_layer = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PunchArea"]
+shape = SubResource( 22 )
+
+[node name="Collision" type="CollisionShape2D" parent="."]
 shape = SubResource( 1 )
 
 [node name="Timer" type="Timer" parent="."]
@@ -191,5 +200,5 @@ modulate = Color( 0.501961, 0.34902, 0.486275, 1 )
 texture = ExtResource( 4 )
 vframes = 5
 hframes = 20
-frame = 6
+frame = 3
 script = ExtResource( 5 )

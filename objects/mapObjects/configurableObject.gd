@@ -10,9 +10,9 @@ var textures = {
 "goal": preload("res://gfx/New folder/moon.png")
 }
 
-var types = ["sticky", "goal", "deadly", "bouncy"]
+var types = ["sticky", "deadly", "bouncy"]
 var isBlobbed = -1
-export(String, "sticky", "goal", "deadly", "bouncy") var type = "goal"
+export(String, "sticky","deadly", "bouncy") var type = "sticky"
 
 onready var tween = get_node("Tween")
 
@@ -29,21 +29,19 @@ func set_properties(planet_type = "sticky", planet_scale = 1, initial_position =
 func _process(delta: float) -> void:
 	$Sprite.texture = textures[type]
 
-func get_type(color, player):
+func get_type():
+	return type
+
+func set_type(planet_type: String, player, color):
 	$AnimatedSprite.modulate = color
 	$AnimatedSprite.visible = true
 	$AnimatedSprite.play("blobify")
 	isBlobbed = player
-	return type
-
-func set_type(planet_type: String):
 	type = planet_type
 
 func get_random_type() -> String:
 	var r = randf()
-	if r < 0.4:
+	if r < 0.7:
 		return "sticky"
-	elif r < 0.7:
-		return "deadly"
 	else:
-		return "goal"
+		return "deadly"

@@ -6,7 +6,7 @@
 [ext_resource path="res://gfx/New folder/background.png" type="Texture" id=4]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7296, 7040 )
+extents = Vector2( 5100, 5100 )
 
 [node name="World" type="Node2D"]
 script = ExtResource( 1 )
@@ -49,72 +49,9 @@ PLANET_COUNT = 10
 position = Vector2( 0, -2688 )
 PLANET_COUNT = 10
 
-[node name="GameZone9" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 0, -5248 )
-PLANET_COUNT = 10
-
-[node name="GameZone10" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 2560, -5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone11" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 5120, -2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone12" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 5120, -5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone13" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 5248, 0 )
-PLANET_COUNT = 10
-
-[node name="GameZone14" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 5120, 2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone15" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 2560, 5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone16" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 5120, 5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone17" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 0, 5248 )
-PLANET_COUNT = 10
-
-[node name="GameZone18" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -2560, 5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone19" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -5120, 2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone20" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -5120, 5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone21" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -5248, 0 )
-PLANET_COUNT = 10
-
-[node name="GameZone22" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -5120, -2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone23" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -2560, -5120 )
-PLANET_COUNT = 10
-
-[node name="GameZone24" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -5120, -5120 )
-PLANET_COUNT = 10
-
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -1
+collision_layer = 0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
 shape = SubResource( 1 )
@@ -123,7 +60,7 @@ shape = SubResource( 1 )
 position = Vector2( 0, 1280 )
 
 [node name="Spawn1" type="Node2D" parent="."]
-position = Vector2( -13.1704, -1280 )
+position = Vector2( -256, 1280 )
 
 [node name="Spawn2" type="Node2D" parent="."]
 position = Vector2( -1280, 0 )

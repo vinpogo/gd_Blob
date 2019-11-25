@@ -5,6 +5,7 @@ var player_count = 2
 var player_configs = []
 
 func default_player_config():
+	randomize()
 	return {
 		"initial_gravity_direction": Vector2(randf(), randf()),
 		"color": Color(randf(), randf(), randf()),
