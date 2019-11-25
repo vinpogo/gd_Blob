@@ -154,7 +154,7 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 				flip_gravity()
 		"punch":
 			print("punch")
-			if punch_count > 0 && is_pressed:
+			if is_pressed:
 				punch()
 
 func flip_gravity() -> void:
