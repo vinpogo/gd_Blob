@@ -9,8 +9,7 @@ func default_player_config():
 	return {
 		"initial_gravity_direction": Vector2(randf(), randf()),
 		"color": Color(randf(), randf(), randf()),
-		"jump_count": 5,
-		"precision_count": 5
+		"ability_count": { "jump": 5, "special": 5}
 	}
 
 func set_player_config_count(n: int):
@@ -24,6 +23,8 @@ func init_player_config_n(n: int, config = null):
 	if config:
 		player_configs[n] = config
 
+func get_player_config(player_index: int):
+	return player_configs[player_index]
 
 func stats_proto():
 	var s = {}
@@ -60,8 +61,6 @@ var ability_mapping = {
 	"slot_2": ABILITIES.FLIP_GRAVITY,
 	"slot_3": ABILITIES.SLOWMO
 }
-var precision_count = 5
-var slowmo_duration = 5.0
 func short_angle_dist(from, to):
 	var max_angle = PI * 2
 	var difference = fmod(to - from, max_angle)
@@ -100,7 +99,7 @@ func ability_pressed(player: int):
 	"slot_3": Input.is_action_pressed("slot_3_%s"%player),
 	}
 
-func ru_setCompass(dir: String, vec: Vector2 ):
+func get_compass(dir: String, vec: Vector2 ):
 	var v = vec.normalized()
 	match(dir):
 		"up":

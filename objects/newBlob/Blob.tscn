@@ -195,5 +195,5 @@ modulate = Color( 0.501961, 0.34902, 0.486275, 1 )
 texture = ExtResource( 4 )
 vframes = 5
 hframes = 20
-frame = 4
+frame = 12
 script = ExtResource( 5 )

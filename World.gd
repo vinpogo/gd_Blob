@@ -30,5 +30,5 @@ func get_blob_statistics():
 
 func _on_Area2D_body_exited(body: PhysicsBody2D) -> void:
 	if body is BlobCharacter:
-		body.compass = global.ru_setCompass("down",-body.global_position)
+		body.compass = global.get_compass("down",-body.global_position)
 		body.ru_rotate(body.global_position)

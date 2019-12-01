@@ -13,7 +13,7 @@ var textures = {
 var types = ["sticky", "deadly", "bouncy"]
 var isBlobbed = -1
 export(String, "sticky","deadly", "bouncy") var type = "sticky"
-
+export var radius = 190.0
 onready var tween = get_node("Tween")
 
 func _ready() -> void:
@@ -28,6 +28,9 @@ func set_properties(planet_type = "sticky", planet_scale = 1, initial_position =
 
 func _process(delta: float) -> void:
 	$Textures/Sprite.texture = textures[type]
+	$Textures/Sprite.scale = Vector2(radius / 190.0, radius / 190.0)
+	$Textures/AnimatedSprite.scale = Vector2(radius / 190.0, radius / 190.0)
+	$CollisionShape2D.shape.radius = radius
 
 func get_type():
 	return type

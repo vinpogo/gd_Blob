@@ -34,22 +34,25 @@ animations = [ {
 [sub_resource type="ShaderMaterial" id=2]
 
 [sub_resource type="CircleShape2D" id=3]
-radius = 196.0
+radius = 200.0
 
 [node name="Configurable" type="StaticBody2D"]
 script = ExtResource( 1 )
 type = "goal"
+radius = 200.0
 
 [node name="Textures" type="Node2D" parent="."]
 scale = Vector2( 1.03158, 1.03158 )
 
 [node name="Sprite" type="Sprite" parent="Textures"]
+scale = Vector2( 1.05263, 1.05263 )
 texture = ExtResource( 2 )
 region_rect = Rect2( 21, 21, 1108, 1108 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="Textures"]
 visible = false
 modulate = Color( 0.85098, 0, 1, 1 )
+scale = Vector2( 1.05263, 1.05263 )
 frames = SubResource( 1 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]

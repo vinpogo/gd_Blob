@@ -32,52 +32,53 @@ size_flags_vertical = 3
 custom_constants/separation = 12
 
 [node name="Labels" type="VBoxContainer" parent="CanvasLayer/Container/Columns/Column1/Stats"]
-margin_right = 167.0
+margin_right = 88.0
 margin_bottom = 580.0
 size_flags_horizontal = 3
 
 [node name="LabelJump" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Labels"]
-margin_right = 167.0
+margin_right = 88.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 2 )
-text = "Jumps left"
+text = "Jumps"
 
-[node name="LabelPrecision" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Labels"]
+[node name="LabelSpecial" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Labels"]
 margin_top = 28.0
-margin_right = 167.0
+margin_right = 88.0
 margin_bottom = 52.0
 custom_fonts/font = ExtResource( 2 )
-text = "Precisions left"
+text = "Specials"
 
 [node name="LabelBlob" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Labels"]
 margin_top = 56.0
-margin_right = 167.0
+margin_right = 88.0
 margin_bottom = 80.0
 custom_fonts/font = ExtResource( 2 )
-text = "Planets blobbed"
+text = "Planets"
 
 [node name="Values" type="VBoxContainer" parent="CanvasLayer/Container/Columns/Column1/Stats"]
-margin_left = 179.0
+margin_left = 100.0
 margin_right = 332.0
 margin_bottom = 580.0
 size_flags_horizontal = 3
+size_flags_stretch_ratio = 15.0
 
 [node name="ValueJump" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Values"]
-margin_right = 153.0
+margin_right = 232.0
 margin_bottom = 24.0
 custom_fonts/font = ExtResource( 2 )
 text = "5"
 
-[node name="ValuePrecision" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Values"]
+[node name="ValueSpecial" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Values"]
 margin_top = 28.0
-margin_right = 153.0
+margin_right = 232.0
 margin_bottom = 52.0
 custom_fonts/font = ExtResource( 2 )
 text = "5"
 
 [node name="ValueBlob" type="Label" parent="CanvasLayer/Container/Columns/Column1/Stats/Values"]
 margin_top = 56.0
-margin_right = 153.0
+margin_right = 232.0
 margin_bottom = 80.0
 custom_fonts/font = ExtResource( 2 )
 text = "0"
