@@ -40,7 +40,7 @@ var ability_mapping = [
 	"jump", # 0
 	"precision_jump", # 1
 	"flip_gravity", # 2
-	"precision_jump", # 3
+	"bounce", # 3
 	"punch", # 4
 	"slowmo" # 5
 ]
@@ -156,18 +156,28 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 
 		"slowmo":
 			print("slowmo")
-			if is_pressed && ability_count.special > 0:
+			if is_pressed && ability_count.special > 0 && !onFloor:
 				ability_count.special -= 1
-			slowmo(is_pressed)
+				slowmo(true)
+			if !is_pressed:
+				slowmo(false)
 
 		"flip_gravity":
 			print("flip_gravity")
 			if is_pressed && ability_count.special > 0:
 				flip_gravity()
+
 		"punch":
 			print("punch")
-			if is_pressed && ability_count.special > 0:
+			if is_pressed && ability_count.special > 0 && !onFloor:
 				punch()
+		"bounce":
+			print("bounce")
+			if is_pressed && !onFloor:
+				toBounce = true
+				ability_count.special -= 1
+			if !is_pressed:
+				toBounce = false
 	emit_signal("set_jump_count", ability_count, player)
 
 func flip_gravity() -> void:
@@ -270,13 +280,13 @@ func collision_handler(collision):
 	print("collide")
 	if collision.collider is Planet:
 		var type = collision.collider.get_type()
-		if type == "sticky":
-			stick(collision)
 		if type == "bouncy" || toBounce:
-			if collision.collider.isBlobbed != player:
+			if collision.collider.isBlobbed != player || toBounce:
 				bounce(collision)
 			else:
 				stick(collision)
+		elif type == "sticky":
+			stick(collision)
 		if type == "deadly":
 			die()
 		else:
