@@ -156,7 +156,10 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 
 		"slowmo":
 			print("slowmo")
+			if is_pressed && ability_count.special > 0:
+				ability_count.special -= 1
 			slowmo(is_pressed)
+
 		"flip_gravity":
 			print("flip_gravity")
 			if is_pressed && ability_count.special > 0:
@@ -165,6 +168,7 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 			print("punch")
 			if is_pressed && ability_count.special > 0:
 				punch()
+	emit_signal("set_jump_count", ability_count, player)
 
 func flip_gravity() -> void:
 	compass = global.get_compass("up", compass.down)
@@ -178,6 +182,7 @@ func slowmo(is_pressed: bool) -> void:
 
 func jump(direction: Vector2):
 	print("jump", global_transform)
+	slowmo(false)
 	velocity = (compass.up + direction.x * compass.right).normalized() * JUMP_FORCE
 	onFloor = false
 	timer.start()
@@ -189,6 +194,7 @@ func jump(direction: Vector2):
 	emit_signal("set_jump_count", ability_count, player)
 
 func precision_jump():
+	slowmo(false)
 	var direction = global.left_stick(player)
 	var jump_direction = direction.y * compass.up + direction.x * compass.right
 	timer.start()
@@ -202,12 +208,14 @@ func precision_jump():
 	emit_signal("set_jump_count", ability_count, player)
 
 func bounce(col):
+	slowmo(false)
 	velocity = velocity.bounce(col.normal).normalized() * JUMP_FORCE
 	toBounce = false
 	tree.travel("jump")
 
 func stick(collision):
 	if !onFloor:
+		slowmo(false)
 		tree.travel("land")
 		onFloor = true
 		velocity = Vector2(0,0)
@@ -229,10 +237,12 @@ func punch():
 
 func get_punched(direction: Vector2, player_index: int):
 	if player_index != player && !onFloor:
+		slowmo(false)
 		velocity = direction.normalized() * PUNCHING_POWER
 		tree.travel("inAir")
 
 func die():
+	slowmo(false)
 	compass = global.get_compass("down", initial_gravity)
 	ru_rotate(compass.up)
 	emit_signal("die", player)
