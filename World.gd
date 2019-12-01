@@ -8,6 +8,7 @@ func get_distance_to_goal(player: int):
 func add_players():
 	for player_config in global.player_configs:
 		player_config.initial_position = get_node("Spawn%s"%player_config.player_index).global_position
+		player_config.initial_gravity_direction = get_node("Spawn%s"%player_config.player_index).initial_gravity
 		var b = load("res://objects/newBlob/Blob.tscn").instance()
 		b.init_blob(player_config)
 		b.set_name("Player%s"%player_config.player_index)

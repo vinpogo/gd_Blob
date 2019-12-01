@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=26 format=2]
 
 [ext_resource path="res://objects/mapObjects/configurableObject.gd" type="Script" id=1]
 [ext_resource path="res://gfx/New folder/moon.png" type="Texture" id=2]
@@ -23,10 +23,7 @@
 [ext_resource path="res://gfx/New folder/blobify/0019.png" type="Texture" id=21]
 [ext_resource path="res://gfx/New folder/blobify/0020.png" type="Texture" id=22]
 
-[sub_resource type="CircleShape2D" id=1]
-radius = 190.568
-
-[sub_resource type="SpriteFrames" id=2]
+[sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ), ExtResource( 19 ), ExtResource( 20 ), ExtResource( 21 ), ExtResource( 22 ) ],
 "loop": false,
@@ -34,20 +31,29 @@ animations = [ {
 "speed": 30.0
 } ]
 
+[sub_resource type="ShaderMaterial" id=2]
+
+[sub_resource type="CircleShape2D" id=3]
+radius = 196.0
+
 [node name="Configurable" type="StaticBody2D"]
 script = ExtResource( 1 )
 type = "goal"
 
-[node name="Sprite" type="Sprite" parent="."]
+[node name="Textures" type="Node2D" parent="."]
+scale = Vector2( 1.03158, 1.03158 )
+
+[node name="Sprite" type="Sprite" parent="Textures"]
 texture = ExtResource( 2 )
 region_rect = Rect2( 21, 21, 1108, 1108 )
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource( 1 )
-
-[node name="Tween" type="Tween" parent="."]
-
-[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+[node name="AnimatedSprite" type="AnimatedSprite" parent="Textures"]
 visible = false
 modulate = Color( 0.85098, 0, 1, 1 )
-frames = SubResource( 2 )
+frames = SubResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+material = SubResource( 2 )
+shape = SubResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]

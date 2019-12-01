@@ -1,9 +1,10 @@
-[gd_scene load_steps=6 format=2]
+[gd_scene load_steps=7 format=2]
 
 [ext_resource path="res://World.gd" type="Script" id=1]
 [ext_resource path="res://objects/mapObjects/scenes/Sector.tscn" type="PackedScene" id=2]
 [ext_resource path="res://objects/mapObjects/Configurable.tscn" type="PackedScene" id=3]
-[ext_resource path="res://gfx/New folder/background.png" type="Texture" id=4]
+[ext_resource path="res://Spawn0.gd" type="Script" id=4]
+[ext_resource path="res://gfx/New folder/background.png" type="Texture" id=5]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 5100, 5100 )
@@ -15,39 +16,282 @@ __meta__ = {
 }
 
 [node name="Map" type="Node" parent="."]
-editor/display_folded = true
 
-[node name="GameZone" parent="Map" instance=ExtResource( 2 )]
+[node name="GameZone6" parent="Map" instance=ExtResource( 2 )]
+editor/display_folded = true
+position = Vector2( -13.1704, -2688 )
+PLANET_COUNT = 0
+
+[node name="Configurable" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable5" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable10" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable17" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -882.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable21" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 909.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable12" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable14" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable16" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -882.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable20" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 909.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable2" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable3" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable4" parent="Map/GameZone6" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="GameZone8" parent="Map" instance=ExtResource( 2 )]
+editor/display_folded = true
+position = Vector2( 2688, 0 )
+PLANET_COUNT = 0
+
+[node name="Configurable" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable5" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable10" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable17" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -882.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable21" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 909.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable12" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable14" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable16" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -882.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable20" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 909.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable2" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable3" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable4" parent="Map/GameZone8" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="GameZone9" parent="Map" instance=ExtResource( 2 )]
+editor/display_folded = true
+position = Vector2( -2688, 0 )
+PLANET_COUNT = 0
+
+[node name="Configurable" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable5" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable10" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable17" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -882.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable21" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 909.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable12" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable14" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable16" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -882.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable20" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 909.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable2" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable3" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable4" parent="Map/GameZone9" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="GameZone10" parent="Map" instance=ExtResource( 2 )]
+editor/display_folded = true
 position = Vector2( -13.1704, 2688 )
-PLANET_COUNT = 10
+PLANET_COUNT = 0
+
+[node name="Configurable" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable5" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable10" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable17" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -882.83, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable21" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 909.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable12" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable14" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -498.83, -896 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable16" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -882.83, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable20" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 909.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable2" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 525.17, -512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable3" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( 525.17, 512 )
+z_index = 2000
+type = "deadly"
+
+[node name="Configurable4" parent="Map/GameZone10" instance=ExtResource( 3 )]
+position = Vector2( -498.83, 512 )
+z_index = 2000
+type = "deadly"
 
 [node name="GameZone2" parent="Map" instance=ExtResource( 2 )]
 position = Vector2( 2560, 2560 )
-PLANET_COUNT = 10
+PLANET_COUNT = 20
 
 [node name="GameZone3" parent="Map" instance=ExtResource( 2 )]
 position = Vector2( -2560, 2560 )
-PLANET_COUNT = 10
+PLANET_COUNT = 20
 
 [node name="GameZone4" parent="Map" instance=ExtResource( 2 )]
 position = Vector2( 2560, -2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone5" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 2688, 0 )
-PLANET_COUNT = 10
-
-[node name="GameZone6" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( -2688, 0 )
-PLANET_COUNT = 10
+PLANET_COUNT = 20
 
 [node name="GameZone7" parent="Map" instance=ExtResource( 2 )]
 position = Vector2( -2560, -2560 )
-PLANET_COUNT = 10
-
-[node name="GameZone8" parent="Map" instance=ExtResource( 2 )]
-position = Vector2( 0, -2688 )
-PLANET_COUNT = 10
+PLANET_COUNT = 20
 
 [node name="Area2D" type="Area2D" parent="."]
 z_index = -1
@@ -58,15 +302,23 @@ shape = SubResource( 1 )
 
 [node name="Spawn0" type="Node2D" parent="."]
 position = Vector2( 0, 1280 )
+script = ExtResource( 4 )
+initial_gravity = Vector2( 0, 1 )
 
 [node name="Spawn1" type="Node2D" parent="."]
-position = Vector2( -256, 1280 )
+position = Vector2( 0, -1280 )
+script = ExtResource( 4 )
+initial_gravity = Vector2( 0, -1 )
 
 [node name="Spawn2" type="Node2D" parent="."]
 position = Vector2( -1280, 0 )
+script = ExtResource( 4 )
+initial_gravity = Vector2( -1, 0 )
 
 [node name="Spawn3" type="Node2D" parent="."]
 position = Vector2( 1280, 0 )
+script = ExtResource( 4 )
+initial_gravity = Vector2( 1, 0 )
 
 [node name="Configurable" parent="." instance=ExtResource( 3 )]
 scale = Vector2( 5, 5 )
@@ -74,7 +326,7 @@ type = "deadly"
 
 [node name="Background" type="Sprite" parent="."]
 z_index = -1
-texture = ExtResource( 4 )
+texture = ExtResource( 5 )
 region_enabled = true
 region_rect = Rect2( 0, 0, 20000, 20000 )
 [connection signal="body_exited" from="Area2D" to="." method="_on_Area2D_body_exited"]

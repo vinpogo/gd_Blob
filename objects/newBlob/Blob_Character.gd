@@ -39,7 +39,7 @@ var ability_mapping = [
 	"flip_gravity", # 2
 	"precision_jump", # 3
 	"punch", # 4
-	"slowmo" # 5 
+	"slowmo" # 5
 ]
 
 #{
@@ -144,7 +144,7 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 				$InputController.visible = false
 #				if global.left_stick(player).y <= 0 && onFloor:
 				precision_jump()
-				
+
 		"slowmo":
 			print("slowmo")
 			slowmo(is_pressed)
@@ -222,6 +222,7 @@ func get_punched(direction: Vector2, player_index: int):
 		tree.travel("inAir")
 
 func die():
+	compass = global.ru_setCompass("down", initial_gravity)
 	emit_signal("die", player)
 	emit_signal("rotate", compass.up)
 	velocity = Vector2(0,0)
@@ -261,13 +262,13 @@ func collision_handler(collision):
 			if collision.collider.isBlobbed != -1:
 				get_n_abilities(1)
 			collision.collider.set_type("bouncy", player, color)
-		
+
 		emit_signal("set_jump_count", jump_count, precision_count, player)
-		
+
 	if collision.collider is KinematicBody2D:
 		if collision.collider.player != player:
 			bounce(collision)
-			
+
 func get_n_abilities(n: int):
 	for i in range(n):
 		randomize()
