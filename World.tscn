@@ -34,23 +34,18 @@ shape = SubResource( 1 )
 position = Vector2( -13.1704, -2688 )
 PLANET_COUNT = 0
 
-[node name="Configurable5" parent="Map/GameZone6" instance=ExtResource( 4 )]
-position = Vector2( -498.83, 896 )
-z_index = 2000
-type = "deadly"
-
 [node name="Configurable10" parent="Map/GameZone6" instance=ExtResource( 4 )]
-position = Vector2( 525.17, 896 )
+position = Vector2( 269.17, 384 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable16" parent="Map/GameZone6" instance=ExtResource( 4 )]
-position = Vector2( -882.83, 512 )
+position = Vector2( 0, -1280 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable20" parent="Map/GameZone6" instance=ExtResource( 4 )]
-position = Vector2( 909.17, 512 )
+position = Vector2( -281.655, -256 )
 z_index = 2000
 type = "deadly"
 
@@ -64,7 +59,7 @@ z_index = 2000
 type = "deadly"
 
 [node name="Configurable17" parent="Map/GameZone8" instance=ExtResource( 4 )]
-position = Vector2( 768, -384 )
+position = Vector2( -896, -601.175 )
 z_index = 2000
 type = "deadly"
 
@@ -83,22 +78,17 @@ position = Vector2( -2688, 0 )
 PLANET_COUNT = 0
 
 [node name="Configurable10" parent="Map/GameZone9" instance=ExtResource( 4 )]
-position = Vector2( 525.17, 896 )
+position = Vector2( -1280, 0 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable21" parent="Map/GameZone9" instance=ExtResource( 4 )]
-position = Vector2( 909.17, -512 )
-z_index = 2000
-type = "deadly"
-
-[node name="Configurable12" parent="Map/GameZone9" instance=ExtResource( 4 )]
-position = Vector2( 525.17, -896 )
+position = Vector2( 6.10352e-005, -1024 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable20" parent="Map/GameZone9" instance=ExtResource( 4 )]
-position = Vector2( 909.17, 512 )
+position = Vector2( 6.10352e-005, 1024 )
 z_index = 2000
 type = "deadly"
 
@@ -107,22 +97,17 @@ position = Vector2( -13.1704, 2688 )
 PLANET_COUNT = 0
 
 [node name="Configurable17" parent="Map/GameZone10" instance=ExtResource( 4 )]
-position = Vector2( -882.83, -512 )
-z_index = 2000
-type = "deadly"
-
-[node name="Configurable21" parent="Map/GameZone10" instance=ExtResource( 4 )]
-position = Vector2( 909.17, -512 )
+position = Vector2( 0, 1241.17 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable12" parent="Map/GameZone10" instance=ExtResource( 4 )]
-position = Vector2( 525.17, -896 )
+position = Vector2( -281.655, -384 )
 z_index = 2000
 type = "deadly"
 
 [node name="Configurable14" parent="Map/GameZone10" instance=ExtResource( 4 )]
-position = Vector2( -498.83, -896 )
+position = Vector2( 269.17, 256 )
 z_index = 2000
 type = "deadly"
 

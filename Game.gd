@@ -42,3 +42,6 @@ func _ready():
 
 
 #	world.get_node("Player1").emit_signal("rotate", world.get_node("Player1").compass.up)
+
+func _on_Timer_timeout() -> void:
+	get_tree().change_scene("res://End.tscn")

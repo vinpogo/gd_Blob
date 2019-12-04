@@ -150,9 +150,12 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 				$InputController.visible = true
 			if !is_pressed:
 				$InputController.visible = false
-#				if global.left_stick(player).y <= 0 && onFloor:
-				if ability_count.jump > 0 && Vector2(0,0) != global.left_stick(player):
-					precision_jump()
+				if onFloor:
+					if ability_count.jump > 0 && global.left_stick(player).y > 0:
+						precision_jump()
+				else:
+					if ability_count.jump > 0 && Vector2(0,0) != global.left_stick(player):
+						precision_jump()
 
 		"slowmo":
 			print("slowmo")
