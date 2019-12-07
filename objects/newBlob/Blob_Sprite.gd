@@ -6,7 +6,7 @@ func _ready():
 	rotation = 0
 
 func _process(delta):
-	if !blob.onFloor:
+	if !blob.on_floor:
 		global_rotation = blob.velocity.angle() + PI/2
 	else:
 		rotation = 0

@@ -3,11 +3,9 @@ extends Area2D
 class_name Sector
 var planet = preload ("res://objects/mapObjects/Configurable.tscn")
 var grid = []
-var leader = ""
 export var PLANET_COUNT = 15
 func _ready() -> void:
 	randomize()
-	var shape = $CollisionShape2D.shape.extents
 	var grid_size = 320
 	for i in range(PLANET_COUNT):
 		var obj_pos = get_free_position_in_grid(grid, Vector2(randi()%8, randi()%8)) * grid_size
@@ -23,7 +21,8 @@ func get_free_position_in_grid(grid, pos: Vector2):
 	else:
 		return get_free_position_in_grid(grid, Vector2(randi()%8, randi()%8))
 func _process(delta: float) -> void:
-	$Sprite.modulate = global.get_winning_color(get_blob_statistics())
+	$Sprite.modulate = PlayerManager.get_winning_color()
+	$Sprite.modulate.a = 0.3
 	pass
 func get_blob_statistics():
 	var stats = global.stats_proto()

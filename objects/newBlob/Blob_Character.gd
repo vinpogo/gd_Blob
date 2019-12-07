@@ -1,84 +1,77 @@
 extends KinematicBody2D
 class_name BlobCharacter, "res://gfx/blob/icon.png"
 
+enum ABILITIES{
+	PRECISION_JUMP,
+	FLIP_GRAVITY,
+	SLOWMO,
+	JUMP,
+	BOUNCE,
+	PUNCH
+}
+
 signal stick
 signal rotate(vec)
 signal set_jump_count(count, player)
 signal jump
 signal die
 
-export var GRAVITY_FORCE = 64
-export var GRAVITY_FACTOR = 0.4
-export var PUNCHING_POWER = 60
-export var JUMP_FORCE = 7
-export var MAX_JUMPS = 1
-export var MAX_SPEED = 21
-export var SLOWMO = 3.0
-export var AIR_CONTROL = 30
+export var GRAVITY_FORCE: = 64
+export var GRAVITY_FACTOR: = 0.4
+export var PUNCHING_POWER: = 60.0
+export var JUMP_FORCE: = 7.0
+export var MAX_SPEED: = 21.0
+export var SLOWMO: = 3.0
+export var AIR_CONTROL: = 30.0
 export(Texture) var player_atlas
 export(Color) var color
-export var player = 1
+export var player: = 1
 
-var justJumped = false
-var onFloor = false
-var toBounce = false
-var timer_on = false
+onready var punch_area = get_node("PunchArea")
+onready var tree = $AnimationPlayer/AnimationTree["parameters/playback"]
 
-var jump_count = 5
-var special_count = 5
-
-var precision_count = 5
-var velocity = Vector2(0,0)
-var gravity_factor = false
-var visited_goals = []
-var newCollide
+var on_floor: = false
+var to_bounce: = false
+var gravity_factor: = false
+var slowmo_on: = false
+var velocity: = Vector2(0,0)
 var initial_gravity: Vector2
 var initial_position: Vector2
-var slowmo_on = false
-var punch_count = 5
+var newCollide: KinematicCollision2D
 var ability_mapping = [
-	"jump", # 0
-	"precision_jump", # 1
-	"flip_gravity", # 2
-	"bounce", # 3
-	"punch", # 4
-	"slowmo" # 5
+	ABILITIES.JUMP, # 0
+	ABILITIES.PRECISION_JUMP, # 1
+	ABILITIES.FLIP_GRAVITY, # 2
+	ABILITIES.BOUNCE, # 3
+	ABILITIES.PUNCH, # 4
+	ABILITIES.SLOWMO # 5
 ]
 var ability_count = {
 	"jump": 5,
 	"special": 5
-}
+} setget set_ability_count
+var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)} setget set_compass
 
-#{
-#	"slot_1": "precision_jump",
-#	"slot_2": "flip_gravity",
-#	"slot_3": "precision_jump",
-#	"slot_4": "punch",
-#	"slot_5": "slowmo"
-#}
+func set_compass(value) -> void:
+	compass = value
+	ru_rotate(compass.up)
+	emit_signal("rotate", compass.up)
 
-var compass = {"down": Vector2(0,1), "up": Vector2(0, -1), "right": Vector2(1, 0), "left": Vector2(-1,0)}
-
-
-onready var punch_area = get_node("PunchArea")
-onready var tween = get_node("rotation")
-onready var timer = get_node("Timer")
-onready var tree = $AnimationPlayer/AnimationTree["parameters/playback"]
-
+func set_ability_count(value):
+	ability_count = value
+	emit_signal("set_jump_count", ability_count, player)
+	pass
 func init_blob(player_config):
 	player = player_config.player_index if player_config.player_index >= 0 else 0
 	ability_count = player_config.ability_count if player_config.ability_count else {"jump": 5, "special": 5}
-	global_position = player_config.initial_position if player_config.initial_position else Vector2(0,0)
-	initial_position = global_position
-	compass = global.get_compass("down", player_config.initial_gravity_direction)
-	ru_rotate(compass.up)
+	initial_position = player_config.initial_position if player_config.initial_position else Vector2(0,0)
+	global_position = initial_position
+	self.compass = global.get_compass("down", player_config.initial_gravity_direction)
 	initial_gravity = compass.down
 	color = player_config.color
 	$Sprite.modulate = color
 
 func _ready():
-	print(player)
-	visited_goals= []
 	emit_signal("rotate", compass.down)
 	if player_atlas:
 		$Sprite.texture = player_atlas
@@ -87,20 +80,18 @@ func _ready():
 
 func _input(event: InputEvent) -> void:
 	if event.device == player:
-		var ability: String
+		var ability: int
 		var toggled_to_state: bool
 		if event is InputEventJoypadButton:
-
 			if event.is_action_pressed("ui_home"):
 				get_tree().change_scene("res://objects/Control.tscn")
-
+			print(event.is_action_type())
 			if event.is_action_pressed("jump"):
-				ability = "jump"
+				ability = ability_mapping[0]
 				toggled_to_state = true
 			if event.is_action_released("jump"):
-				ability = "jump"
+				ability = ability_mapping[0]
 				toggled_to_state = false
-
 			if event.is_action_pressed("slot_1"):
 				ability = ability_mapping[1]
 				toggled_to_state = true
@@ -132,11 +123,13 @@ func _input(event: InputEvent) -> void:
 				ability = ability_mapping[5]
 				toggled_to_state = false
 			handle_ability(ability, toggled_to_state)
+		if player == 0:
+			print(transform.basis_xform(global.left_stick(player)))
 
-func handle_ability(ability: String, is_pressed: bool) -> void:
+func handle_ability(ability: int, is_pressed: bool) -> void:
 	match(ability):
 
-		"jump":
+		ABILITIES.JUMP:
 			if ability_count.jump > 0 && is_pressed:
 				var direction = global.left_stick(player)
 				jump(direction)
@@ -144,97 +137,90 @@ func handle_ability(ability: String, is_pressed: bool) -> void:
 				print("turn off")
 				gravity_factor = false
 
-		"precision_jump":
+		ABILITIES.PRECISION_JUMP:
 			print("precision_jump")
 			if ability_count.jump > 0 && is_pressed:
-				$InputController.visible = true
+				$Arrow.visible = true
 			if !is_pressed:
-				$InputController.visible = false
-				if onFloor:
-					if ability_count.jump > 0 && global.left_stick(player).y > 0:
+				$Arrow.visible = false
+				if on_floor:
+					if ability_count.jump > 0 && global.left_stick(player).y < 0:
 						precision_jump()
 				else:
 					if ability_count.jump > 0 && Vector2(0,0) != global.left_stick(player):
 						precision_jump()
 
-		"slowmo":
+		ABILITIES.SLOWMO:
 			print("slowmo")
-			if is_pressed && ability_count.special > 0 && !onFloor:
+			if is_pressed && ability_count.special > 0 && !on_floor:
 				ability_count.special -= 1
 				slowmo(true)
 			if !is_pressed:
 				slowmo(false)
 
-		"flip_gravity":
+		ABILITIES.FLIP_GRAVITY:
 			print("flip_gravity")
 			if is_pressed && ability_count.special > 0:
 				flip_gravity()
 
-		"punch":
+		ABILITIES.PUNCH:
 			print("punch")
-			if is_pressed && ability_count.special > 0 && !onFloor:
+			if is_pressed && ability_count.special > 0 && !on_floor:
 				punch()
-		"bounce":
+		ABILITIES.BOUNCE:
 			print("bounce")
-			if is_pressed && !onFloor:
-				toBounce = true
-				ability_count.special -= 1
+			if is_pressed && !on_floor:
+				to_bounce = true
 			if !is_pressed:
-				toBounce = false
+				to_bounce = false
 	emit_signal("set_jump_count", ability_count, player)
 
 func flip_gravity() -> void:
-	compass = global.get_compass("up", compass.down)
+	self.compass = global.get_compass("up", compass.down)
 	tree.travel("inAir")
-	ru_rotate(compass.up)
 	ability_count.special -= 1
-	onFloor = false
+	on_floor = false
 
 func slowmo(is_pressed: bool) -> void:
 	slowmo_on = is_pressed
 
 func jump(direction: Vector2):
-	print("jump", global_transform)
+	print("jump")
 	slowmo(false)
-	velocity = (compass.up + direction.x * compass.right).normalized() * JUMP_FORCE
-	onFloor = false
-	timer.start()
-	justJumped = true
+	var new_velocity = direction
+	new_velocity.y = -1
+	new_velocity = new_velocity.normalized() * JUMP_FORCE
+	new_velocity = transform.basis_xform(new_velocity)
+	velocity = new_velocity#(compass.up + direction.x * compass.right).normalized() * JUMP_FORCE
+	on_floor = false
 	ability_count.jump -= 1
 	gravity_factor = true
 	tree.travel("jump")
-	var o = {"jump_count": jump_count, "precision_count": precision_count}
-	emit_signal("set_jump_count", ability_count, player)
 
 func precision_jump():
 	slowmo(false)
-	var direction = global.left_stick(player)
-	var jump_direction = direction.y * compass.up + direction.x * compass.right
-	timer.start()
+	var direction = global.left_stick(player)* JUMP_FORCE * 2
+	var jump_direction = transform.basis_xform(direction)
 	ability_count.jump -= 1
-	justJumped = true
 	gravity_factor = false
 	tree.travel("precision-jump")
-	velocity = jump_direction.normalized() * JUMP_FORCE * 2
-	onFloor = false
+	velocity = jump_direction #.normalized() * JUMP_FORCE * 2
+	on_floor = false
 	emit_signal("jump")
-	emit_signal("set_jump_count", ability_count, player)
 
 func bounce(col):
 	slowmo(false)
 	velocity = velocity.bounce(col.normal).normalized() * JUMP_FORCE
-	toBounce = false
 	tree.travel("jump")
 
 func stick(collision):
-	if !onFloor:
+	if !on_floor:
 		slowmo(false)
 		tree.travel("land")
-		onFloor = true
+		on_floor = true
 		velocity = Vector2(0,0)
 		gravity_factor = false
-		compass = global.get_compass("up", collision.normal)
-		ru_rotate(collision.normal)
+		self.compass = global.get_compass("up", collision.normal)
 		emit_signal("stick")
 
 func punch():
@@ -249,24 +235,22 @@ func punch():
 		ability_count.special -= 1
 
 func get_punched(direction: Vector2, player_index: int):
-	if player_index != player && !onFloor:
+	if player_index != player && !on_floor:
 		slowmo(false)
 		velocity = direction.normalized() * PUNCHING_POWER
 		tree.travel("inAir")
 
 func die():
 	slowmo(false)
-	compass = global.get_compass("down", initial_gravity)
-	ru_rotate(compass.up)
+	self.compass = global.get_compass("down", initial_gravity)
 	emit_signal("die", player)
-	emit_signal("rotate", compass.up)
 	velocity = Vector2(0,0)
 	global_position = initial_position
-	onFloor = false
+	on_floor = false
 
 func player_input_velocity():
 	var factor = 1.0
-	if onFloor:
+	if on_floor:
 		return Vector2(0,0)
 	if !is_falling_down():
 		factor = 0.5
@@ -274,18 +258,19 @@ func player_input_velocity():
 
 func gravity_velocity():
 	if is_falling_down() && gravity_factor:
-		print("turn off")
 		gravity_factor = false
 	var g = GRAVITY_FACTOR if gravity_factor else 1.0
 	return compass.down * GRAVITY_FORCE * g
 
 func collision_handler(collision):
-	print("collide")
 	if collision.collider is Planet:
 		var type = collision.collider.get_type()
-		if type == "bouncy" || toBounce:
-			if collision.collider.isBlobbed != player || toBounce:
+		if type == "bouncy" || to_bounce:
+			if collision.collider.isBlobbed != player:
 				bounce(collision)
+			elif to_bounce && ability_count.special > 0:
+				bounce(collision)
+				ability_count.special -= 1
 			else:
 				stick(collision)
 		elif type == "sticky":
@@ -294,8 +279,10 @@ func collision_handler(collision):
 			die()
 		else:
 			if collision.collider.isBlobbed == -1:
+				PlayerManager.add_score_for_player(30, player)
 				get_n_abilities(3)
 			elif collision.collider.isBlobbed != player:
+				PlayerManager.add_score_for_player(20, player)
 				get_n_abilities(2)
 			else:
 				get_n_abilities(1)
@@ -324,15 +311,13 @@ func ru_rotate(vec) -> void:
 	emit_signal("rotate", vec)
 	var angle = vec.angle()
 	var rot = rotation - PI / 2
-	if tween:
-		tween.interpolate_property(self, "rotation", null, rotation + global.short_angle_dist(rot, angle), 0.2, Tween.TRANS_LINEAR, Tween.EASE_IN)
-		tween.start()
+	self.rotation += global.short_angle_dist(rot, angle)
 
 func is_falling_down():
 	return compass.down.dot(velocity) > 0
 
 func _physics_process(delta):
-	if !onFloor:
+	if !on_floor:
 		velocity = velocity + (player_input_velocity() + gravity_velocity()) * delta
 		if is_falling_down() && velocity.length() > MAX_SPEED:
 			velocity = velocity.normalized() * MAX_SPEED

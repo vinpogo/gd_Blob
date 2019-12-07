@@ -6,15 +6,12 @@ class_name Planet
 var textures = {
 "bouncy": preload("res://gfx/New folder/moon.png"),
 "sticky": preload("res://gfx/New folder/moon.png"),
-"deadly": preload("res://gfx/New folder/sun.png"),
-"goal": preload("res://gfx/New folder/moon.png")
+"deadly": preload("res://gfx/New folder/sun.png")
 }
 
-var types = ["sticky", "deadly", "bouncy"]
 var isBlobbed = -1
 export(String, "sticky","deadly", "bouncy") var type = "sticky"
 export var radius = 190.0
-onready var tween = get_node("Tween")
 
 func _ready() -> void:
 	$Textures/Sprite.texture = textures[type]

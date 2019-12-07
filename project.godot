@@ -45,12 +45,15 @@ config/icon="res://gfx/icon.png"
 [autoload]
 
 global="*res://global.gd"
+PlayerManager="*res://PlayerManager.gd"
 
 [debug]
 
 gdscript/completion/autocomplete_setters_and_getters=true
+gdscript/warnings/unassigned_variable=false
 gdscript/warnings/unused_argument=false
-gdscript/warnings/unreachable_code=false
+gdscript/warnings/return_value_discarded=false
+gdscript/warnings/integer_division=false
 
 [display]
 

@@ -1,12 +1,7 @@
 extends Node2D
 
-func get_distance_to_goal(player: int):
-	var d = get_node("Spawn%s"%( 1 if player == 2 else 2)).global_position - get_node("Player%s"%player).global_position
-	return d.length()
-	pass
-
 func add_players():
-	for player_config in global.player_configs:
+	for player_config in PlayerManager.player_configs:
 		player_config.initial_position = get_node("Spawn%s"%player_config.player_index).global_position
 		player_config.initial_gravity_direction = get_node("Spawn%s"%player_config.player_index).initial_gravity
 		var b = load("res://objects/newBlob/Blob.tscn").instance()
