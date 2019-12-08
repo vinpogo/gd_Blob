@@ -15,6 +15,6 @@ func _on_CheckBox2_toggled(button_pressed: bool) -> void:
 
 
 func _on_Button_button_up() -> void:
-	PlayerManager.player_count = 1 if !cb_player1.pressed else 2
+	PlayerManager.player_count = 1 if cb_player1.pressed else 3
 	get_tree().change_scene_to(game)
 	pass # Replace with function body.

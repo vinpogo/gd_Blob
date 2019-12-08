@@ -28,7 +28,7 @@ func get_player_config(player_index: int):
 
 func stats_proto():
 	var s = {}
-	for i in range(player_count):
+	for i in range(PlayerManager.player_count):
 		s["player_%s"%(i)] = 0
 	return s
 

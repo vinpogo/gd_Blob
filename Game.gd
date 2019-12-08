@@ -13,7 +13,6 @@ func _ready():
 	world.add_players()
 
 	viewport1.size.x = 1024
-	minimap.world_2d = viewport1.world_2d
 	camera1.target = world.get_node("Player0")
 	camera1.connect_signals()
 	hud1.target = world.get_node("Player0")
@@ -21,10 +20,8 @@ func _ready():
 	hud1.world = world
 	hud1.player = 0
 
-	if PlayerManager.player_count == 1:
-		$ViewportContainer.rect_position.x = 0.0
-		$ViewportContainer.rect_rotation = 0.0
-	viewport1.size.x = 1024 / PlayerManager.player_count
+	viewport1.size.x = 1024 / (2 if PlayerManager.player_count > 1 else 1)
+	viewport1.size.y = 600 / (2 if PlayerManager.player_count > 2 else 1)
 	for i in range(1, PlayerManager.player_count ):
 		var v = player_viewport.instance()
 		print(v)
